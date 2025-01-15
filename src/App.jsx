@@ -4,8 +4,7 @@ import CenterComponent from './pages/Page1/CenterComponent'
 import { fetchSupabaseData } from './utils/getFromRemote'
 import { fetchExpensivePlayer } from './utils/expensivePlayer';
 import { fetchPrevPlayer } from './utils/previousPlayer';
-import TeamSquad from './pages/FinalSquad'
-import TeamsWithSquads from './pages/FinalSquad'
+import TeamsWithCompactDesign from './pages/FinalSquad';
 
 function App() {
   const [players, setplayers] = useState([]);
@@ -38,6 +37,7 @@ function App() {
   return (
     <>
       <CenterComponent />
+      < TeamsWithCompactDesign/>
     </>
   )
 }
