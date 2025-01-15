@@ -3,7 +3,7 @@ import React from "react";
 const IPLAuction = () => {
   // Hardcoded sample data
   const mostExpensivePlayer = {
-    name: "Virat Kohli",
+    name: "VK",
     team: "Royal Challengers Bangalore",
     price: 170000000, // ₹17 crore
   };
