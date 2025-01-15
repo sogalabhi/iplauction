@@ -3,7 +3,8 @@ import './App.css'
 import { fetchSupabaseData } from './utils/getFromRemote'
 import { fetchExpensivePlayer } from './utils/expensivePlayer';
 import { fetchPrevPlayer } from './utils/previousPlayer';
-
+import TeamSquad from './pages/FinalSquad'
+import TeamsWithSquads from './pages/FinalSquad'
 
 function App() {
   const [players, setplayers] = useState([]);
@@ -35,7 +36,7 @@ function App() {
 
   return (
     <>
-
+      <TeamsWithSquads/>
     </>
   )
 }
