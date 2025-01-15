@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import './App.css'
+import CenterComponent from './pages/Page1/CenterComponent'
 import { fetchSupabaseData } from './utils/getFromRemote'
 import { fetchExpensivePlayer } from './utils/expensivePlayer';
 import { fetchPrevPlayer } from './utils/previousPlayer';
@@ -36,7 +37,7 @@ function App() {
 
   return (
     <>
-      <TeamsWithSquads/>
+      <CenterComponent />
     </>
   )
 }
