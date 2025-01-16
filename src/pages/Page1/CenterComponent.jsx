@@ -6,7 +6,7 @@ import Confetti from "react-confetti";
 import Ha from "./Ha";
 import { Link } from "react-router-dom";
 
-const Page1 = () => {
+const CenterComponent = () => {
   const [isPlayerSold, setIsPlayerSold] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showPlayerCard, setShowPlayerCard] = useState(false);
@@ -158,10 +158,9 @@ const Page1 = () => {
       )}
       <div className="flex items-start gap-[120px]">
           <LeftComponent/>
-          <PlayerCard onSold={setIsPlayerSold} />
       </div>
     </div>
   );
 };
 
-export default Page1;
+export default CenterComponent;
