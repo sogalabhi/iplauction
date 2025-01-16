@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import SponsorCarousel from "./SponsorCarousel";
 import PlayerCard from "./PlayerCard";
+import LeftComponent from "./LeftComponent";
 
 const Page1 = () => {
   const [isPlayerSold, setIsPlayerSold] = useState(false);
@@ -15,7 +16,10 @@ const Page1 = () => {
           <SponsorCarousel />
         </div>
       )}
-      <PlayerCard onSold={setIsPlayerSold} />
+      <div className="flex items-start gap-[120px]">
+          <LeftComponent/>
+          <PlayerCard onSold={setIsPlayerSold} />
+      </div>
     </div>
   );
 };
