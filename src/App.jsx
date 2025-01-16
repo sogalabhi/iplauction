@@ -1,12 +1,9 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import CenterComponent from './pages/Page1/CenterComponent'
-import LeftComponent from './pages/Page1/LeftComponent'
 import { fetchSupabaseData } from './utils/getFromRemote'
 import { fetchExpensivePlayer } from './utils/expensivePlayer';
 import { fetchPrevPlayer } from './utils/previousPlayer';
-import TeamSquad from './pages/FinalSquad'
-import TeamsWithSquads from './pages/FinalSquad'
 import { fetchTeamsWithSquads } from './utils/teamswithplayers';
 import TeamsWithCompactDesign from './pages/FinalSquad';
 import { Route, Router, Routes } from 'react-router-dom';
