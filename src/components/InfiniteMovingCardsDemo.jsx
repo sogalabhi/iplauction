@@ -5,12 +5,11 @@ import React from "react";
 export function InfiniteMovingCardsDemo() {
   const purchasedPlayers = [
     {
-  quote: "Virat Kohli",
-  name: "Royal Challengers Bangalore",
-  title: "₹15 Crore",
-  image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Virat_Kohli_portrait.jpg/849px-Virat_Kohli_portrait.jpg?20180427075657",
-}
-,
+      quote: "Virat Kohli",
+      name: "Royal Challengers Bangalore",
+      title: "₹15 Crore",
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Virat_Kohli_portrait.jpg/849px-Virat_Kohli_portrait.jpg?20180427075657", // Image link to be added later
+    },
     {
       quote: "MS Dhoni",
       name: "Chennai Super Kings",
@@ -71,7 +70,5 @@ export function InfiniteMovingCardsDemo() {
     </div>
   );
 }
-
-
 
 

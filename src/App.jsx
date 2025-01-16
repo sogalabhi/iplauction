@@ -1,11 +1,29 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import Timer from "./components/Timer";
 import { InfiniteMovingCardsDemo } from "./components/InfiniteMovingCardsDemo";
 import { Header } from "./components/Header";
 
 const App = () => {
+  useEffect(() => {
+    // Enable autoplay after user interaction
+    const audio = document.getElementById("background-audio");
+    if (audio) {
+      audio.play();
+    }
+  }, []);
+
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center text-white overflow-hidden">
+      {/* Background Music */}
+      <audio id="background-audio" loop>
+        <source
+          src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+          type="audio/mp3"
+        />
+        Your browser does not support the audio element.
+      </audio>
+
       {/* Background Animation */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-800 via-purple-800 to-black animate-gradient">
         <div className="absolute inset-0 bg-[radial-gradient(circle,_rgba(255,255,255,0.1)_1px,_transparent_1px)] bg-[size:30px_30px] opacity-40 animate-cross"></div>
@@ -13,7 +31,6 @@ const App = () => {
 
       {/* Main Content */}
       <div className="relative z-10 w-full max-w-5xl backdrop-blur-lg bg-white/10 p-6 rounded-lg border border-gray-700 shadow-lg mb-8">
-
         {/* Header */}
         <Header />
 
@@ -75,6 +92,9 @@ const App = () => {
 };
 
 export default App;
+
+
+
 
 
 
