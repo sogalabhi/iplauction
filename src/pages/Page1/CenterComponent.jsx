@@ -4,6 +4,7 @@ import PlayerCard from "./PlayerCard";
 import LeftComponent from "./LeftComponent";
 import Confetti from "react-confetti";
 import Ha from "./Ha";
+import { Link } from "react-router-dom";
 
 const Page1 = () => {
   const [isPlayerSold, setIsPlayerSold] = useState(false);
@@ -16,7 +17,7 @@ const Page1 = () => {
     {
       id: 1,
       name: "Virat Kohli",
-      image: "https://via.placeholder.com/150",
+      image: "https://e7.pngegg.com/pngimages/160/980/png-clipart-virat-kohli-india-national-cricket-team-papua-new-guinea-national-cricket-team-cricketer-cricket-tshirt-sports.png",
       basePrice: 2000000,
       currentBid: 5000000,
       matches: 30,
@@ -105,7 +106,6 @@ const Page1 = () => {
           </div>
         </div>
       )}
-
       {!isPlayerSold && !showPlayerCard && (
         <div className="text-center mt-8 flex gap-4 justify-center py-2">
           <button
@@ -114,6 +114,12 @@ const Page1 = () => {
           >
             Mark as Sold
           </button>
+<Link
+          to={"/teamswithsquad"}
+          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+        >
+          Team Squad
+        </Link>
           <button
             onClick={nextPlayer}
             className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
