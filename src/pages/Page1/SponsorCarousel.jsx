@@ -4,25 +4,17 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const people = [
-  { name: "Alice Johnson", image: "https://via.placeholder.com/150" },
-  { name: "Bob Smith", image: "https://via.placeholder.com/150" },
-  { name: "Catherine Lee", image: "https://via.placeholder.com/150" },
-  { name: "David Brown", image: "https://via.placeholder.com/150" },
-  { name: "Emily Davis", image: "https://via.placeholder.com/150" },
-  { name: "Emily Davis", image: "https://via.placeholder.com/150" },
-  { name: "Emily Davis", image: "https://via.placeholder.com/150" },
-  { name: "Emily Davis", image: "https://via.placeholder.com/150" },
-  { name: "Emily Davis", image: "https://via.placeholder.com/150" }
+  { name: "Alice Johnson", image: "https://banner2.cleanpng.com/20240111/qtv/transparent-google-logo-colorful-google-logo-with-bold-green-1710929465092.webp" },
+  { name: "Bob Smith", image: "https://banner2.cleanpng.com/20240111/qtv/transparent-google-logo-colorful-google-logo-with-bold-green-1710929465092.webp" },
+  { name: "Catherine Lee", image: "https://banner2.cleanpng.com/20240111/qtv/transparent-google-logo-colorful-google-logo-with-bold-green-1710929465092.webp" },
+  { name: "David Brown", image: "https://banner2.cleanpng.com/20240111/qtv/transparent-google-logo-colorful-google-logo-with-bold-green-1710929465092.webp" },
 ];
 
 const Carousel = () => {
   const settings = {
     dots: false,
-    infinite: true,
-    speed: 10000,
     slidesToShow: 4,
     slidesToScroll: 1,
-    autoplay: true,
     autoplaySpeed: 0,
     cssEase: "linear",
     pauseOnHover: false, 
@@ -51,7 +43,6 @@ const Carousel = () => {
                   className="w-full h-full object-cover rounded-full border-4 border-gray-300 shadow-lg"
                 />
               </div>
-              <p className="text-lg font-medium">{person.name}</p>
             </div>
           ))}
         </Slider>

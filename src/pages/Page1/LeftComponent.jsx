@@ -19,7 +19,7 @@ const LeftComponent = () => {
   };
 
   return (
-    <div className="p-8 font-sans space-y-6 w-[550px]">
+    <div className="p-8 font-sans space-y-6 w-80">
       {/* Most Expensive Player */}
       <div
         className="flex flex-col mb-6 bg-opacity-30 backdrop-blur-lg rounded-lg border border-white shadow-lg"

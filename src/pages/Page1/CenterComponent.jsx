@@ -5,6 +5,8 @@ import LeftComponent from "./LeftComponent";
 import Confetti from "react-confetti";
 import Ha from "./Ha";
 import { Link } from "react-router-dom";
+import CardForHomePage from "../../components/CardForHomePage";
+import TeamTable from "../../components/TeamTable";
 
 const CenterComponent = () => {
   const [isPlayerSold, setIsPlayerSold] = useState(false);
@@ -12,7 +14,7 @@ const CenterComponent = () => {
   const [showPlayerCard, setShowPlayerCard] = useState(false);
   const [showHammer, setShowHammer] = useState(false);
 
-  
+
   const [players, setPlayers] = useState([
     {
       id: 1,
@@ -60,7 +62,7 @@ const CenterComponent = () => {
       setIsPlayerSold(true);
     }, 2000);
   };
- 
+
 
   const nextPlayer = () => {
     setShowPlayerCard(false);
@@ -95,13 +97,21 @@ const CenterComponent = () => {
           <h2 className="text-center text-2xl">Sponsored By</h2>
           <SponsorCarousel />
           <div className="relative flex justify-center items-center">
-            <div className="relative">
+            <div className="flex-1 pl-10">
+              {/* <LeftComponent /> */}
+              <CardForHomePage title="Most Expensive Player" player={{ 'name': "MS Dhoni", 'final_price': "777crore", 'to_team': "RCB", 'url': 'https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/public/players/dhoni.png' }} />
+              <CardForHomePage title="Last Player Sold" player={{ 'name': "Virat Kohli", 'final_price': "15crore", 'to_team': "CSK", 'url': "https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/public/players/kohli.png" }} />
+            </div>
+            <div className="relative flex-1">
               <PlayerCard
                 key={currentIndex}
                 player={players[currentIndex]}
                 onSold={setIsPlayerSold}
                 showHammer={showHammer}
               />
+            </div>
+            <div className="flex-1">
+              <TeamTable />
             </div>
           </div>
         </div>
@@ -114,12 +124,12 @@ const CenterComponent = () => {
           >
             Mark as Sold
           </button>
-<Link
-          to={"/teamswithsquad"}
-          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-        >
-          Team Squad
-        </Link>
+          <Link
+            to={"/teamswithsquad"}
+            className="flexw-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+          >
+            Team Squad
+          </Link>
           <button
             onClick={nextPlayer}
             className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
@@ -156,9 +166,6 @@ const CenterComponent = () => {
           </div>
         </div>
       )}
-      <div className="flex items-start gap-[120px]">
-          <LeftComponent/>
-      </div>
     </div>
   );
 };

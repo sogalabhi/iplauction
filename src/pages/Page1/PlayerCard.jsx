@@ -56,25 +56,25 @@ const PlayerCard = ({ player, showHammer }) => {
       </div>
 
       <div className="bg-gray-800 p-2 rounded-lg text-white w-112 h-16 m-4">
-        <div className="flex flex-row gap-7">
-          <div className="flex flex-col justify-between">
-            <span className="font-semibold">Matches:</span>
+        <div className="flex flex-row gap-7 items-center justify-center">
+          <div className="flex flex-col">
+            <span className="text-xs font-semibold">Matches:</span>
             <span>{player.matches}</span>
           </div>
-          <div className="flex flex-col justify-between">
-            <span className="font-semibold">Wickets:</span>
+          <div className="flex flex-col">
+            <span className="text-xs font-semibold">Wickets:</span>
             <span>{player.wickets}</span>
           </div>
-          <div className="flex flex-col justify-between">
-            <span className="font-semibold">Economy:</span>
+          <div className="flex flex-col">
+            <span className="text-xs font-semibold">Economy:</span>
             <span>{player.economy}</span>
           </div>
-          <div className="flex flex-col justify-between">
-            <span className="font-semibold">Strike Rate:</span>
+          <div className="flex flex-col">
+            <span className="text-xs font-semibold">Strike Rate:</span>
             <span>{player.strikeRate}</span>
           </div>
-          <div className="flex flex-col justify-between">
-            <span className="font-semibold">Runs:</span>
+          <div className="flex flex-col">
+            <span className="text-xs font-semibold">Runs:</span>
             <span>{player.runs}</span>
           </div>
         </div>
