@@ -6,7 +6,6 @@ const PlayerCard = ({ player, showHammer }) => {
   const [isSold, setIsSold] = useState(false);
 
   useEffect(() => {
-    // Reset state when a new player is passed
     setIsSold(false);
   }, [player]);
 

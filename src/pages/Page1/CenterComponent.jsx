@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import SponsorCarousel from "./SponsorCarousel";
 import PlayerCard from "./PlayerCard";
+import LeftComponent from "./LeftComponent";
 import Confetti from "react-confetti";
 import Ha from "./Ha";
 import { Link } from "react-router-dom";
@@ -11,7 +12,8 @@ const Page1 = () => {
   const [showPlayerCard, setShowPlayerCard] = useState(false);
   const [showHammer, setShowHammer] = useState(false);
 
-  const players = [
+  
+  const [players, setPlayers] = useState([
     {
       id: 1,
       name: "Virat Kohli",
@@ -48,22 +50,41 @@ const Page1 = () => {
       strikeRate: 140.3,
       runs: 1800,
     },
-  ];
+  ]);
 
   const markAsSold = () => {
-    setShowHammer(true); // Show the hammer animation
+    setShowHammer(true);
     setTimeout(() => {
-      setShowHammer(false); // Hide the hammer animation after it completes
-      setShowPlayerCard(true); // Proceed with marking the player as sold
+      setShowHammer(false);
+      setShowPlayerCard(true);
       setIsPlayerSold(true);
-    }, 2000); // Adjust timeout to match the hammer animation duration
+    }, 2000);
   };
+ 
 
   const nextPlayer = () => {
-    // Move to the next player
     setShowPlayerCard(false);
     setIsPlayerSold(false);
     setCurrentIndex((prevIndex) => (prevIndex + 1) % players.length);
+  };
+
+  const handleBid = () => {
+    setPlayers((prevPlayers) =>
+      prevPlayers.map((player, index) => {
+        if (index === currentIndex) {
+          let newBid = player.currentBid;
+          if (newBid < 10000000) {
+            newBid += 1000000;
+          } else if (newBid < 50000000) {
+            newBid += 2000000;
+          } else {
+            newBid += 5000000;
+          }
+          return { ...player, currentBid: newBid };
+        }
+        return player;
+      })
+    );
   };
 
   return (
@@ -75,34 +96,45 @@ const Page1 = () => {
           <SponsorCarousel />
           <div className="relative flex justify-center items-center">
             <div className="relative">
-              {/* Player Card */}
               <PlayerCard
                 key={currentIndex}
                 player={players[currentIndex]}
                 onSold={setIsPlayerSold}
                 showHammer={showHammer}
               />
-              {/* Hammer Animation */}
             </div>
           </div>
         </div>
       )}
-      <div className="text-center mt-8 space-x-3">
-        {!isPlayerSold && !showPlayerCard && (
+      {!isPlayerSold && !showPlayerCard && (
+        <div className="text-center mt-8 flex gap-4 justify-center py-2">
           <button
             onClick={markAsSold}
-            className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+            className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
           >
             Mark as Sold
           </button>
-        )}
-        <Link
+<Link
           to={"/teamswithsquad"}
           className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
         >
           Team Squad
         </Link>
-      </div>
+          <button
+            onClick={nextPlayer}
+            className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+          >
+            Mark as Unsold
+          </button>
+          <button
+            onClick={handleBid}
+            className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+          >
+            Bid
+          </button>
+        </div>
+      )}
+
       {showPlayerCard && (
         <div className="flex flex-col items-center">
           {isPlayerSold && (
@@ -124,6 +156,10 @@ const Page1 = () => {
           </div>
         </div>
       )}
+      <div className="flex items-start gap-[120px]">
+          <LeftComponent/>
+          <PlayerCard onSold={setIsPlayerSold} />
+      </div>
     </div>
   );
 };
