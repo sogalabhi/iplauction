@@ -13,7 +13,7 @@ const PlayerCard = ({ player, showHammer }) => {
     <div
       className={`flex flex-col items-center justify-center ${
         isSold ? "fixed inset-0 z-50 bg-black" : ""
-      } transition-all duration-500`}
+      } transition-all duration-500 py-3`}
     >
       {/* Confetti */}
       {isSold && (
@@ -22,14 +22,13 @@ const PlayerCard = ({ player, showHammer }) => {
 
       <div className="relative flex justify-center items-center">
         <div className="absolute w-[30rem] h-[15rem] rounded-t-full bg-gradient-to-r from-blue-500 to-purple-500 opacity-50 blur-lg animate-pulse"></div>
-
         <div
-          className={`relative w-96 h-48 rounded-t-full overflow-hidden shadow-xl`}
+          className={`relative w-96 h-48 rounded-t-full overflow-visible shadow-xl`}
         >
           <img
             src={player.image}
             alt={player.name}
-            className="w-full h-full object-cover"
+            className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-auto h-64"
           />
           {showHammer && (
             <div className="absolute inset-0 flex justify-center items-center">

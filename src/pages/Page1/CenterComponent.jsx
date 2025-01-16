@@ -19,7 +19,7 @@ const CenterComponent = () => {
     {
       id: 1,
       name: "Virat Kohli",
-      image: "https://e7.pngegg.com/pngimages/160/980/png-clipart-virat-kohli-india-national-cricket-team-papua-new-guinea-national-cricket-team-cricketer-cricket-tshirt-sports.png",
+      image: "https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/public/players/kohli.png",
       basePrice: 2000000,
       currentBid: 5000000,
       matches: 30,
@@ -31,7 +31,7 @@ const CenterComponent = () => {
     {
       id: 2,
       name: "Rohit Sharma",
-      image: "https://via.placeholder.com/150",
+      image: "https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/public/players/rohit.png",
       basePrice: 2500000,
       currentBid: 5500000,
       matches: 35,
@@ -43,7 +43,7 @@ const CenterComponent = () => {
     {
       id: 3,
       name: "MS Dhoni",
-      image: "https://via.placeholder.com/150",
+      image: "https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/public/players/dhoni.png",
       basePrice: 3000000,
       currentBid: 6000000,
       matches: 40,
