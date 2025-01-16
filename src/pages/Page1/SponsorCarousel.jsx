@@ -51,7 +51,7 @@ const Carousel = () => {
                   className="w-full h-full object-cover rounded-full border-4 border-gray-300 shadow-lg"
                 />
               </div>
-              <p className="text-lg font-medium">{person.name}</p>
+              
             </div>
           ))}
         </Slider>
