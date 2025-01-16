@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import SponsorCarousel from "./SponsorCarousel";
 import PlayerCard from "./PlayerCard";
+import LeftComponent from "./LeftComponent";
 import Confetti from "react-confetti";
 import Ha from "./Ha";
 
@@ -149,6 +150,10 @@ const Page1 = () => {
           </div>
         </div>
       )}
+      <div className="flex items-start gap-[120px]">
+          <LeftComponent/>
+          <PlayerCard onSold={setIsPlayerSold} />
+      </div>
     </div>
   );
 };
