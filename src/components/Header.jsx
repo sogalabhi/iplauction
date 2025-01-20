@@ -3,33 +3,32 @@ import React from "react";
 
 export function Header() {
   return (
-    <header className="relative bg-gray-900 text-white py-6 px-4 sm:px-12 rounded-lg overflow-hidden">
-      {/* Main Header: InCub8 IPL Auction */}
-      <div className="text-center relative z-10">
-        <h1 className="text-4xl font-semibold font-poppins text-green-400 mb-2">
-          InCub8
+    <header className="relative bg-gray-900 text-white py-4 px-4 sm:px-8 rounded-lg overflow-hidden flex items-center justify-between">
+      {/* Left Logo */}
+      <div className="flex items-center">
+        <img
+          src="src/assets/incub8L.png"
+          alt="Organization Logo"
+          className="h-20 mr-7"
+        />
+      </div>
+
+      {/* Main Header: E-Cell NITK */}
+      <div className="text-center relative z-10 flex-grow">
+        <h1 className="text-3xl font-semibold font-poppins text-green-400 mb-1">
+          E-Cell NITK
         </h1>
-        <h2 className="text-2xl font-semibold font-poppins text-white">
+        <h2 className="text-xl font-semibold font-poppins text-white">
           IPL Auction
         </h2>
       </div>
 
-      {/* Sponsors Section */}
-      <div className="mt-8 flex justify-center space-x-8 relative z-10">
+      {/* Right Logo */}
+      <div className="flex items-center">
         <img
-          src="https://via.placeholder.com/100x50?text=Sponsor+1"
-          alt="Sponsor 1"
-          className="h-12"
-        />
-        <img
-          src="https://via.placeholder.com/100x50?text=Sponsor+2"
-          alt="Sponsor 2"
-          className="h-12"
-        />
-        <img
-          src="https://via.placeholder.com/100x50?text=Sponsor+3"
-          alt="Sponsor 3"
-          className="h-12"
+          src="src/assets/navLogo.png"
+          alt="Right Logo"
+          className="h-16 ml-2"
         />
       </div>
 

@@ -37,15 +37,15 @@ const Timer = ({ auctionEndTime }) => {
       {/* Last Purchased Player */}
       <div className="flex items-center space-x-4">
         <img
-          src="https://via.placeholder.com/60"
-          alt="Player"
+          src="https://upload.wikimedia.org/wikipedia/en/2/2b/Chennai_Super_Kings_Logo.svg"
+          alt="MS Dhoni"
           className="w-16 h-16 rounded-full border border-gray-700"
         />
         <div>
           <p className="text-sm text-gray-400">Last Purchased Player</p>
-          <p className="text-lg font-bold">MS Dhoni</p>
+          <p className="text-xl font-bold">MS Dhoni</p>
           <p className="text-sm text-gray-400">Team: Chennai Super Kings</p>
-          <p className="text-sm text-green-500">₹12 Crore</p>
+          <p className="text-lg text-green-500">₹12 Crore</p>
         </div>
       </div>
 
@@ -78,13 +78,13 @@ const Timer = ({ auctionEndTime }) => {
       <div className="flex items-center space-x-4">
         <div>
           <p className="text-sm text-gray-400">Highest Bid</p>
-          <p className="text-lg font-bold">₹16 Crore</p>
+          <p className="text-xl font-bold">₹16 Crore</p>
           <p className="text-sm text-gray-400">Player: Ben Stokes</p>
           <p className="text-sm text-gray-400">Team: Chennai Super Kings</p>
         </div>
         <img
-          src="https://via.placeholder.com/60"
-          alt="Player"
+          src="https://upload.wikimedia.org/wikipedia/en/2/2b/Chennai_Super_Kings_Logo.svg"
+          alt="Ben Stokes"
           className="w-16 h-16 rounded-full border border-gray-700"
         />
       </div>
@@ -93,4 +93,3 @@ const Timer = ({ auctionEndTime }) => {
 };
 
 export default Timer;
-
