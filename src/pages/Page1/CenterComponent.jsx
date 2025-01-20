@@ -4,6 +4,7 @@ import PlayerCard from "./PlayerCard";
 import LeftComponent from "./LeftComponent";
 import Confetti from "react-confetti";
 import Ha from "./Ha";
+import Overview from './Overview'
 import { Link } from "react-router-dom";
 
 const CenterComponent = () => {
@@ -17,6 +18,7 @@ const CenterComponent = () => {
     {
       id: 1,
       name: "Virat Kohli",
+      teamId:1,
       image: "https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/public/players/kohli.png",
       basePrice: 2000000,
       currentBid: 5000000,
@@ -29,6 +31,7 @@ const CenterComponent = () => {
     {
       id: 2,
       name: "Rohit Sharma",
+      teamId:3,
       image: "https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/public/players/rohit.png",
       basePrice: 2500000,
       currentBid: 5500000,
@@ -41,6 +44,7 @@ const CenterComponent = () => {
     {
       id: 3,
       name: "MS Dhoni",
+      teamId:2,
       image: "https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/public/players/dhoni.png",
       basePrice: 3000000,
       currentBid: 6000000,
@@ -52,13 +56,41 @@ const CenterComponent = () => {
     },
   ]);
 
+  //Used fro assigning the team for a player after sold out
+  const [teams, setTeams] = useState([
+    { teamId: 1, teamName: "Team A", fundsRemaining: 10000000, playerCount: 0 },
+    { teamId: 2, teamName: "Team B", fundsRemaining: 10000000, playerCount: 0 },
+    { teamId: 3, teamName: "Team C", fundsRemaining: 10000000, playerCount: 0 },
+    { teamId: 4, teamName: "Team D", fundsRemaining: 10000000, playerCount: 0 },
+    { teamId: 5, teamName: "Team E", fundsRemaining: 10000000, playerCount: 0 },
+    { teamId: 6, teamName: "Team F", fundsRemaining: 10000000, playerCount: 0 },
+    { teamId: 7, teamName: "Team J", fundsRemaining: 10000000, playerCount: 0 },
+    { teamId: 8, teamName: "Team H", fundsRemaining: 10000000, playerCount: 0 },
+    { teamId: 9, teamName: "Team I", fundsRemaining: 10000000, playerCount: 0 },
+    { teamId: 10, teamName: "Team K", fundsRemaining: 10000000, playerCount: 0 },
+  ]);
+
   const markAsSold = () => {
     setShowHammer(true);
     setTimeout(() => {
       setShowHammer(false);
       setShowPlayerCard(true);
       setIsPlayerSold(true);
+      
+      const soldPlayer = players[currentIndex];
+      setTeams((prevTeams) =>
+        prevTeams.map((team) =>
+          team.teamId === soldPlayer.teamId
+            ? {
+                ...team,
+                fundsRemaining: team.fundsRemaining - soldPlayer.currentBid, 
+                playerCount: team.playerCount + 1, 
+              }
+            : team
+        )
+      );
     }, 2000);
+  
   };
  
 
@@ -114,7 +146,7 @@ const CenterComponent = () => {
           >
             Mark as Sold
           </button>
-<Link
+        <Link
           to={"/teamswithsquad"}
           className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
         >
@@ -134,8 +166,8 @@ const CenterComponent = () => {
           </button>
         </div>
       )}
-
-      {showPlayerCard && (
+      
+      {showPlayerCard ? (
         <div className="flex flex-col items-center">
           {isPlayerSold && (
             <Confetti width={window.innerWidth} height={window.innerHeight} />
@@ -146,19 +178,31 @@ const CenterComponent = () => {
             player={players[currentIndex]}
             onSold={setIsPlayerSold}
           />
-          <div className="text-center mt-4">
+          <div className="text-center mt-4 ">
             <button
               onClick={nextPlayer}
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              className="bg-blue-500 m-2 text-white px-4 py-2 rounded hover:bg-blue-600"
             >
               Next Player
             </button>
+            <button
+              
+              className="bg-blue-500 m-2 text-white px-4 py-2 rounded hover:bg-blue-600"
+            >
+              Break
+            </button>
           </div>
         </div>
-      )}
+      ):
+        <div>
+          <Overview teams={teams}/>
+        </div>
+      }
+      
       <div className="flex items-start gap-[120px]">
           <LeftComponent/>
       </div>
+           
     </div>
   );
 };
