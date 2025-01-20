@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import SponsorCarousel from "./SponsorCarousel";
 import PlayerCard from "./PlayerCard";
 import LeftComponent from "./LeftComponent";
 import Confetti from "react-confetti";

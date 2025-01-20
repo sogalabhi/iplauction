@@ -15,9 +15,8 @@ const Overview = ({ teams }) => {
           </tr>
         </thead>
         <tbody>
-          {console.log(teams)}
-          {teams.map((team) => (
-            <tr key={team.id} className="hover:bg-gray-600">
+          {teams.map((team, idx) => (
+            <tr key={idx} className="hover:bg-gray-600">
               <td className="p-2">{team.name}</td>
               <td className="p-2 text-center">{team.playerCount}</td>
               <td className="p-2 text-right">₹{team.purse}</td>
