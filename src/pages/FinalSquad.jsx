@@ -4,13 +4,14 @@ import { Link } from "react-router-dom";
 const roleIcons = {
   "Batsmen": "🏏",
   "Bowler": "🎯",
-  "All-rounder": "⚡",
+  "All-rounder": "🏏🎯",
   "WK": "🧤",
 };
 
 const TeamsWithCompactDesign = ({ teamlist }) => {
+  console.log(teamlist[1].color1);
   return (
-    <div className="p-4 bg-gradient-to-br from-purple-700 via-blue-800 to-gray-900 min-h-screen flex flex-col items-center justify-center">
+    <div className="p-4 bg-gradient-to-br from-[#361602] from-40% to-[#021e31] min-h-screen flex flex-col items-center justify-center">
       <h1 className="text-6xl font-extrabold text-center my-2 tracking-wide animate-pulse text-white">
         Teams Squad
       </h1>
@@ -30,7 +31,7 @@ const TeamsWithCompactDesign = ({ teamlist }) => {
             <div
               className={`px-4 py-3 rounded-t-xl  flex flex-row justify-between items-center`}
               style={{
-                background: `linear-gradient(45deg, ${team.color}, #1a202c)`,
+                background: `linear-gradient(to bottom right, #${team.color1}, #${team.color2})`,
               }}
             >
               <div>
