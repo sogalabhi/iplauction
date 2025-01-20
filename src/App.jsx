@@ -7,6 +7,7 @@ import { fetchPrevPlayer } from './utils/previousPlayer';
 import { fetchTeamsWithSquads } from './utils/teamswithplayers';
 import TeamsWithCompactDesign from './pages/FinalSquad';
 import { Route, Router, Routes } from 'react-router-dom';
+import { getTeamFromTeamID } from './utils/getTeamfromTeamId';
 
 function App() {
   const [players, setPlayers] = useState([]);
@@ -18,6 +19,7 @@ function App() {
   const fetchAllPlayers = async () => {
     var res = await fetchSupabaseData('CricketPlayers');
     setPlayers(res);
+    var res2 = await getTeamFromTeamID(0);
   }
   const fetchAllTeams = async () => {
     var res = await fetchSupabaseData('Teams');
@@ -25,6 +27,7 @@ function App() {
   }
   const getExpensivePlayer = async () => {
     var res = await fetchExpensivePlayer();
+    console.log(res);
     setExpPlayer(res);
   }
   const getPrevPlayer = async () => {
@@ -36,7 +39,6 @@ function App() {
     fetchTeamsWithSquads().then((teams) => {
       setTeamsWithSquad(teams);
     });
-
   }
 
   useEffect(() => {
@@ -50,7 +52,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<CenterComponent />} />
+        <Route path="/" element={<CenterComponent teamlist={teamswithsquad}/>} />
         <Route path="/teamswithsquad" element={<TeamsWithCompactDesign teamlist={teamswithsquad} />} />
       </Routes>
 
