@@ -6,6 +6,8 @@ import Confetti from "react-confetti";
 import Ha from "./Ha";
 import Overview from './Overview'
 import { Link } from "react-router-dom";
+import CardForHomePage from "../../components/CardForHomePage";
+import TeamTable from "../../components/TeamTable";
 
 const CenterComponent = () => {
   const [isPlayerSold, setIsPlayerSold] = useState(false);
@@ -13,7 +15,7 @@ const CenterComponent = () => {
   const [showPlayerCard, setShowPlayerCard] = useState(false);
   const [showHammer, setShowHammer] = useState(false);
 
-  
+
   const [players, setPlayers] = useState([
     {
       id: 1,
@@ -92,7 +94,7 @@ const CenterComponent = () => {
     }, 2000);
   
   };
- 
+
 
   const nextPlayer = () => {
     setShowPlayerCard(false);
@@ -120,20 +122,35 @@ const CenterComponent = () => {
   };
 
   return (
-    <div className={`min-h-screen bg-black text-white`}>
+    // <div className={`min-h-screen bg-gradient-to-b from-indigo-500 to-purple-600 text-white`}>
+    <div className={`min-h-screen bg-gradient-to-b from-[#361602] from-40% to-[#021e31] text-white`}>
       {!isPlayerSold && !showPlayerCard && (
         <div className="py-1">
-          <h1 className="text-center text-4xl py-7">E-CELL NITK IPL AUCTION</h1>
+          <h1 className="text-center text-4xl py-3" style={{ 'font-family': "Alinea Incise W01 Regular" }}>E-CELL NITK IPL AUCTION</h1>
           <h2 className="text-center text-2xl">Sponsored By</h2>
-          <SponsorCarousel />
-          <div className="relative flex justify-center items-center">
-            <div className="relative">
+          <div className="flex justify-center items-center gap-4 my-4">
+            <img src="https://banner2.cleanpng.com/20240111/qtv/transparent-google-logo-colorful-google-logo-with-bold-green-1710929465092.webp" className="w-10 h-10 rounded-full" alt="" />
+            <img src="https://banner2.cleanpng.com/20240111/qtv/transparent-google-logo-colorful-google-logo-with-bold-green-1710929465092.webp" className="w-10 h-10 rounded-full" alt="" />
+            <img src="https://banner2.cleanpng.com/20240111/qtv/transparent-google-logo-colorful-google-logo-with-bold-green-1710929465092.webp" className="w-10 h-10 rounded-full" alt="" />
+            <img src="https://banner2.cleanpng.com/20240111/qtv/transparent-google-logo-colorful-google-logo-with-bold-green-1710929465092.webp" className="w-10 h-10 rounded-full" alt="" />
+            <img src="https://banner2.cleanpng.com/20240111/qtv/transparent-google-logo-colorful-google-logo-with-bold-green-1710929465092.webp" className="w-10 h-10 rounded-full" alt="" />
+          </div>
+          <div className="relative flex justify-center items-center mt-20">
+            <div className="flex-1 pl-10">
+              <LeftComponent />
+              {/* <CardForHomePage title="Most Expensive Player" player={{ 'name': "MS Dhoni", 'final_price': "777crore", 'to_team': "RCB", 'url': 'https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/public/players/dhoni.png' }} />
+              <CardForHomePage title="Last Player Sold" player={{ 'name': "Virat Kohli", 'final_price': "15crore", 'to_team': "CSK", 'url': "https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/public/players/kohli.png" }} /> */}
+            </div>
+            <div className="relative flex-1">
               <PlayerCard
                 key={currentIndex}
                 player={players[currentIndex]}
                 onSold={setIsPlayerSold}
                 showHammer={showHammer}
               />
+            </div>
+            <div className="flex-1">
+              <TeamTable />
             </div>
           </div>
         </div>
@@ -183,7 +200,7 @@ const CenterComponent = () => {
               onClick={nextPlayer}
               className="bg-blue-500 m-2 text-white px-4 py-2 rounded hover:bg-blue-600"
             >
-              Next Player
+              Bid
             </button>
             <button
               
@@ -192,18 +209,33 @@ const CenterComponent = () => {
               Break
             </button>
           </div>
-        </div>
-      ):
-        <div>
-          <Overview teams={teams}/>
-        </div>
+        )
       }
-      
-      <div className="flex items-start gap-[120px]">
-          <LeftComponent/>
-      </div>
-           
-    </div>
+
+      {
+        showPlayerCard && (
+          <div className="flex flex-col items-center">
+            {isPlayerSold && (
+              <Confetti width={window.innerWidth} height={window.innerHeight} />
+            )}
+            <h1 className="text-4xl py-8">🎉 Player Sold 🎉</h1>
+            <PlayerCard
+              key={currentIndex}
+              player={players[currentIndex]}
+              onSold={setIsPlayerSold}
+            />
+            <div className="text-center mt-4">
+              <button
+                onClick={nextPlayer}
+                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              >
+                Next Player
+              </button>
+            </div>
+          </div>
+        )
+      }
+    </div >
   );
 };
 
