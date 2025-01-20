@@ -1,5 +1,4 @@
 import React from 'react';
-import viratKohliImage from './viratKohli.jpeg';
 
 const LeftComponent = () => {
   // Example data
@@ -7,7 +6,7 @@ const LeftComponent = () => {
     name: 'Virat Kohli',
     team: 'Royal Challengers Bangalore',
     price: '$2.4 Million',
-    imageUrl: viratKohliImage, // Replace with actual image URL
+    imageUrl: 'https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcTC6vBReh7p0IdW5F5rAwRBTmJNcDeJzUR21ZaKE1_1h1memFkYk6o2qG7lGHJArg5GUb0lK63F_opIZiY', // Replace with actual image URL
     teamColor: '#F05A28', // Royal Challengers Bangalore color
   };
 
@@ -15,7 +14,7 @@ const LeftComponent = () => {
     name: 'MS Dhoni',
     team: 'Chennai Super Kings',
     price: '$1.8 Million',
-    imageUrl: 'https://wallpapercave.com/wp/wp1859094.jpg', // Replace with actual image URL
+    imageUrl: 'https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcTC6vBReh7p0IdW5F5rAwRBTmJNcDeJzUR21ZaKE1_1h1memFkYk6o2qG7lGHJArg5GUb0lK63F_opIZiY', // Replace with actual image URL
     teamColor: '#F7A900', // Chennai Super Kings color
   };
 
