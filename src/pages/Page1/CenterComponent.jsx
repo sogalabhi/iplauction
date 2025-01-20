@@ -90,7 +90,7 @@ const CenterComponent = () => {
   };
 
   return (
-    <div className={`min-h-screen bg-black text-white`}>
+    <div className={`min-h-screen bg-gradient-to-r from-indigo-500 to-purple-600 text-white`}>
       {!isPlayerSold && !showPlayerCard && (
         <div className="py-1">
           <h1 className="text-center text-4xl py-7">E-CELL NITK IPL AUCTION</h1>
@@ -98,7 +98,7 @@ const CenterComponent = () => {
           <SponsorCarousel />
           <div className="relative flex justify-center items-center">
             <div className="flex-1 pl-10">
-              {/* <LeftComponent /> */}
+              <LeftComponent />
               <CardForHomePage title="Most Expensive Player" player={{ 'name': "MS Dhoni", 'final_price': "777crore", 'to_team': "RCB", 'url': 'https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/public/players/dhoni.png' }} />
               <CardForHomePage title="Last Player Sold" player={{ 'name': "Virat Kohli", 'final_price': "15crore", 'to_team': "CSK", 'url': "https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/public/players/kohli.png" }} />
             </div>

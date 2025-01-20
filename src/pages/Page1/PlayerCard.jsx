@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Confetti from "react-confetti";
 import Ha from "./Ha";
+import StatsForHomePage from "../../components/StatsForHomePage";
 
 const PlayerCard = ({ player, showHammer }) => {
   const [isSold, setIsSold] = useState(false);
@@ -11,9 +12,8 @@ const PlayerCard = ({ player, showHammer }) => {
 
   return (
     <div
-      className={`flex flex-col items-center justify-center ${
-        isSold ? "fixed inset-0 z-50 bg-black" : ""
-      } transition-all duration-500 py-3`}
+      className={`flex flex-col items-center justify-center ${isSold ? "fixed inset-0 z-50 bg-black" : ""
+        } transition-all duration-500 py-3`}
     >
       {/* Confetti */}
       {isSold && (
@@ -38,46 +38,23 @@ const PlayerCard = ({ player, showHammer }) => {
         </div>
       </div>
 
-      <h2 className="text-xl font-bold text-sky-400 mt-4">{player.name}</h2>
+      <h2 className="text-xl font-bold  mt-4">{player.name}</h2>
 
       <div className="flex gap-4 mt-2 py-5 justify-center items-center">
-        <div className="border border-slate-500 transform skew-x-12 px-4 py-2">
-          <span className="inline-block transform -skew-x-12 text-sky-400">
+        <div className="border border-slate-200 transform skew-x-12 px-4 py-2">
+          <span className="inline-block transform -skew-x-12 ">
             Base Price: ₹{player.basePrice.toLocaleString()}
           </span>
         </div>
 
-        <div className="border border-slate-500 transform -skew-x-12 px-4 py-2">
-          <span className="inline-block transform skew-x-12 text-sky-400">
+        <div className="border border-slate-200 transform -skew-x-12 px-4 py-2">
+          <span className="inline-block transform skew-x-12 ">
             Current Bid: ₹{player.currentBid.toLocaleString()}
           </span>
         </div>
       </div>
 
-      <div className="bg-gray-800 p-2 rounded-lg text-white w-112 h-16 m-4">
-        <div className="flex flex-row gap-7 items-center justify-center">
-          <div className="flex flex-col">
-            <span className="text-xs font-semibold">Matches:</span>
-            <span>{player.matches}</span>
-          </div>
-          <div className="flex flex-col">
-            <span className="text-xs font-semibold">Wickets:</span>
-            <span>{player.wickets}</span>
-          </div>
-          <div className="flex flex-col">
-            <span className="text-xs font-semibold">Economy:</span>
-            <span>{player.economy}</span>
-          </div>
-          <div className="flex flex-col">
-            <span className="text-xs font-semibold">Strike Rate:</span>
-            <span>{player.strikeRate}</span>
-          </div>
-          <div className="flex flex-col">
-            <span className="text-xs font-semibold">Runs:</span>
-            <span>{player.runs}</span>
-          </div>
-        </div>
-      </div>
+      <StatsForHomePage stats={player} />
 
       {isSold && (
         <div className="absolute text-3xl font-bold text-green-600 top-10">
