@@ -23,7 +23,7 @@ const Carousel = () => {
 
   return (
     <div
-      className="relative mx-auto py-10"
+      className="relative mx-auto py-2"
       style={{
         width: "50%",
       }}
@@ -36,7 +36,7 @@ const Carousel = () => {
               key={index}
               className="text-center px-2 fade-sponsor"
             >
-              <div className="w-20 h-20 mx-auto mb-4">
+              <div className="w-10 h-10 mb-4">
                 <img
                   src={person.image}
                   alt={person.name}

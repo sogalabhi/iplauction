@@ -5,7 +5,6 @@ import CenterComponent from './Page1/CenterComponent'
 export default function HomePage() {
     return (
         <div className='h-screen w-screen flex justify-center items-center'>
-            {/* <LeftComponent /> */}
             <CenterComponent />
         </div>
     )
