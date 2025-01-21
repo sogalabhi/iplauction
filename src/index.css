@@ -15,3 +15,13 @@
   }
   
   
+
+@font-face {
+    font-family: "Alinea Incise W01 Regular";
+    src: url("https://db.onlinewebfonts.com/t/dacf293f8c5019e3f9c8191c483ac33d.eot");
+    src: url("https://db.onlinewebfonts.com/t/dacf293f8c5019e3f9c8191c483ac33d.eot?#iefix")format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/dacf293f8c5019e3f9c8191c483ac33d.woff2")format("woff2"),
+    url("https://db.onlinewebfonts.com/t/dacf293f8c5019e3f9c8191c483ac33d.woff")format("woff"),
+    url("https://db.onlinewebfonts.com/t/dacf293f8c5019e3f9c8191c483ac33d.ttf")format("truetype"),
+    url("https://db.onlinewebfonts.com/t/dacf293f8c5019e3f9c8191c483ac33d.svg#Alinea Incise W01 Regular")format("svg");
+}

@@ -1,105 +1,63 @@
-"use client";
-import React, { useEffect } from "react";
-import Timer from "./components/Timer";
-import { InfiniteMovingCardsDemo } from "./components/InfiniteMovingCardsDemo";
-import { Header } from "./components/Header";
+import { useEffect, useState } from 'react'
+import './App.css'
+import CenterComponent from './pages/Page1/CenterComponent'
+import { fetchSupabaseData } from './utils/getFromRemote'
+import { fetchExpensivePlayer } from './utils/expensivePlayer';
+import { fetchPrevPlayer } from './utils/previousPlayer';
+import { fetchTeamsWithSquads } from './utils/teamswithplayers';
+import TeamsWithCompactDesign from './pages/FinalSquad';
+import { Route, Router, Routes } from 'react-router-dom';
+import { getTeamFromTeamID } from './utils/getTeamfromTeamId';
 
-const App = () => {
+function App() {
+  const [players, setPlayers] = useState([]);
+  const [teams, setTeams] = useState([]);
+  const [prevPlayer, setPrevPlayer] = useState([]);
+  const [expPlayer, setExpPlayer] = useState([]);
+  const [teamswithsquad, setTeamsWithSquad] = useState([]);
+
+  const fetchAllPlayers = async () => {
+    var res = await fetchSupabaseData('CricketPlayers');
+    setPlayers(res);
+    var res2 = await getTeamFromTeamID(0);
+  }
+  const fetchAllTeams = async () => {
+    var res = await fetchSupabaseData('Teams');
+    setTeams(res);
+  }
+  const getExpensivePlayer = async () => {
+    var res = await fetchExpensivePlayer();
+    console.log(res);
+    setExpPlayer(res);
+  }
+  const getPrevPlayer = async () => {
+    var res = await fetchPrevPlayer();
+    setPrevPlayer(res);
+  }
+  const getAllTeamswithplayers = async () => {
+    // Usage example
+    fetchTeamsWithSquads().then((teams) => {
+      setTeamsWithSquad(teams);
+    });
+  }
+
   useEffect(() => {
-    // Enable autoplay after user interaction
-    const audio = document.getElementById("background-audio");
-    if (audio) {
-      audio.play();
-    }
-  }, []);
+    fetchAllPlayers();
+    fetchAllTeams();
+    getExpensivePlayer();
+    getPrevPlayer();
+    getAllTeamswithplayers();
+  }, [])
 
   return (
-    <div className="relative h-screen flex flex-col items-center justify-center text-white overflow-hidden">
-      {/* Background Music */}
-      <audio id="background-audio" loop>
-        <source
-          src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-          type="audio/mp3"
-        />
-        Your browser does not support the audio element.
-      </audio>
+    <>
+      <Routes>
+        <Route path="/" element={<CenterComponent teamlist={teamswithsquad}/>} />
+        <Route path="/teamswithsquad" element={<TeamsWithCompactDesign teamlist={teamswithsquad} />} />
+      </Routes>
 
-      {/* Background Animation */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-300 via-orange-500 to-blue-600 animate-gradient">
-        <div className="absolute inset-0 bg-[radial-gradient(circle,_rgba(255,255,255,0.1)_1px,_transparent_1px)] bg-[size:30px_30px] opacity-40 animate-cross"></div>
-      </div>
+    </>
+  )
+}
 
-      {/* Main Content */}
-      <div className="relative z-10 w-full h-full max-w-5xl backdrop-blur-lg bg-white/10 p-6 rounded-lg border border-gray-700 shadow-lg flex flex-col justify-between">
-        {/* Header */}
-        <div className="flex-grow">
-          <Header />
-        </div>
-
-        {/* Timer Section */}
-        <div className="flex-grow mt-8 p-6 rounded-lg border border-gray-700 shadow-lg backdrop-blur-lg bg-white/10">
-          <Timer auctionEndTime="2025-02-20T18:30:00" />
-        </div>
-
-        {/* Infinite Moving Cards Section */}
-        <div className="flex-grow mt-8 bg-gray-800 p-6 rounded-lg border border-gray-700 shadow-lg">
-          <InfiniteMovingCardsDemo />
-        </div>
-      </div>
-
-      {/* Add keyframes using Tailwind's @layer */}
-      <style>
-        {
-          `
-          @tailwind base;
-          @tailwind components;
-          @tailwind utilities;
-
-          @layer utilities {
-            @keyframes gradient {
-              0% {
-                background-position: 0% 50%;
-              }
-              50% {
-                background-position: 100% 50%;
-              }
-              100% {
-                background-position: 0% 50%;
-              }
-            }
-            @keyframes cross {
-              0% {
-                transform: translate(0, 0);
-              }
-              50% {
-                transform: translate(-20%, -20%);
-              }
-              100% {
-                transform: translate(0, 0);
-              }
-            }
-
-            .animate-gradient {
-              animation: gradient 10s ease infinite;
-              background-size: 400% 400%;
-            }
-
-            .animate-cross {
-              animation: cross 20s linear infinite;
-            }
-          }
-          `
-        }
-      </style>
-    </div>
-  );
-};
-
-export default App;
-
-
-
-
-
-
-
+export default App

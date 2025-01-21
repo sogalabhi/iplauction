@@ -3,7 +3,7 @@ import React from "react";
 const IPLAuction = () => {
   // Hardcoded sample data
   const mostExpensivePlayer = {
-    name: "Virat Kohli",
+    name: "VK",
     team: "Royal Challengers Bangalore",
     price: 170000000, // ₹17 crore
   };
@@ -59,7 +59,7 @@ const IPLAuction = () => {
       {/* Top Section */}
       <div className="grid grid-cols-3 gap-6">
         {/* Most Expensive Player */}
-        <div className="bg-gray-800 p-4 rounded-lg shadow-md">
+        <div className=" p-4 rounded-lg shadow-md">
           <h2 className="text-xl font-bold mb-4">Most Expensive Player</h2>
           <p>Name: {mostExpensivePlayer.name}</p>
           <p>Team: {mostExpensivePlayer.team}</p>
@@ -67,7 +67,7 @@ const IPLAuction = () => {
         </div>
 
         {/* Current Player Info */}
-        <div className="bg-gray-800 p-6 rounded-lg shadow-md">
+        <div className=" p-6 rounded-lg shadow-md">
           <h2 className="text-xl font-bold mb-4">Current Player</h2>
           <p>Name: {currentPlayer.name}</p>
           <p>Base Price: ₹{currentPlayer.basePrice.toLocaleString()}</p>
@@ -75,7 +75,7 @@ const IPLAuction = () => {
         </div>
 
         {/* Last Sold Player */}
-        <div className="bg-gray-800 p-4 rounded-lg shadow-md">
+        <div className="p-4 rounded-lg shadow-md">
           <h2 className="text-xl font-bold mb-4">Last Sold Player</h2>
           <p>Name: {lastSoldPlayer.name}</p>
           <p>Team: {lastSoldPlayer.team}</p>
