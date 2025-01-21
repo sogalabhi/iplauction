@@ -1,4 +1,8 @@
 import React from 'react';
+import { useEffect, useState } from 'react';
+import viratKohliImage from './viratKohli.jpeg';
+import {fetchExpensivePlayer} from '../../utils/expensivePlayer.js';
+import {fetchPrevPlayer} from '../../utils/previousPlayer.js';
 
 const LeftComponent = () => {
   // Example data
@@ -17,6 +21,30 @@ const LeftComponent = () => {
     imageUrl: 'https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/public/players/dhoni.png', // Replace with actual image URL
     teamColor: '#F7A900', // Chennai Super Kings color
   };
+  
+  const [mostExpensivePlayer1, setPlayerData] = useState([]);
+  const [lastSoldPlayer1, setLastSoldPlayer] = useState(null);
+
+    useEffect(() => {
+        const getPlayerData = async () => {
+            const data = await fetchExpensivePlayer(); // Call the function
+            setPlayerData(data); // Save the response array to state
+        };
+
+        // Fetch last sold player
+        const getLastSoldPlayer = async () => {
+          const data = await fetchPrevPlayer();
+          setLastSoldPlayer(data);
+        };
+
+        getPlayerData(); // Fetch data on component mount
+        getLastSoldPlayer();
+    }, []);
+  console.log(fetchExpensivePlayer());
+  /*const mostExpensivePlayer1 = fetchExpensivePlayer();*/
+  console.log(mostExpensivePlayer1);
+  console.log(lastSoldPlayer1);
+  /*const lastSoldPlayer1 = fetchPrevPlayer();*/
 
   return (
     <div className="p-8 font-sans space-y-6">
@@ -35,20 +63,26 @@ const LeftComponent = () => {
           {/* Player Info */}
           <div className="flex items-center">
             {/* Player Image */}
-            <div className="flex-shrink-0 p-4">
-              <img
-                src={mostExpensivePlayer.imageUrl}
-                alt={mostExpensivePlayer.name}
-                className="w-[100px] h-[100px] rounded-full border-2 border-white object-cover"
-              />
-            </div>
-            
-            {/* Player Details */}
-            <div className="flex-grow p-4">
-              <h2 className="text-[20px] font-bold">{mostExpensivePlayer.name}</h2>
-              <p className="text-[18px]">{mostExpensivePlayer.team}</p>
-              <p className="text-[18px]">{mostExpensivePlayer.price}</p>
-            </div>
+            {mostExpensivePlayer1.length > 0 ? (
+              <>
+              <div className="flex-shrink-0 p-4">
+                <img
+                  src={mostExpensivePlayer1[0].player_image}
+                  alt={mostExpensivePlayer1[0].player_name}
+                  className="w-[100px] h-[100px] rounded-full border-2 border-white object-cover"
+                />
+              </div>
+              
+              {/* Player Details */}
+              <div className="flex-grow p-4">
+                <h2 className="text-[20px] font-bold">{mostExpensivePlayer1[0].player_name}</h2>
+                <p className="text-[18px]">{mostExpensivePlayer.team}</p>
+                <p className="text-[18px]">{mostExpensivePlayer1[0].final_price}</p>
+              </div>
+              </>
+            ):(
+              <p className="p-4 text-gray-400">Loading...</p>
+            )}
           </div>
         </div>
       </div>
@@ -67,20 +101,26 @@ const LeftComponent = () => {
           {/* Player Info */}
           <div className="flex items-center">
             {/* Player Image */}
+            {lastSoldPlayer1 ? (
+              <>
             <div className="flex-shrink-0 p-4">
               <img
-                src={lastSoldPlayer.imageUrl}
-                alt={lastSoldPlayer.name}
+                src={lastSoldPlayer1[0].player_image}
+                alt={lastSoldPlayer1[0].player_name}
                 className="w-[100px] h-[100px] rounded-full border-2 border-white object-cover"
               />
             </div>
             
             {/* Player Details */}
             <div className="flex-grow p-4">
-              <h2 className="text-[20px] font-bold">{lastSoldPlayer.name}</h2>
+              <h2 className="text-[20px] font-bold">{lastSoldPlayer1[0].player_name}</h2>
               <p className="text-[18px]">{lastSoldPlayer.team}</p>
-              <p className="text-[18px]">{lastSoldPlayer.price}</p>
+              <p className="text-[18px]">{lastSoldPlayer1[0].final_price}</p>
             </div>
+            </>
+          ):(
+            <p className="p-4 text-gray-400">Loading...</p>
+          )}
           </div>
         </div>
       </div>
