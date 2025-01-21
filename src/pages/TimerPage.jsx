@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import Timer from "../components/Timer";
 import { InfiniteMovingCardsDemo } from "../components/InfiniteMovingCardsDemo";
 import { Header } from "../components/Header";
+import { useNavigate } from 'react-router-dom';
 
 const TimerPage = () => {
   useEffect(() => {
@@ -12,7 +13,7 @@ const TimerPage = () => {
       audio.play();
     }
   }, []);
-
+  const navigate = useNavigate();
   return (
     <div className="relative w-screen h-screen flex flex-col items-center justify-evenly text-white overflow-hidden">
       {/* Background Music */}
@@ -36,7 +37,7 @@ const TimerPage = () => {
 
       {/* Timer Section */}
       <div className="relative z-10 w p-4">
-        <div className="p-3 rounded-lg border border-gray-700 shadow-lg backdrop-blur-m bg-white/10" >
+        <div className="p-3 rounded-lg border border-gray-700 shadow-lg backdrop-blur-m bg-white/10">
           <Timer auctionEndTime="2025-02-20T18:30:00" />
         </div>
       </div>
@@ -45,6 +46,31 @@ const TimerPage = () => {
       <div className="relative z-10 w-full max-w-4xl p-4">
         <InfiniteMovingCardsDemo />
       </div>
+
+      <button
+        onClick={() => navigate('/')} 
+        className="absolute bottom-8 right-8 z-20 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full shadow-lg flex items-center justify-center"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-12 w-12"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"
+          />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M9 22V12h6v10"
+          />
+        </svg>
+      </button>
 
       {/* Custom Styles */}
       <style>
@@ -93,3 +119,4 @@ const TimerPage = () => {
 };
 
 export default TimerPage;
+

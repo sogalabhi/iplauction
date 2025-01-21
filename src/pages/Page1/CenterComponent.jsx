@@ -5,6 +5,7 @@ import Overview from "./Overview";
 
 import { Link } from 'react-router-dom';
 import ReactConfetti from "react-confetti";
+import { useNavigate } from 'react-router-dom';
 
 const CenterComponent = ({ teamlist }) => {
   const [isPlayerSold, setIsPlayerSold] = useState(false);
@@ -21,7 +22,7 @@ const CenterComponent = ({ teamlist }) => {
     }, 2000);
   };
 
-
+  const navigate = useNavigate();
   const nextPlayer = () => {
     setShowPlayerCard(false);
     setIsPlayerSold(false);
@@ -147,6 +148,9 @@ const CenterComponent = ({ teamlist }) => {
             >
               Bid
             </button>
+            <button onClick={() => navigate('/timer')}
+                    className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+              >Break !</button>
           </div>
         )
       }
@@ -170,6 +174,9 @@ const CenterComponent = ({ teamlist }) => {
               >
                 Next Player
               </button>
+              <button onClick={() => navigate('/timer')}
+                    className="bg-green-500 text-white px-4 py-2 rounded hover:bg-blue-600 m-10"
+              >Break !</button>
             </div>
           </div>
         )
