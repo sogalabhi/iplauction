@@ -1,6 +1,5 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import viratKohliImage from './viratKohli.jpeg';
 import {fetchExpensivePlayer} from '../../utils/expensivePlayer.js';
 import {fetchPrevPlayer} from '../../utils/previousPlayer.js';
 
@@ -40,12 +39,6 @@ const LeftComponent = () => {
         getPlayerData(); // Fetch data on component mount
         getLastSoldPlayer();
     }, []);
-  console.log(fetchExpensivePlayer());
-  /*const mostExpensivePlayer1 = fetchExpensivePlayer();*/
-  console.log(mostExpensivePlayer1);
-  console.log(lastSoldPlayer1);
-  /*const lastSoldPlayer1 = fetchPrevPlayer();*/
-
   return (
     <div className="p-8 font-sans space-y-6">
       {/* Most Expensive Player */}
