@@ -1,8 +1,9 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import PlayerCard from "./PlayerCard";
 import LeftComponent from "./LeftComponent";
 import Overview from "./Overview";
-import BottomButtons from "../../components/BottomButtons";
+
+import { Link } from 'react-router-dom';
 
 const CenterComponent = ({ teamlist }) => {
   const [isPlayerSold, setIsPlayerSold] = useState(false);
@@ -10,6 +11,40 @@ const CenterComponent = ({ teamlist }) => {
   const [showPlayerCard, setShowPlayerCard] = useState(false);
   const [showHammer, setShowHammer] = useState(false);
 
+  const markAsSold = () => {
+    setShowHammer(true);
+    setTimeout(() => {
+      setShowHammer(false);
+      setShowPlayerCard(true);
+      setIsPlayerSold(true);
+    }, 2000);
+  };
+
+
+  const nextPlayer = () => {
+    setShowPlayerCard(false);
+    setIsPlayerSold(false);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % players.length);
+  };
+
+  const handleBid = () => {
+    setPlayers((prevPlayers) =>
+      prevPlayers.map((player, index) => {
+        if (index === currentIndex) {
+          let newBid = player.currentBid;
+          if (newBid < 10000000) {
+            newBid += 1000000;
+          } else if (newBid < 50000000) {
+            newBid += 2000000;
+          } else {
+            newBid += 5000000;
+          }
+          return { ...player, currentBid: newBid };
+        }
+        return player;
+      })
+    );
+  };
 
   const [players, setPlayers] = useState([
     {
@@ -55,7 +90,7 @@ const CenterComponent = ({ teamlist }) => {
     <div className={`min-h-screen bg-gradient-to-b from-[#361602] from-40% to-[#021e31] text-white`}>
       {!isPlayerSold && !showPlayerCard && (
         <div className="py-1">
-          <h1 className="text-center text-4xl py-3" style={{ 'font-family': "Alinea Incise W01 Regular" }}>E-CELL NITK IPL AUCTION</h1>
+          <h1 className="text-center text-4xl py-3" style={{ 'fontFamily': "Alinea Incise W01 Regular" }}>E-CELL NITK IPL AUCTION</h1>
           <h2 className="text-center text-2xl">Sponsored By</h2>
           <div className="flex justify-center items-center gap-4 my-4">
             <img src="https://banner2.cleanpng.com/20240111/qtv/transparent-google-logo-colorful-google-logo-with-bold-green-1710929465092.webp" className="w-10 h-10 rounded-full" alt="" />
@@ -80,7 +115,60 @@ const CenterComponent = ({ teamlist }) => {
               <Overview teams={teamlist} />
             </div>
           </div>
-          <BottomButtons isPlayerSold={isPlayerSold} setIsPlayerSold={setIsPlayerSold} currentIndex={currentIndex} showPlayerCard={showPlayerCard} players={players} setPlayers={setPlayers} setCurrentIndex={setCurrentIndex} setShowPlayerCard={setShowPlayerCard} />
+          {
+            !isPlayerSold && !showPlayerCard && (
+              <div className="text-center flex gap-4 justify-center py-2">
+                <button
+                  onClick={markAsSold}
+                  className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                >
+                  Mark as Sold
+                </button>
+                <Link
+                  to={"/teamswithsquad"}
+                  className="flexw-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                >
+                  Team Squad
+                </Link>
+                <button
+                  onClick={nextPlayer}
+                  className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                >
+                  Mark as Unsold
+                </button>
+                <button
+                  onClick={handleBid}
+                  className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                >
+                  Bid
+                </button>
+              </div>
+            )
+          }
+
+          {
+            showPlayerCard && (
+              <div className="flex flex-col items-center">
+                {isPlayerSold && (
+                  <Confett width={window.innerWidth} height={window.innerHeight} />
+                )}
+                <h1 className="text-4xl py-8">🎉 Player Sold 🎉</h1>
+                <PlayerCard
+                  key={currentIndex}
+                  player={players[currentIndex]}
+                  onSold={setIsPlayerSold}
+                />
+                <div className="text-center mt-4">
+                  <button
+                    onClick={nextPlayer}
+                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                  >
+                    Next Player
+                  </button>
+                </div>
+              </div>
+            )
+          }
         </div>
       )
       }
