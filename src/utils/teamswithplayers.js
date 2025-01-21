@@ -1,3 +1,5 @@
+import { color } from "framer-motion";
+
 const SUPABASE_URL = "https://ykpijunxogyxoiveffdq.supabase.co/rest/v1/";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlrcGlqdW54b2d5eG9pdmVmZmRxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY4NzM0MTcsImV4cCI6MjA1MjQ0OTQxN30.m1m6O47gtaZtc9IMhQ_y1eKrdd-_jROL2JuI7aTupL4";
 
@@ -13,7 +15,7 @@ export const fetchTeamsWithSquads = async () => {
             },
         });
         const teams = await teamsResponse.json();
-
+        console.log(teams);
         // Fetch players data
         const playersResponse = await fetch(`${SUPABASE_URL}CricketPlayers`, {
             method: "GET",
@@ -25,8 +27,13 @@ export const fetchTeamsWithSquads = async () => {
         const players = await playersResponse.json();
 
         // Map teams with their squads
+        console.log(teams[0].color1);
         const teamsWithSquads = teams.map((team) => ({
             name: team.team_name,
+            playerCount: players.filter((player) => player.sold_to_team_id === team.id).length,
+            purse: team.purse,
+            teamLogo: team.team_logo,
+            textColor: team.text_color,
             squad: players
                 .filter((player) => player.sold_to_team_id === team.id)
                 .map((player) => ({
@@ -34,6 +41,8 @@ export const fetchTeamsWithSquads = async () => {
                     role: player.category,
                     isOverseas: player.is_overseas,
                 })),
+            color1: team.color1,
+            color2: team.color2,
         }));
 
         return teamsWithSquads;
@@ -42,4 +51,3 @@ export const fetchTeamsWithSquads = async () => {
         return [];
     }
 };
-
