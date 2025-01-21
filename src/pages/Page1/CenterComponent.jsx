@@ -4,6 +4,7 @@ import LeftComponent from "./LeftComponent";
 import Overview from "./Overview";
 
 import { Link } from 'react-router-dom';
+import ReactConfetti from "react-confetti";
 
 const CenterComponent = ({ teamlist }) => {
   const [isPlayerSold, setIsPlayerSold] = useState(false);
@@ -115,64 +116,64 @@ const CenterComponent = ({ teamlist }) => {
               <Overview teams={teamlist} />
             </div>
           </div>
-          {
-            !isPlayerSold && !showPlayerCard && (
-              <div className="text-center flex gap-4 justify-center py-2">
-                <button
-                  onClick={markAsSold}
-                  className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-                >
-                  Mark as Sold
-                </button>
-                <Link
-                  to={"/teamswithsquad"}
-                  className="flexw-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-                >
-                  Team Squad
-                </Link>
-                <button
-                  onClick={nextPlayer}
-                  className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-                >
-                  Mark as Unsold
-                </button>
-                <button
-                  onClick={handleBid}
-                  className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-                >
-                  Bid
-                </button>
-              </div>
-            )
-          }
 
-          {
-            showPlayerCard && (
-              <div className="flex flex-col items-center">
-                {isPlayerSold && (
-                  <Confett width={window.innerWidth} height={window.innerHeight} />
-                )}
-                <h1 className="text-4xl py-8">🎉 Player Sold 🎉</h1>
-                <PlayerCard
-                  key={currentIndex}
-                  player={players[currentIndex]}
-                  onSold={setIsPlayerSold}
-                />
-                <div className="text-center mt-4">
-                  <button
-                    onClick={nextPlayer}
-                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                  >
-                    Next Player
-                  </button>
-                </div>
-              </div>
-            )
-          }
         </div>
       )
       }
+      {
+        !isPlayerSold && !showPlayerCard && (
+          <div className="text-center flex gap-4 justify-center py-2">
+            <button
+              onClick={markAsSold}
+              className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+            >
+              Mark as Sold
+            </button>
+            <Link
+              to={"/teamswithsquad"}
+              className="flexw-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+            >
+              Team Squad
+            </Link>
+            <button
+              onClick={nextPlayer}
+              className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+            >
+              Mark as Unsold
+            </button>
+            <button
+              onClick={handleBid}
+              className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+            >
+              Bid
+            </button>
+          </div>
+        )
+      }
 
+      {
+        showPlayerCard && (
+          <div className="flex flex-col items-center">
+            {isPlayerSold && (
+              <ReactConfetti width={window.innerWidth} height={window.innerHeight} />
+            )}
+            <h1 className="text-4xl py-8">🎉 Player Sold 🎉</h1>
+            <PlayerCard
+              key={currentIndex}
+              player={players[currentIndex]}
+              onSold={setIsPlayerSold}
+            />
+            <div className="text-center mt-4">
+              <button
+                onClick={nextPlayer}
+                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              >
+                Next Player
+              </button>
+            </div>
+          </div>
+        )
+      }
     </div >
   );
 };
