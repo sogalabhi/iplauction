@@ -19,8 +19,7 @@ function App() {
 
   const fetchAllPlayers = async () => {
     var res = await fetchSupabaseData('CricketPlayers');
-    setPlayers(res);
-    var res2 = await getTeamFromTeamID(0);
+    var res2 = await getTeamFromTeamID(1);
   }
   const fetchAllTeams = async () => {
     var res = await fetchSupabaseData('Teams');
@@ -28,7 +27,6 @@ function App() {
   }
   const getExpensivePlayer = async () => {
     var res = await fetchExpensivePlayer();
-    console.log(res);
     setExpPlayer(res);
   }
   const getPrevPlayer = async () => {
@@ -36,7 +34,6 @@ function App() {
     setPrevPlayer(res);
   }
   const getAllTeamswithplayers = async () => {
-    // Usage example
     fetchTeamsWithSquads().then((teams) => {
       setTeamsWithSquad(teams);
     });
@@ -50,10 +47,25 @@ function App() {
     getAllTeamswithplayers();
   }, [])
 
+  useEffect(() => {
+    console.log(teams)
+    const handleKeyPress = (event) => {
+      const key = event.key;
+      console.log(teamswithsquad);
+      if (key >= 1 && key <= teams.length) {
+        console.log(teams[key - 1]);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
+  }, []);
+
+
   return (
     <>
       <Routes>
-        <Route path="/" element={<CenterComponent teamlist={teamswithsquad}/>} />
+        <Route path="/" element={<CenterComponent teamlist={teamswithsquad} />} />
         <Route path="/teamswithsquad" element={<TeamsWithCompactDesign teamlist={teamswithsquad} />} />
         <Route path="/timer" element={<TimerPage />} />
       </Routes>

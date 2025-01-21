@@ -9,7 +9,6 @@ const roleIcons = {
 };
 
 const TeamsWithCompactDesign = ({ teamlist }) => {
-  console.log(teamlist[1].color1);
   return (
     <div className="p-4 bg-gradient-to-br from-[#361602] from-40% to-[#021e31] min-h-screen flex flex-col items-center justify-center">
       <h1 className="text-6xl font-extrabold text-center my-2 tracking-wide animate-pulse text-white">
@@ -29,26 +28,26 @@ const TeamsWithCompactDesign = ({ teamlist }) => {
           >
             {/* Team Header */}
             <div
-              className={`px-4 py-3 rounded-t-xl  flex flex-row justify-between items-center`}
+              className={`px-4 py-3 rounded-t-xl  flex flex-row justify-between items-center text-${team.textColor}`}
               style={{
                 background: `linear-gradient(to bottom right, #${team.color1}, #${team.color2})`,
               }}
             >
               <div>
                 <h2 className="text-lg font-extrabold">{team.name}</h2>
-                <p className="text-xs font-medium text-gray-700">
+                <p className="text-xs font-medium">
                   Purse Balance: {team.purse} Lakhs
                 </p>
               </div>
               <img
-                src={`src/assets/Images/${team.logo}`}
+                src={`${team.teamLogo}`}
                 alt={team.name}
                 className="h-14 w-14 rounded-full border-2 border-white"
               />
             </div>
 
             {/* Squad Section */}
-            <div className="px-4 pb-4">
+            <div className="p-4">
               <ul className="space-y-2">
                 {team.squad.map((player, idx) => (
                   <li

@@ -15,7 +15,6 @@ export const fetchTeamsWithSquads = async () => {
             },
         });
         const teams = await teamsResponse.json();
-        console.log(teams);
         // Fetch players data
         const playersResponse = await fetch(`${SUPABASE_URL}CricketPlayers`, {
             method: "GET",
@@ -27,11 +26,12 @@ export const fetchTeamsWithSquads = async () => {
         const players = await playersResponse.json();
 
         // Map teams with their squads
-        console.log(teams[0].color1);
         const teamsWithSquads = teams.map((team) => ({
             name: team.team_name,
             playerCount: players.filter((player) => player.sold_to_team_id === team.id).length,
             purse: team.purse,
+            teamLogo: team.team_logo,
+            textColor: team.text_color,
             squad: players
                 .filter((player) => player.sold_to_team_id === team.id)
                 .map((player) => ({
