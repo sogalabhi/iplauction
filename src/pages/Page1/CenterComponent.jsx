@@ -142,12 +142,7 @@ const CenterComponent = ({ teamlist }) => {
             >
               Mark as Unsold
             </button>
-            <button
-              onClick={handleBid}
-              className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-            >
-              Bid
-            </button>
+
             <button onClick={() => navigate('/timer')}
                     className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
               >Break !</button>
