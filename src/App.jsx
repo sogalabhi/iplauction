@@ -19,7 +19,8 @@ function App() {
   const fetchAllPlayers = async () => {
     var res = await fetchSupabaseData('CricketPlayers');
     setPlayers(res);
-    var res2 = await getTeamFromTeamID(0);
+    var res2 = await getTeamFromTeamID(1);
+    console.log(res2);
   }
   const fetchAllTeams = async () => {
     var res = await fetchSupabaseData('Teams');

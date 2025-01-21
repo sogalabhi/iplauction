@@ -3,7 +3,7 @@ const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 
 export const getTeamFromTeamID = async (teamid) => {
     try {
-        const response = await fetch(`${SUPABASE_URL}CricketPlayers?teamid=eq.${teamid}`, {
+        const response = await fetch(`${SUPABASE_URL}Teams?id=eq.${encodeURIComponent(teamid)}`, {
             method: "GET",
             headers: {
                 apiKey: SUPABASE_KEY,
