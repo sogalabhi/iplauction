@@ -32,6 +32,8 @@ export const fetchTeamsWithSquads = async () => {
             name: team.team_name,
             playerCount: players.filter((player) => player.sold_to_team_id === team.id).length,
             purse: team.purse,
+            teamLogo: team.team_logo,
+            textColor: team.text_color,
             squad: players
                 .filter((player) => player.sold_to_team_id === team.id)
                 .map((player) => ({

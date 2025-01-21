@@ -1,11 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import PlayerCard from "./PlayerCard";
 import LeftComponent from "./LeftComponent";
-import Confetti from "react-confetti";
-import Ha from "./Ha";
-import { Link } from "react-router-dom";
-import CardForHomePage from "../../components/CardForHomePage";
-import TeamTable from "../../components/TeamTable";
 import Overview from "./Overview";
 import BottomButtons from "../../components/BottomButtons";
 
