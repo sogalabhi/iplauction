@@ -3,7 +3,7 @@ import Confetti from "react-confetti";
 import Ha from "./Ha";
 import StatsForHomePage from "../../components/StatsForHomePage";
 
-const PlayerCard = ({ player, showHammer, currentBidder }) => {
+const PlayerCard = ({ player, showHammer, currentBidder, currentBid }) => {
   const [isSold, setIsSold] = useState(false);
 
   useEffect(() => {
@@ -60,12 +60,12 @@ const PlayerCard = ({ player, showHammer, currentBidder }) => {
 
         <div className="border border-slate-200 transform -skew-x-12 px-4 py-2">
           <span className="inline-block transform skew-x-12 ">
-            Current Bid: ₹{formatPriceInLakhs(player.currentBid)}
+            {showHammer ? 'Current Bid' : 'Final Price'}: ₹{formatPriceInLakhs(currentBid)}
           </span>
         </div>
       </div>
       {currentBidder != null &&
-        <h2 className="text-xl font-bold animate-pulse mt-4 text-red-500 ">Current Bidder: {currentBidder}</h2>
+        <h2 className="text-xl font-bold animate-pulse mt-4 text-red-500 "> {showHammer ? 'Current Bidder' : 'Bought By'}: {currentBidder}</h2>
       }
 
       <StatsForHomePage stats={player} />

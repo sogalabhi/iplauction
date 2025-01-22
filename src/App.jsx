@@ -23,7 +23,6 @@ function App() {
         res[i].currentBid = res[i].base_price;
       }
     }
-    console.log(res);
     setPlayers(res);
     var res2 = await getTeamFromTeamID(1);
   }
@@ -58,7 +57,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<CenterComponent teamlist={teamswithsquad} playersList={players} />} />
+        <Route path="/" element={<CenterComponent teamlist={teamswithsquad} initplayersList={players} />} />
         <Route path="/teamswithsquad" element={<TeamsWithCompactDesign teamlist={teamswithsquad} />} />
       </Routes>
 

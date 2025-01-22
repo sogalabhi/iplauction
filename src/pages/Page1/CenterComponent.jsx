@@ -5,17 +5,32 @@ import Overview from "./Overview";
 
 import { Link } from 'react-router-dom';
 import ReactConfetti from "react-confetti";
+import { markPlayerAsSold } from "../../utils/updatePlayer";
 
-const CenterComponent = ({ teamlist, playersList }) => {
-  console.log(playersList);
+const CenterComponent = ({ teamlist, initplayersList }) => {
   const [isPlayerSold, setIsPlayerSold] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showPlayerCard, setShowPlayerCard] = useState(false);
   const [showHammer, setShowHammer] = useState(false);
   const [currentBidder, setCurrentBidder] = useState(null);
   const [currentBidderId, setCurrentBidderId] = useState(0);
-  const markAsSold = () => {
+  const [currentBid, setCurrentBid] = useState(0);
+  const [playersList, setPlayersList] = useState(initplayersList);
+  useEffect(() => {
+    setPlayersList(initplayersList);
+  }, [initplayersList])
+
+  const markAsSold = async () => {
     setShowHammer(true);
+    var player = playersList[currentIndex];
+    const { id, final_price, sold_to_team_id } = player;
+    console.log(player)
+    try {
+      await markPlayerAsSold(id, final_price, sold_to_team_id);
+      console.log(`Player ${id} marked as sold successfully!`);
+    } catch (error) {
+      console.error("Error in marking as sold:", error.message);
+    }
     setTimeout(() => {
       setShowHammer(false);
       setShowPlayerCard(true);
@@ -27,36 +42,61 @@ const CenterComponent = ({ teamlist, playersList }) => {
   const nextPlayer = () => {
     setShowPlayerCard(false);
     setIsPlayerSold(false);
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % players.length);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % playersList.length);
   };
 
-  const handleBid = async () => {
-    setPlayers((prevPlayers) =>
-      prevPlayers.map((player, index) => {
-        if (index === currentIndex) {
-          let newBid = player.currentBid;
-          console.log('currentBid: ', currentBid);
-          if (newBid < 100) {
-            newBid += 10;
-          } else if (newBid < 500) {
-            newBid += 20;
-          } else {
-            newBid += 50;
-          }
-          return { ...player, currentBid: newBid };
-        }
-        return player;
-      })
+  function updatePlayerInList(finalPrice, soldToTeam) {
+    // Create a copy of the player
+    const updatedPlayer = {
+      ...playersList[playerIndex],
+      final_price: finalPrice,
+      sold_to_team_id: parseInt(soldToTeam),
+    };
+
+    // Update the player in the list
+    const updatedPlayersList = playersList.map((player, index) =>
+      index === playerIndex ? updatedPlayer : player
     );
+
+    return updatedPlayersList;
+  }
+
+  const handleBid = async (sold_to_team_id) => {
+    setCurrentBid((prevBid) => {
+      let final_bid;
+      if (prevBid === 0) {
+        final_bid = playersList[currentIndex].base_price;
+      } else if (prevBid < 100) {
+        final_bid = prevBid + 10;
+      } else if (prevBid < 500) {
+        final_bid = prevBid + 20;
+      } else {
+        final_bid = prevBid + 50;
+      }
+      try {
+        console.log(sold_to_team_id)
+        setPlayersList(prevList => {
+          const updatedList = [...prevList];
+          updatedList[currentIndex] = { ...updatedList[currentIndex], final_price: final_bid, sold_to_team_id: parseInt(sold_to_team_id) };
+          console.log('Player bid successfully!', updatedList[currentIndex]);
+          return updatedList;
+        });
+      } catch (error) {
+        console.error('Error during bidding:', error.message);
+      }
+      return final_bid;
+    });
   };
+
   const handleKeyPress = async (event) => {
-    const key = event.key;
-    if (key >= 1 && key <= teamlist.length) {
-      console.log(teamlist[key - 1].name);
+    var key = event.key;
+    if (key >= 0 && key <= teamlist.length) {
+      if (key == 0) {
+        key = 10;
+      }
       setCurrentBidder(teamlist[key - 1].name);
       setCurrentBidderId(key);
-      await handleBid();
-      console.log('teamlist: ', teamlist);
+      await handleBid(key, currentBid);
     }
   };
   useEffect(() => {
@@ -65,7 +105,6 @@ const CenterComponent = ({ teamlist, playersList }) => {
   }, [teamlist]);
 
 
-  const [players, setPlayers] = useState(playersList);
 
   return (
     // <div className={`min-h-screen bg-gradient-to-b from-indigo-500 to-purple-600 text-white`}>
@@ -92,6 +131,7 @@ const CenterComponent = ({ teamlist, playersList }) => {
                 onSold={setIsPlayerSold}
                 showHammer={showHammer}
                 currentBidder={currentBidder}
+                currentBid={currentBid}
               />}
             </div>
             <div className="flex-1">
@@ -105,12 +145,12 @@ const CenterComponent = ({ teamlist, playersList }) => {
       {
         !isPlayerSold && !showPlayerCard && (
           <div className="text-center flex gap-4 justify-center py-2">
-            <button
+            {currentBid > 0 && <button
               onClick={markAsSold}
               className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
             >
               Mark as Sold
-            </button>
+            </button>}
             <Link
               to={"/teamswithsquad"}
               className="flexw-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
@@ -138,6 +178,8 @@ const CenterComponent = ({ teamlist, playersList }) => {
               key={currentIndex}
               player={playersList[currentIndex]}
               onSold={setIsPlayerSold}
+              currentBidder={currentBidder}
+              currentBid={currentBid}
             />}
             <div className="text-center mt-4">
               <button
