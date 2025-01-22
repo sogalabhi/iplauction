@@ -52,12 +52,10 @@ function App() {
     getAllTeamswithplayers();
   }, [])
 
-
-
   return (
     <>
       <Routes>
-        <Route path="/" element={<CenterComponent teamlist={teamswithsquad} initplayersList={players} />} />
+        <Route path="/" element={<CenterComponent initteamlist={teamswithsquad} initplayersList={players} />} />
         <Route path="/teamswithsquad" element={<TeamsWithCompactDesign teamlist={teamswithsquad} />} />
       </Routes>
 

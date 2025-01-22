@@ -6,8 +6,9 @@ import Overview from "./Overview";
 import { Link } from 'react-router-dom';
 import ReactConfetti from "react-confetti";
 import { markPlayerAsSold } from "../../utils/updatePlayer";
+import { fetchTeamsWithSquads } from "../../utils/teamswithplayers";
 
-const CenterComponent = ({ teamlist, initplayersList }) => {
+const CenterComponent = ({ initteamlist, initplayersList }) => {
   const [isPlayerSold, setIsPlayerSold] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showPlayerCard, setShowPlayerCard] = useState(false);
@@ -16,18 +17,27 @@ const CenterComponent = ({ teamlist, initplayersList }) => {
   const [currentBidderId, setCurrentBidderId] = useState(0);
   const [currentBid, setCurrentBid] = useState(0);
   const [playersList, setPlayersList] = useState(initplayersList);
+  const [teamsList, setTeamsList] = useState(initteamlist);
   useEffect(() => {
     setPlayersList(initplayersList);
   }, [initplayersList])
+  useEffect(() => {
+    setTeamsList(initteamlist);
+  }, [initteamlist])
+
+  const getAllTeamswithplayers = async () => {
+    fetchTeamsWithSquads().then((teams) => {
+      setTeamsList(teams);
+      console.log('updated teamsWithSquads: ', teams) 
+    });
+  }
 
   const markAsSold = async () => {
     setShowHammer(true);
     var player = playersList[currentIndex];
     const { id, final_price, sold_to_team_id } = player;
-    console.log(player)
     try {
       await markPlayerAsSold(id, final_price, sold_to_team_id);
-      console.log(`Player ${id} marked as sold successfully!`);
     } catch (error) {
       console.error("Error in marking as sold:", error.message);
     }
@@ -36,6 +46,7 @@ const CenterComponent = ({ teamlist, initplayersList }) => {
       setShowPlayerCard(true);
       setIsPlayerSold(true);
     }, 2000);
+    getAllTeamswithplayers();
   };
 
 
@@ -43,23 +54,11 @@ const CenterComponent = ({ teamlist, initplayersList }) => {
     setShowPlayerCard(false);
     setIsPlayerSold(false);
     setCurrentIndex((prevIndex) => (prevIndex + 1) % playersList.length);
+
+    setCurrentBid(0);
+    setCurrentBidderId(0);
+    setCurrentBidder(null);
   };
-
-  function updatePlayerInList(finalPrice, soldToTeam) {
-    // Create a copy of the player
-    const updatedPlayer = {
-      ...playersList[playerIndex],
-      final_price: finalPrice,
-      sold_to_team_id: parseInt(soldToTeam),
-    };
-
-    // Update the player in the list
-    const updatedPlayersList = playersList.map((player, index) =>
-      index === playerIndex ? updatedPlayer : player
-    );
-
-    return updatedPlayersList;
-  }
 
   const handleBid = async (sold_to_team_id) => {
     setCurrentBid((prevBid) => {
@@ -90,11 +89,11 @@ const CenterComponent = ({ teamlist, initplayersList }) => {
 
   const handleKeyPress = async (event) => {
     var key = event.key;
-    if (key >= 0 && key <= teamlist.length) {
+    if (key >= 0 && key <= teamsList.length) {
       if (key == 0) {
         key = 10;
       }
-      setCurrentBidder(teamlist[key - 1].name);
+      setCurrentBidder(teamsList[key - 1].name);
       setCurrentBidderId(key);
       await handleBid(key, currentBid);
     }
@@ -102,7 +101,7 @@ const CenterComponent = ({ teamlist, initplayersList }) => {
   useEffect(() => {
     window.addEventListener("keydown", handleKeyPress);
     return () => window.removeEventListener("keydown", handleKeyPress);
-  }, [teamlist]);
+  }, [teamsList]);
 
 
 
@@ -135,7 +134,7 @@ const CenterComponent = ({ teamlist, initplayersList }) => {
               />}
             </div>
             <div className="flex-1">
-              <Overview teams={teamlist} />
+              <Overview teams={teamsList} />
             </div>
           </div>
 
