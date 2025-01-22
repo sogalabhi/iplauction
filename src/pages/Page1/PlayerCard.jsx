@@ -3,13 +3,24 @@ import Confetti from "react-confetti";
 import Ha from "./Ha";
 import StatsForHomePage from "../../components/StatsForHomePage";
 
-const PlayerCard = ({ player, showHammer }) => {
+const PlayerCard = ({ player, showHammer, currentBidder }) => {
   const [isSold, setIsSold] = useState(false);
 
   useEffect(() => {
     setIsSold(false);
   }, [player]);
+  function formatPriceInLakhs(price) {
 
+    if (price >= 100) {
+      // Convert to crore
+      const crore = (price / 100).toFixed(2); // 2 decimal places
+      return `${Number(crore).toLocaleString('en-IN')} Crore`;
+    } else {
+      // Keep it in lakh
+      return `${Number(price).toLocaleString('en-IN')} Lakh`;
+      // return price;
+    }
+  }
   return (
     <div
       className={`flex flex-col items-center justify-center ${isSold ? "fixed inset-0 z-50 bg-black" : ""
@@ -26,7 +37,7 @@ const PlayerCard = ({ player, showHammer }) => {
           className={`relative w-96 h-48 rounded-t-full overflow-visible shadow-xl`}
         >
           <img
-            src={player.image}
+            src={player.player_image}
             alt={player.name}
             className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-auto h-64"
           />
@@ -38,21 +49,24 @@ const PlayerCard = ({ player, showHammer }) => {
         </div>
       </div>
 
-      <h2 className="text-xl font-bold  mt-4">{player.name}</h2>
+      <h2 className="text-xl font-bold mt-4">{player.name}</h2>
 
       <div className="flex gap-4 mt-2 py-5 justify-center items-center">
-        <div className="border border-slate-200 transform skew-x-12 px-4 py-2">
+        <div className="border-slate-200 rounded-lg border-4 transform skew-x-12 px-4 py-2">
           <span className="inline-block transform -skew-x-12 ">
-            Base Price: ₹{player.basePrice.toLocaleString()}
+            Base Price: ₹{formatPriceInLakhs(player.base_price)}
           </span>
         </div>
 
         <div className="border border-slate-200 transform -skew-x-12 px-4 py-2">
           <span className="inline-block transform skew-x-12 ">
-            Current Bid: ₹{player.currentBid.toLocaleString()}
+            Current Bid: ₹{formatPriceInLakhs(player.currentBid)}
           </span>
         </div>
       </div>
+      {currentBidder != null &&
+        <h2 className="text-xl font-bold animate-pulse mt-4 text-red-500 ">Current Bidder: {currentBidder}</h2>
+      }
 
       <StatsForHomePage stats={player} />
 

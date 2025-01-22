@@ -18,6 +18,13 @@ function App() {
 
   const fetchAllPlayers = async () => {
     var res = await fetchSupabaseData('CricketPlayers');
+    for (let i = 0; i < res.length; i++) {
+      if (res[i].currentBid == null) {
+        res[i].currentBid = res[i].base_price;
+      }
+    }
+    console.log(res);
+    setPlayers(res);
     var res2 = await getTeamFromTeamID(1);
   }
   const fetchAllTeams = async () => {
@@ -46,25 +53,12 @@ function App() {
     getAllTeamswithplayers();
   }, [])
 
-  useEffect(() => {
-    console.log(teams)
-    const handleKeyPress = (event) => {
-      const key = event.key;
-      console.log(teamswithsquad);
-      if (key >= 1 && key <= teams.length) {
-        console.log(teams[key - 1]);
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyPress);
-    return () => window.removeEventListener("keydown", handleKeyPress);
-  }, []);
 
 
   return (
     <>
       <Routes>
-        <Route path="/" element={<CenterComponent teamlist={teamswithsquad} />} />
+        <Route path="/" element={<CenterComponent teamlist={teamswithsquad} playersList={players} />} />
         <Route path="/teamswithsquad" element={<TeamsWithCompactDesign teamlist={teamswithsquad} />} />
       </Routes>
 
