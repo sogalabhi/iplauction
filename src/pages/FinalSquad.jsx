@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { fetchTeamsWithSquads } from "../utils/teamswithplayers";
 
 const roleIcons = {
   "Batsmen": "🏏",
@@ -8,7 +9,19 @@ const roleIcons = {
   "WK": "🧤",
 };
 
-const TeamsWithCompactDesign = ({ teamlist }) => {
+const TeamsWithCompactDesign = () => {
+
+  const [teamswithsquad, setTeamsWithSquad] = useState([]);
+  const getAllTeamswithplayers = async () => {
+    fetchTeamsWithSquads().then((teams) => {
+      setTeamsWithSquad(teams);
+    });
+  }
+
+  useEffect(() => {
+    getAllTeamswithplayers();
+  }, [])
+
   return (
     <div className="p-4 bg-gradient-to-br from-[#361602] from-40% to-[#021e31] min-h-screen flex flex-col items-center justify-center">
       <h1 className="text-6xl font-extrabold text-center my-2 tracking-wide animate-pulse text-white">
@@ -21,7 +34,7 @@ const TeamsWithCompactDesign = ({ teamlist }) => {
         Home
       </Link>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-6">
-        {teamlist.map((team, index) => (
+        {teamswithsquad.map((team, index) => (
           <div
             key={index}
             className="border min-h-60 rounded-xl shadow-lg bg-gradient-to-tr from-gray-100 to-white transform hover:scale-105 hover:shadow-2xl transition duration-300 ease-in-out"

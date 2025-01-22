@@ -27,6 +27,7 @@ export const fetchTeamsWithSquads = async () => {
 
         // Map teams with their squads
         const teamsWithSquads = teams.map((team) => ({
+            team_id: team.id,
             name: team.team_name,
             playerCount: players.filter((player) => player.sold_to_team_id === team.id).length,
             purse: team.purse,
@@ -42,8 +43,9 @@ export const fetchTeamsWithSquads = async () => {
             color1: team.color1,
             color2: team.color2,
         }));
+        console.log('teamsWithSquads: ', teamsWithSquads)
 
-        return teamsWithSquads;
+        return teamsWithSquads.sort((a, b) => a.team_id - b.team_id);;
     } catch (error) {
         console.error("Error fetching data:", error);
         return [];

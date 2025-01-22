@@ -1,8 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { fetchTeamsWithSquads } from "../../utils/teamswithplayers";
 
-const Overview = ({ teams }) => {
+const Overview = () => {
 
+  const [teams, setTeams] = useState([]);
+  const getAllTeamswithplayers = async () => {
+    fetchTeamsWithSquads().then((teamslist) => {
+      setTeams(teamslist);
+    });
+  }
 
+  useEffect(() => {
+    getAllTeamswithplayers();
+  }, [])
   return (
     <div className="w-11/12 mx-5 max-w-4xl bg-white/10 backdrop-blur-md rounded-lg shadow-lg border border-white/20 p-6">
       <h2 className="text-2xl font-bold text-white text-center mb-6">Team Overview</h2>
