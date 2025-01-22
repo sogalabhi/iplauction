@@ -152,7 +152,7 @@ const CenterComponent = ({ teamlist }) => {
 
       {
         showPlayerCard && (
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center overflow-x-hidden">
             {isPlayerSold && (
               <ReactConfetti width={window.innerWidth} height={window.innerHeight} />
             )}

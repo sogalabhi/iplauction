@@ -3,7 +3,8 @@ import React, { useEffect } from "react";
 import Timer from "../components/Timer";
 import { InfiniteMovingCardsDemo } from "../components/InfiniteMovingCardsDemo";
 import { Header } from "../components/Header";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+
 
 const TimerPage = () => {
   useEffect(() => {
@@ -13,7 +14,10 @@ const TimerPage = () => {
       audio.play();
     }
   }, []);
+
   const navigate = useNavigate();
+
+
   return (
     <div className="relative w-screen h-screen flex flex-col items-center justify-evenly text-white overflow-hidden">
       {/* Background Music */}
@@ -35,9 +39,10 @@ const TimerPage = () => {
         <Header />
       </div>
 
-      {/* Timer Section */}
-      <div className="relative z-10 w p-4">
-        <div className="p-3 rounded-lg border border-gray-700 shadow-lg backdrop-blur-m bg-white/10">
+      {/* Main Content Section */}
+      <div className="relative z-10 flex flex-row w-full max-w-6xl p-4 items-center justify-center">
+        {/* Timer Section */}
+        <div className="p-3 rounded-lg border border-gray-700 shadow-lg backdrop-blur bg-white/10 w">
           <Timer auctionEndTime="2025-02-20T18:30:00" />
         </div>
       </div>
@@ -48,7 +53,7 @@ const TimerPage = () => {
       </div>
 
       <button
-        onClick={() => navigate('/')} 
+        onClick={() => navigate("/")} 
         className="absolute bottom-8 right-8 z-20 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full shadow-lg flex items-center justify-center"
       >
         <svg
