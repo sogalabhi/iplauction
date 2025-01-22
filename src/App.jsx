@@ -56,7 +56,7 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<CenterComponent initteamlist={teamswithsquad} initplayersList={players} />} />
-        <Route path="/teamswithsquad" element={<TeamsWithCompactDesign teamlist={teamswithsquad} />} />
+        <Route path="/teamswithsquad" element={<TeamsWithCompactDesign/>} />
       </Routes>
 
     </>

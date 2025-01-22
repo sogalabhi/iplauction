@@ -28,7 +28,7 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
   const getAllTeamswithplayers = async () => {
     fetchTeamsWithSquads().then((teams) => {
       setTeamsList(teams);
-      console.log('updated teamsWithSquads: ', teams) 
+      console.log('updated teamsWithSquads: ', teams)
     });
   }
 
@@ -53,7 +53,7 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
   const nextPlayer = () => {
     setShowPlayerCard(false);
     setIsPlayerSold(false);
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % playersList.length);
+    setCurrentIndex((prevIndex) => prevIndex + 1);
 
     setCurrentBid(0);
     setCurrentBidderId(0);
@@ -61,6 +61,8 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
   };
 
   const handleBid = async (sold_to_team_id) => {
+    console.log('current index:', currentIndex);
+    console.log('base:', playersList);
     setCurrentBid((prevBid) => {
       let final_bid;
       if (prevBid === 0) {
@@ -73,7 +75,6 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
         final_bid = prevBid + 50;
       }
       try {
-        console.log(sold_to_team_id)
         setPlayersList(prevList => {
           const updatedList = [...prevList];
           updatedList[currentIndex] = { ...updatedList[currentIndex], final_price: final_bid, sold_to_team_id: parseInt(sold_to_team_id) };
@@ -102,8 +103,6 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
     window.addEventListener("keydown", handleKeyPress);
     return () => window.removeEventListener("keydown", handleKeyPress);
   }, [teamsList]);
-
-
 
   return (
     // <div className={`min-h-screen bg-gradient-to-b from-indigo-500 to-purple-600 text-white`}>
@@ -134,7 +133,7 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
               />}
             </div>
             <div className="flex-1">
-              <Overview teams={teamsList} />
+              <Overview />
             </div>
           </div>
 
