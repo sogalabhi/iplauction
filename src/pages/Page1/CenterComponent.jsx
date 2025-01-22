@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PlayerCard from "./PlayerCard";
 import LeftComponent from "./LeftComponent";
 import Overview from "./Overview";
@@ -6,12 +6,14 @@ import Overview from "./Overview";
 import { Link } from 'react-router-dom';
 import ReactConfetti from "react-confetti";
 
-const CenterComponent = ({ teamlist }) => {
+const CenterComponent = ({ teamlist, playersList }) => {
+  console.log(playersList);
   const [isPlayerSold, setIsPlayerSold] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showPlayerCard, setShowPlayerCard] = useState(false);
   const [showHammer, setShowHammer] = useState(false);
-
+  const [currentBidder, setCurrentBidder] = useState(null);
+  const [currentBidderId, setCurrentBidderId] = useState(0);
   const markAsSold = () => {
     setShowHammer(true);
     setTimeout(() => {
@@ -28,17 +30,18 @@ const CenterComponent = ({ teamlist }) => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % players.length);
   };
 
-  const handleBid = () => {
+  const handleBid = async () => {
     setPlayers((prevPlayers) =>
       prevPlayers.map((player, index) => {
         if (index === currentIndex) {
           let newBid = player.currentBid;
-          if (newBid < 10000000) {
-            newBid += 1000000;
-          } else if (newBid < 50000000) {
-            newBid += 2000000;
+          console.log('currentBid: ', currentBid);
+          if (newBid < 100) {
+            newBid += 10;
+          } else if (newBid < 500) {
+            newBid += 20;
           } else {
-            newBid += 5000000;
+            newBid += 50;
           }
           return { ...player, currentBid: newBid };
         }
@@ -46,45 +49,23 @@ const CenterComponent = ({ teamlist }) => {
       })
     );
   };
+  const handleKeyPress = async (event) => {
+    const key = event.key;
+    if (key >= 1 && key <= teamlist.length) {
+      console.log(teamlist[key - 1].name);
+      setCurrentBidder(teamlist[key - 1].name);
+      setCurrentBidderId(key);
+      await handleBid();
+      console.log('teamlist: ', teamlist);
+    }
+  };
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
+  }, [teamlist]);
 
-  const [players, setPlayers] = useState([
-    {
-      id: 1,
-      name: "Virat Kohli",
-      image: "https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/public/players/kohli.png",
-      basePrice: 2000000,
-      currentBid: 5000000,
-      matches: 30,
-      wickets: 120,
-      economy: 4.5,
-      strikeRate: 130.2,
-      runs: 1500,
-    },
-    {
-      id: 2,
-      name: "Rohit Sharma",
-      image: "https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/public/players/rohit.png",
-      basePrice: 2500000,
-      currentBid: 5500000,
-      matches: 35,
-      wickets: 115,
-      economy: 4.3,
-      strikeRate: 135.5,
-      runs: 1600,
-    },
-    {
-      id: 3,
-      name: "MS Dhoni",
-      image: "https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/public/players/dhoni.png",
-      basePrice: 3000000,
-      currentBid: 6000000,
-      matches: 40,
-      wickets: 110,
-      economy: 4.2,
-      strikeRate: 140.3,
-      runs: 1800,
-    },
-  ]);
+
+  const [players, setPlayers] = useState(playersList);
 
   return (
     // <div className={`min-h-screen bg-gradient-to-b from-indigo-500 to-purple-600 text-white`}>
@@ -105,12 +86,13 @@ const CenterComponent = ({ teamlist }) => {
               <LeftComponent />
             </div>
             <div className="relative flex-1">
-              <PlayerCard
+              {playersList.length > 0 && <PlayerCard
                 key={currentIndex}
-                player={players[currentIndex]}
+                player={playersList[currentIndex]}
                 onSold={setIsPlayerSold}
                 showHammer={showHammer}
-              />
+                currentBidder={currentBidder}
+              />}
             </div>
             <div className="flex-1">
               <Overview teams={teamlist} />
@@ -141,12 +123,6 @@ const CenterComponent = ({ teamlist }) => {
             >
               Mark as Unsold
             </button>
-            <button
-              onClick={handleBid}
-              className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-            >
-              Bid
-            </button>
           </div>
         )
       }
@@ -158,11 +134,11 @@ const CenterComponent = ({ teamlist }) => {
               <ReactConfetti width={window.innerWidth} height={window.innerHeight} />
             )}
             <h1 className="text-4xl py-8">🎉 Player Sold 🎉</h1>
-            <PlayerCard
+            {playersList.length > 0 && <PlayerCard
               key={currentIndex}
-              player={players[currentIndex]}
+              player={playersList[currentIndex]}
               onSold={setIsPlayerSold}
-            />
+            />}
             <div className="text-center mt-4">
               <button
                 onClick={nextPlayer}
