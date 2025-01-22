@@ -8,6 +8,7 @@ import { fetchTeamsWithSquads } from './utils/teamswithplayers';
 import TeamsWithCompactDesign from './pages/FinalSquad';
 import { Route, Router, Routes } from 'react-router-dom';
 import { getTeamFromTeamID } from './utils/getTeamfromTeamId';
+import TimerPage from './pages/TimerPage';
 
 function App() {
   const [players, setPlayers] = useState([]);
@@ -57,7 +58,6 @@ function App() {
       <Routes>
         <Route path="/" element={<CenterComponent initteamlist={teamswithsquad} initplayersList={players} />} />
         <Route path="/teamswithsquad" element={<TeamsWithCompactDesign/>} />
-      </Routes>
 
     </>
   )
