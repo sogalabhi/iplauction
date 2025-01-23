@@ -8,6 +8,7 @@ import { fetchTeamsWithSquads } from './utils/teamswithplayers';
 import TeamsWithCompactDesign from './pages/FinalSquad';
 import { Route, Router, Routes } from 'react-router-dom';
 import { getTeamFromTeamID } from './utils/getTeamfromTeamId';
+import { fetchUnsoldPlayers } from './utils/getUnSoldPlayers';
 import TimerPage from './pages/TimerPage';
 
 function App() {
@@ -18,14 +19,8 @@ function App() {
   const [teamswithsquad, setTeamsWithSquad] = useState([]);
 
   const fetchAllPlayers = async () => {
-    var res = await fetchSupabaseData('CricketPlayers');
-    for (let i = 0; i < res.length; i++) {
-      if (res[i].currentBid == null) {
-        res[i].currentBid = res[i].base_price;
-      }
-    }
+    var res = await fetchUnsoldPlayers('CricketPlayers');
     setPlayers(res);
-    var res2 = await getTeamFromTeamID(1);
   }
   const fetchAllTeams = async () => {
     var res = await fetchSupabaseData('Teams');
@@ -57,7 +52,8 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<CenterComponent initteamlist={teamswithsquad} initplayersList={players} />} />
-        <Route path="/teamswithsquad" element={<TeamsWithCompactDesign/>} />
+        <Route path="/teamswithsquad" element={<TeamsWithCompactDesign />} />
+      </Routes>
 
     </>
   )

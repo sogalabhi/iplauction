@@ -5,6 +5,12 @@ import StatsForHomePage from "../../components/StatsForHomePage";
 
 const PlayerCard = ({ player, showHammer, currentBidder, currentBid }) => {
   const [isSold, setIsSold] = useState(false);
+  const roleIcons = {
+    "Batsmen": "🏏",
+    "Bowler": "⚾",
+    "All-rounder": "🏏⚾",
+    "WK": "🧤",
+  };
 
   useEffect(() => {
     setIsSold(false);
@@ -48,8 +54,9 @@ const PlayerCard = ({ player, showHammer, currentBidder, currentBid }) => {
           )}
         </div>
       </div>
-
-      <h2 className="text-xl font-bold mt-4">{player.name}</h2>
+        {console.log(player.category)}
+      <h2 className="text-xl font-bold mt-4">{player.player_name} {roleIcons[player.category]}</h2>
+      
 
       <div className="flex gap-4 mt-2 py-5 justify-center items-center">
         <div className="border-slate-200 rounded-lg border-4 transform skew-x-12 px-4 py-2">
