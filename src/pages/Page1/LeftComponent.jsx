@@ -20,7 +20,7 @@ const LeftComponent = () => {
     imageUrl: 'https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/public/players/dhoni.png', // Replace with actual image URL
     teamColor: '#F7A900', // Chennai Super Kings color
   };
-  
+
   const [mostExpensivePlayer1, setPlayerData] = useState([]);
   const [lastSoldPlayer1, setLastSoldPlayer] = useState(null);
 

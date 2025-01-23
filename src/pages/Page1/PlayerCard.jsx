@@ -54,7 +54,6 @@ const PlayerCard = ({ player, showHammer, currentBidder, currentBid }) => {
           )}
         </div>
       </div>
-        {console.log(player.category)}
       <h2 className="text-xl font-bold mt-4">{player.player_name} {roleIcons[player.category]}</h2>
       
 
