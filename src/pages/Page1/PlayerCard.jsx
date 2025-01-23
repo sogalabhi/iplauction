@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Confetti from "react-confetti";
-//import Ha from "./Ha";
+import Ha from "./Ha";
 import StatsForHomePage from "../../components/StatsForHomePage";
 
 const PlayerCard = ({ player, showHammer, currentBidder, currentBid }) => {
