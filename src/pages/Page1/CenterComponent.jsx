@@ -8,9 +8,9 @@ import ReactConfetti from "react-confetti";
 import { markPlayerAsSold } from "../../utils/updatePlayer";
 import { fetchTeamsWithSquads } from "../../utils/teamswithplayers";
 import { fetchUnsoldPlayers } from "../../utils/getUnSoldPlayers";
+import { updatePurseOfTeam } from "../../utils/updateTeam";
 
 const CenterComponent = ({ initteamlist, initplayersList }) => {
-  console.log('initTeamList:', initteamlist);
   const [isPlayerSold, setIsPlayerSold] = useState(false);
   const [showPlayerCard, setShowPlayerCard] = useState(false);
   const [showHammer, setShowHammer] = useState(false);
@@ -29,11 +29,9 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
   const getTeamAndPlayers = async () => {
     fetchUnsoldPlayers().then((players) => {
       setPlayersList(players);
-      console.log('updated players: ', players)
     });
     fetchTeamsWithSquads().then((teams) => {
       setTeamsList(teams);
-      console.log('updated teamsWithSquads: ', teams)
     });
   }
 
@@ -43,6 +41,13 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
     const { id, final_price, sold_to_team_id } = player;
     try {
       await markPlayerAsSold(id, final_price, sold_to_team_id);
+    } catch (error) {
+      console.error("Error in marking as sold:", error.message);
+    }
+    var team = teamsList[sold_to_team_id - 1];
+    team.purse = team.purse - final_price;
+    try {
+      await updatePurseOfTeam(sold_to_team_id, team.purse);
     } catch (error) {
       console.error("Error in marking as sold:", error.message);
     }
@@ -79,7 +84,6 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
         setPlayersList(prevList => {
           const updatedList = [...prevList];
           updatedList[0] = { ...updatedList[0], final_price: final_bid, sold_to_team_id: parseInt(sold_to_team_id) };
-          console.log('Player bid successfully!', updatedList[0]);
           return updatedList;
         });
       } catch (error) {
@@ -90,7 +94,6 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
   };
 
   const handleKeyPress = async (event) => {
-    console.log(teamsList);
     var key = event.key;
     if (key >= 0 && key <= teamsList.length) {
       if (key == 0) {
@@ -125,7 +128,6 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
               <LeftComponent />
             </div>
             <div className="relative flex-1">
-              {console.log(playersList[0])}
               {playersList.length > 0 && <PlayerCard
                 player={playersList[0]}
                 onSold={setIsPlayerSold}

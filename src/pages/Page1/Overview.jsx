@@ -10,6 +10,19 @@ const Overview = () => {
     });
   }
 
+  function formatPriceInLakhs(price) {
+
+    if (price >= 100) {
+      // Convert to crore
+      const crore = (price / 100).toFixed(2); // 2 decimal places
+      return `${Number(crore).toLocaleString('en-IN')} Crore`;
+    } else {
+      // Keep it in lakh
+      return `${Number(price).toLocaleString('en-IN')} Lakh`;
+      // return price;
+    }
+  }
+
   useEffect(() => {
     getAllTeamswithplayers();
   }, [])
@@ -29,7 +42,7 @@ const Overview = () => {
             <tr key={idx} className="hover:bg-gray-600">
               <td className="p-2">{team.name}</td>
               <td className="p-2 text-center">{team.playerCount}</td>
-              <td className="p-2 text-right">₹{team.purse}</td>
+              <td className="p-2 text-right">₹{formatPriceInLakhs(team.purse)}</td>
             </tr>
           ))}
         </tbody>
