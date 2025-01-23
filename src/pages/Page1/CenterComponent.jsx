@@ -112,17 +112,17 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
 
   return (
     // <div className={`min-h-screen bg-gradient-to-b from-indigo-500 to-purple-600 text-white`}>
-    <div className={`min-h-screen bg-gradient-to-b from-[#361602] from-40% to-[#021e31] text-white`}>
+    <div className={`min-h-screen from-[#361602] from-40% to-[#021e31] text-white bg-[url('https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/sign/teamlogo/bg-2.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0ZWFtbG9nby9iZy0yLmpwZyIsImlhdCI6MTczNzY3MDYyNywiZXhwIjoxNzQwMjYyNjI3fQ.u3Xm0UO108oG0s8RbQ6btlaz-_1xkU7PWmROqteth_A&t=2025-01-23T22%3A17%3A04.862Z')] bg-no-repeat bg-cover`}>
       {!isPlayerSold && !showPlayerCard && (
         <div className="py-1">
-          <h1 className="text-center text-4xl py-3" style={{ 'fontFamily': "Alinea Incise W01 Regular" }}>E-CELL NITK IPL AUCTION</h1>
-          <h2 className="text-center text-2xl">Sponsored By</h2>
+          <h1 className="text-center text-5xl pt-10" style={{ 'fontFamily': "Alinea Incise W01 Regular" }}>E-CELL NITK IPL AUCTION</h1>
+          <h2 className="text-center text-2xl pt-2">Sponsored By</h2>
           <div className="flex justify-center items-center gap-4 my-4">
-            <img src="https://banner2.cleanpng.com/20240111/qtv/transparent-google-logo-colorful-google-logo-with-bold-green-1710929465092.webp" className="w-10 h-10 rounded-full" alt="" />
-            <img src="https://banner2.cleanpng.com/20240111/qtv/transparent-google-logo-colorful-google-logo-with-bold-green-1710929465092.webp" className="w-10 h-10 rounded-full" alt="" />
-            <img src="https://banner2.cleanpng.com/20240111/qtv/transparent-google-logo-colorful-google-logo-with-bold-green-1710929465092.webp" className="w-10 h-10 rounded-full" alt="" />
-            <img src="https://banner2.cleanpng.com/20240111/qtv/transparent-google-logo-colorful-google-logo-with-bold-green-1710929465092.webp" className="w-10 h-10 rounded-full" alt="" />
-            <img src="https://banner2.cleanpng.com/20240111/qtv/transparent-google-logo-colorful-google-logo-with-bold-green-1710929465092.webp" className="w-10 h-10 rounded-full" alt="" />
+            <img src="https://banner2.cleanpng.com/20240111/qtv/transparent-google-logo-colorful-google-logo-with-bold-green-1710929465092.webp" className="w-10 h-10 rounded-full hover:scale-105 transition" alt="" />
+            <img src="https://banner2.cleanpng.com/20240111/qtv/transparent-google-logo-colorful-google-logo-with-bold-green-1710929465092.webp" className="w-10 h-10 rounded-full hover:scale-105 transition" alt="" />
+            <img src="https://banner2.cleanpng.com/20240111/qtv/transparent-google-logo-colorful-google-logo-with-bold-green-1710929465092.webp" className="w-10 h-10 rounded-full hover:scale-105 transition" alt="" />
+            <img src="https://banner2.cleanpng.com/20240111/qtv/transparent-google-logo-colorful-google-logo-with-bold-green-1710929465092.webp" className="w-10 h-10 rounded-full hover:scale-105 transition" alt="" />
+            <img src="https://banner2.cleanpng.com/20240111/qtv/transparent-google-logo-colorful-google-logo-with-bold-green-1710929465092.webp" className="w-10 h-10 rounded-full hover:scale-105 transition" alt="" />
           </div>
           <div className="relative flex justify-center items-center">
             <div className="flex-1 pl-10">

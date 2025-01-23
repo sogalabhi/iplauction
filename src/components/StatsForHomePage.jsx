@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function StatsForHomePage({ stats }) {
     return (
-        <div className="my-5 mx-5 bg-white/10 backdrop-blur-md rounded-lg shadow-lg border border-white/20 p-4">
+        <div className="my-5 mx-5 bg-white/10 hover:bg-white/5 cursor-default hover:scale-105 transition backdrop-blur-md rounded-lg shadow-lg border border-white/20 p-4">
             <div className="flex flex-row gap-7 items-center justify-center">
                 <div className="flex flex-col">
                     <span className="text-xs font-semibold">Matches:</span>
