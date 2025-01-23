@@ -15,6 +15,7 @@ export const fetchTeamsWithSquads = async () => {
             },
         });
         const teams = await teamsResponse.json();
+        console.log('teams: ', teams)
         // Fetch players data
         const playersResponse = await fetch(`${SUPABASE_URL}CricketPlayers`, {
             method: "GET",
@@ -43,9 +44,9 @@ export const fetchTeamsWithSquads = async () => {
             color1: team.color1,
             color2: team.color2,
         }));
-        console.log('teamsWithSquads: ', teamsWithSquads)
+        console.log('teamsWithSquads: ', teamsWithSquads.sort((a, b) => a.team_id - b.team_id))
 
-        return teamsWithSquads.sort((a, b) => a.team_id - b.team_id);;
+        return teamsWithSquads.sort((a, b) => a.team_id - b.team_id);
     } catch (error) {
         console.error("Error fetching data:", error);
         return [];

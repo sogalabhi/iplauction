@@ -10,6 +10,7 @@ import { fetchTeamsWithSquads } from "../../utils/teamswithplayers";
 import { fetchUnsoldPlayers } from "../../utils/getUnSoldPlayers";
 
 const CenterComponent = ({ initteamlist, initplayersList }) => {
+  console.log('initTeamList:', initteamlist);
   const [isPlayerSold, setIsPlayerSold] = useState(false);
   const [showPlayerCard, setShowPlayerCard] = useState(false);
   const [showHammer, setShowHammer] = useState(false);
@@ -89,6 +90,7 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
   };
 
   const handleKeyPress = async (event) => {
+    console.log(teamsList);
     var key = event.key;
     if (key >= 0 && key <= teamsList.length) {
       if (key == 0) {
@@ -131,6 +133,17 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
                 currentBidder={currentBidder}
                 currentBid={currentBid}
               />}
+              {playersList.length == 0 &&
+                <div className="text-center">
+                  <h1 className="text-2xl mb-5">No Players Left</h1>
+                  <Link
+                    to={"/teamswithsquad"}
+                    className="flexw-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                  >
+                    Team Squad
+                  </Link>
+                </div>
+              }
             </div>
             <div className="flex-1">
               <Overview />
@@ -141,7 +154,7 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
       )
       }
       {
-        !isPlayerSold && !showPlayerCard && (
+        !isPlayerSold && !showPlayerCard && playersList.length > 0 && (
           <div className="text-center flex gap-4 justify-center py-2">
             {currentBid > 0 && <button
               onClick={markAsSold}
