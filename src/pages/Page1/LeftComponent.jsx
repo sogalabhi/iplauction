@@ -2,27 +2,14 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import {fetchExpensivePlayer} from '../../utils/expensivePlayer.js';
 import {fetchPrevPlayer} from '../../utils/previousPlayer.js';
+import {getTeamFromTeamID} from '../../utils/getTeamfromTeamId.js';
 
 const LeftComponent = () => {
-  // Example data
-  const mostExpensivePlayer = {
-    name: 'Virat Kohli',
-    team: 'Royal Challengers Bangalore',
-    price: '$2.4 Million',
-    imageUrl: 'https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/public/players/dhoni.png', // Replace with actual image URL
-    teamColor: '#F05A28', // Royal Challengers Bangalore color
-  };
-
-  const lastSoldPlayer = {
-    name: 'MS Dhoni',
-    team: 'Chennai Super Kings',
-    price: '$1.8 Million',
-    imageUrl: 'https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/public/players/dhoni.png', // Replace with actual image URL
-    teamColor: '#F7A900', // Chennai Super Kings color
-  };
   
   const [mostExpensivePlayer1, setPlayerData] = useState([]);
   const [lastSoldPlayer1, setLastSoldPlayer] = useState(null);
+  const [mostExpensiveTeam, setMostExpensiveTeam] = useState(null); // Store data2
+  const [lastSoldTeam, setLastSoldTeam] = useState(null); // Store data1
 
     useEffect(() => {
         const getPlayerData = async () => {
@@ -35,16 +22,39 @@ const LeftComponent = () => {
           const data = await fetchPrevPlayer();
           setLastSoldPlayer(data);
         };
-
         getPlayerData(); // Fetch data on component mount
         getLastSoldPlayer();
     }, []);
+    useEffect(() => {
+      if (mostExpensivePlayer1.length > 0) {
+        const fetchTeam = async () => {
+          const teamData = await getTeamFromTeamID(mostExpensivePlayer1[0].sold_to_team_id);
+          setMostExpensiveTeam(teamData[0]); // Assuming teamData is an array
+        };
+        fetchTeam();
+      }
+    }, [mostExpensivePlayer1]);
+  
+    useEffect(() => {
+      if (lastSoldPlayer1 && lastSoldPlayer1.length > 0) {
+        const fetchTeam = async () => {
+          const teamData = await getTeamFromTeamID(lastSoldPlayer1[0].sold_to_team_id);
+          setLastSoldTeam(teamData[0]); // Assuming teamData is an array
+        };
+        fetchTeam();
+      }
+    }, [lastSoldPlayer1]);
+
+  console.log(mostExpensivePlayer1);
+
+  console.log(mostExpensiveTeam);
+
   return (
     <div className="p-8 font-sans space-y-6">
       {/* Most Expensive Player */}
       <div
         className="flex flex-col mb-6 rounded-lg border border-slate-1000 bg-no-repeat bg-cover "
-        style={{backgroundImage: "url('https://images.news18.com/ibnlive/uploads/2024/03/royal-challengers-bengaluru-2024-03-b48979f9d2ac67312368a28efd770b05-16x9.jpg')", backdropFilter: 'blur(25px) saturate(150%)'}}
+        style={{backgroundImage: `linear-gradient(to bottom right, #${mostExpensiveTeam?.color1}, #${mostExpensiveTeam?.color2}),url(${mostExpensiveTeam?.team_logo})`, backdropFilter: 'blur(25px) saturate(150%)'}}
       >
         <div className='relative overflow-hidden isolate bg-[rgba(0,0,0,0.65)] rounded-lg'>
           
@@ -69,8 +79,8 @@ const LeftComponent = () => {
               {/* Player Details */}
               <div className="flex-grow p-4">
                 <h2 className="text-[20px] font-bold">{mostExpensivePlayer1[0].player_name}</h2>
-                <p className="text-[18px]">{mostExpensivePlayer.team}</p>
-                <p className="text-[18px]">{mostExpensivePlayer1[0].final_price}</p>
+                <p className="text-[18px]">{mostExpensiveTeam?.team_name || 'Loading...'}</p>
+                <p className="text-[18px]">&#8377; {mostExpensivePlayer1[0].final_price/100} Crores</p>
               </div>
               </>
             ):(
@@ -83,7 +93,7 @@ const LeftComponent = () => {
       {/* Last Sold Player */}
       <div
         className="flex flex-col rounded-lg border border-slate-1000 bg-no-repeat bg-cover shadow-lg"
-        style={{backgroundImage: "url('https://static.wikia.nocookie.net/0307f86d-9bed-4c6d-af9a-27605e713600/scale-to-width/755')", backdropFilter: 'blur(25px) saturate(150%)'}}
+        style={{backgroundImage: `linear-gradient(to bottom right, #${lastSoldTeam?.color1}, #${lastSoldTeam?.color2}), url(${lastSoldTeam?.team_logo})`, backdropFilter: 'blur(25px) saturate(150%)'}}
       >
         <div className='relative overflow-hidden isolate bg-[rgba(0,0,0,0.65)] rounded-lg'>
           {/* Heading */}
@@ -107,8 +117,8 @@ const LeftComponent = () => {
             {/* Player Details */}
             <div className="flex-grow p-4">
               <h2 className="text-[20px] font-bold">{lastSoldPlayer1[0].player_name}</h2>
-              <p className="text-[18px]">{lastSoldPlayer.team}</p>
-              <p className="text-[18px]">{lastSoldPlayer1[0].final_price}</p>
+              <p className="text-[18px]">{lastSoldTeam?.team_name || 'Loading...'}</p>
+              <p className="text-[18px]">&#8377; {lastSoldPlayer1[0].final_price/100} Crores</p>
             </div>
             </>
           ):(
