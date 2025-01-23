@@ -17,19 +17,31 @@ const TeamsWithCompactDesign = () => {
       setTeamsWithSquad(teams);
     });
   }
+  function formatPriceInLakhs(price) {
 
+    if (price >= 100) {
+      // Convert to crore
+      const crore = (price / 100).toFixed(2); // 2 decimal places
+      return `${Number(crore).toLocaleString('en-IN')} Crore`;
+    } else {
+      // Keep it in lakh
+      return `${Number(price).toLocaleString('en-IN')} Lakh`;
+      // return price;
+    }
+  }
   useEffect(() => {
     getAllTeamswithplayers();
   }, [])
 
   return (
-    <div className="p-4 bg-gradient-to-br from-[#361602] from-40% to-[#021e31] min-h-screen flex flex-col items-center justify-center">
-      <h1 className="text-6xl font-extrabold text-center my-2 tracking-wide animate-pulse text-white">
+    <div className="p-4 bg-[url('https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/sign/teamlogo/bg.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0ZWFtbG9nby9iZy5qcGciLCJpYXQiOjE3Mzc2NjkyMTksImV4cCI6MTc2OTIwNTIxOX0.EV0N-PHzI_vLLYN6ImccszenCZbYuHWPf_DQ_5nWOaw&t=2025-01-23T21%3A53%3A36.437Z')] bg-no-repeat bg-cover from-[#361602] from-40% to-[#021e31] min-h-screen flex flex-col items-center justify-center">
+
+      <h1 className="text-6xl font-extrabold text-center mt-2 mb-4 tracking-wide animate-pulse text-white">
         Teams Squad
       </h1>
       <Link
         to={"/"}
-        className="bg-green-500 text-white px-4 py-2 my-2 rounded hover:bg-green-600"
+        className="absolute top-5 left-10 bg-green-500 text-white px-4 py-2 my-2 rounded hover:bg-green-600"
       >
         Home
       </Link>
@@ -49,7 +61,7 @@ const TeamsWithCompactDesign = () => {
               <div>
                 <h2 className="text-lg font-extrabold">{team.name}</h2>
                 <p className="text-xs font-medium">
-                  Purse Balance: {team.purse} Lakhs
+                  Purse Balance: {formatPriceInLakhs(team.purse)}
                 </p>
               </div>
               <img
@@ -62,27 +74,49 @@ const TeamsWithCompactDesign = () => {
             {/* Squad Section */}
             <div className="p-4">
               <ul className="space-y-2">
-                {team.squad.map((player, idx) => (
-                  <li
-                    key={idx}
-                    className="flex items-center justify-between bg-gray-200 px-3 py-2 rounded-lg transform hover:bg-gray-300 transition duration-200"
-                  >
-                    <div className="flex items-center">
-                      <span className="text-sm text-gray-800 font-semibold mr-2">
-                        {player.name}
-                      </span>
+                <div className="grid grid-cols-2 gap-4">
+                  {/* First column */}
+                  <ul>
+                    {team.squad.slice(0, Math.ceil(team.squad.length / 2)).map((player, idx) => (
+                      <li
+                        key={idx}
+                        className="flex items-center justify-between bg-gray-200 p-2 my-1 rounded-lg transform hover:bg-gray-300 transition duration-200"
+                      >
+                        <div className="flex items-center">
+                          <span className="text-xs text-gray-800 font-semibold mr-2">
+                            {player.name}
+                          </span>
+                          {player.isOverseas && (
+                            <span className="text-blue-500 text-lg animate-bounce">✈️</span>
+                          )}
+                        </div>
+                        <span className="text-gray-600 text-xs">{roleIcons[player.role]}</span>
+                      </li>
+                    ))}
+                  </ul>
 
-                      {player.isOverseas && (
-                        <span className="text-blue-500 text-lg animate-bounce">
-                          ✈️
-                        </span>
-                      )}
-                    </div>
-                    <span className="text-gray-600 text-xs">
-                      {roleIcons[player.role]}
-                    </span>
-                  </li>
-                ))}
+                  {/* Second column */}
+                  <ul>
+                    {team.squad.slice(Math.ceil(team.squad.length / 2)).map((player, idx) => (
+                      <li
+                        key={idx}
+                        className="flex items-center justify-between bg-gray-200 px-1 my-1 rounded-lg transform hover:bg-gray-300 transition duration-200"
+                      >
+                        <div className="flex items-center">
+                          <span className="text-xs text-gray-800 font-semibold mr-2">
+                            {player.name}
+                          </span>
+                          {player.isOverseas && (
+                            <span className="text-blue-500 animate-bounce">✈️</span>
+                          )}
+                        </div>
+                        <span className="text-gray-600 text-xs">{roleIcons[player.role]}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+
               </ul>
             </div>
           </div>

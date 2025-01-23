@@ -29,7 +29,7 @@ const PlayerCard = ({ player, showHammer, currentBidder, currentBid }) => {
   }
   return (
     <div
-      className={`flex flex-col items-center justify-center ${isSold ? "fixed inset-0 z-50 bg-black" : ""
+      className={`flex flex-col items-center justify-center hover:scale-105 transition ${isSold ? "fixed inset-0 z-50 bg-black" : ""
         } transition-all duration-500 py-3`}
     >
       {/* Confetti */}
@@ -45,7 +45,7 @@ const PlayerCard = ({ player, showHammer, currentBidder, currentBid }) => {
           <img
             src={player.player_image}
             alt={player.name}
-            className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-auto h-64"
+            className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-auto h-64 "
           />
           {showHammer && (
             <div className="absolute inset-0 flex justify-center items-center">
@@ -64,7 +64,7 @@ const PlayerCard = ({ player, showHammer, currentBidder, currentBid }) => {
           </span>
         </div>
 
-        <div className="border border-slate-200 transform -skew-x-12 px-4 py-2">
+        <div className="border-slate-200 rounded-lg border-4 transform -skew-x-12 px-4 py-2">
           <span className="inline-block transform skew-x-12 ">
             {showHammer ? 'Current Bid' : 'Final Price'}: ₹{formatPriceInLakhs(currentBid)}
           </span>
