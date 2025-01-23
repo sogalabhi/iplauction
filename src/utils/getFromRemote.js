@@ -3,7 +3,7 @@ const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 
 export const fetchSupabaseData = async (table) => {
     try {
-        const response = await fetch(`${SUPABASE_URL}${table}`, {
+        const response = await fetch(`${SUPABASE_URL}${table}?order=id.asc`, {
             method: "GET",
             headers: {
                 apiKey: SUPABASE_KEY,

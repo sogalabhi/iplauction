@@ -8,6 +8,7 @@ import { fetchTeamsWithSquads } from './utils/teamswithplayers';
 import TeamsWithCompactDesign from './pages/FinalSquad';
 import { Route, Router, Routes } from 'react-router-dom';
 import { getTeamFromTeamID } from './utils/getTeamfromTeamId';
+import TimerPage from './pages/TimerPage';
 
 function App() {
   const [players, setPlayers] = useState([]);
@@ -18,9 +19,13 @@ function App() {
 
   const fetchAllPlayers = async () => {
     var res = await fetchSupabaseData('CricketPlayers');
+    for (let i = 0; i < res.length; i++) {
+      if (res[i].currentBid == null) {
+        res[i].currentBid = res[i].base_price;
+      }
+    }
     setPlayers(res);
     var res2 = await getTeamFromTeamID(1);
-    console.log(res2);
   }
   const fetchAllTeams = async () => {
     var res = await fetchSupabaseData('Teams');
@@ -28,7 +33,6 @@ function App() {
   }
   const getExpensivePlayer = async () => {
     var res = await fetchExpensivePlayer();
-    console.log(res);
     setExpPlayer(res);
   }
   const getPrevPlayer = async () => {
@@ -36,7 +40,6 @@ function App() {
     setPrevPlayer(res);
   }
   const getAllTeamswithplayers = async () => {
-    // Usage example
     fetchTeamsWithSquads().then((teams) => {
       setTeamsWithSquad(teams);
     });
@@ -53,9 +56,8 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<CenterComponent teamlist={teamswithsquad}/>} />
-        <Route path="/teamswithsquad" element={<TeamsWithCompactDesign teamlist={teamswithsquad} />} />
-      </Routes>
+        <Route path="/" element={<CenterComponent initteamlist={teamswithsquad} initplayersList={players} />} />
+        <Route path="/teamswithsquad" element={<TeamsWithCompactDesign/>} />
 
     </>
   )

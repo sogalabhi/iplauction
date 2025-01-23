@@ -1,6 +1,5 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-//import viratKohliImage from './viratKohli.jpeg';
 import {fetchExpensivePlayer} from '../../utils/expensivePlayer.js';
 import {fetchPrevPlayer} from '../../utils/previousPlayer.js';
 import {getTeamFromTeamID} from '../../utils/getTeamfromTeamId.js';
@@ -26,7 +25,6 @@ const LeftComponent = () => {
         getPlayerData(); // Fetch data on component mount
         getLastSoldPlayer();
     }, []);
-
     useEffect(() => {
       if (mostExpensivePlayer1.length > 0) {
         const fetchTeam = async () => {

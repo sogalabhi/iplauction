@@ -6,23 +6,23 @@ export default function StatsForHomePage({ stats }) {
             <div className="flex flex-row gap-7 items-center justify-center">
                 <div className="flex flex-col">
                     <span className="text-xs font-semibold">Matches:</span>
-                    <span>{stats.matches}</span>
+                    <span>{stats.stat1}</span>
                 </div>
                 <div className="flex flex-col">
                     <span className="text-xs font-semibold">Wickets:</span>
-                    <span>{stats.wickets}</span>
+                    <span>{stats.stat2}</span>
                 </div>
                 <div className="flex flex-col">
                     <span className="text-xs font-semibold">Economy:</span>
-                    <span>{stats.economy}</span>
+                    <span>{stats.stat3}</span>
                 </div>
                 <div className="flex flex-col">
                     <span className="text-xs font-semibold">Strike Rate:</span>
-                    <span>{stats.strikeRate}</span>
+                    <span>{stats.stat4}</span>
                 </div>
                 <div className="flex flex-col">
                     <span className="text-xs font-semibold">Runs:</span>
-                    <span>{stats.runs}</span>
+                    <span>{stats.stat1}</span>
                 </div>
             </div>
         </div>
