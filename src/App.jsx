@@ -9,6 +9,7 @@ import TeamsWithCompactDesign from './pages/FinalSquad';
 import { Route, Router, Routes } from 'react-router-dom';
 import { getTeamFromTeamID } from './utils/getTeamfromTeamId';
 import { fetchUnsoldPlayers } from './utils/getUnSoldPlayers';
+import TimerPage from './pages/TimerPage';
 
 function App() {
   const [players, setPlayers] = useState([]);
