@@ -53,6 +53,7 @@ function App() {
       <Routes>
         <Route path="/" element={<CenterComponent initteamlist={teamswithsquad} initplayersList={players} />} />
         <Route path="/teamswithsquad" element={<TeamsWithCompactDesign />} />
+        <Route path="/break" element={<TimerPage />} />
       </Routes>
 
     </>
