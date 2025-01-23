@@ -45,49 +45,6 @@ const TimerPage = () => {
       <div className="relative z-10 w-full max-w-4xl p-4">
         <InfiniteMovingCardsDemo />
       </div>
-
-      {/* Custom Styles */}
-      <style>
-        {`
-          @tailwind base;
-          @tailwind components;
-          @tailwind utilities;
-
-          @layer utilities {
-            @keyframes gradient {
-              0% {
-                background-position: 0% 50%;
-              }
-              50% {
-                background-position: 100% 50%;
-              }
-              100% {
-                background-position: 0% 50%;
-              }
-            }
-            @keyframes cross {
-              0% {
-                transform: translate(0, 0);
-              }
-              50% {
-                transform: translate(-20%, -20%);
-              }
-              100% {
-                transform: translate(0, 0);
-              }
-            }
-
-            .animate-gradient {
-              animation: gradient 10s ease infinite;
-              background-size: 400% 400%;
-            }
-
-            .animate-cross {
-              animation: cross 20s linear infinite;
-            }
-          }
-        `}
-      </style>
     </div>
   );
 };

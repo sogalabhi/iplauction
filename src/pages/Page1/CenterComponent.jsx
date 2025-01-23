@@ -38,9 +38,9 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
   const markAsSold = async () => {
     setShowHammer(true);
     var player = playersList[0];
-    const { id, final_price, sold_to_team_id } = player;
+    const { id, final_price, sold_to_team_id, sold_to_team } = player;
     try {
-      await markPlayerAsSold(id, final_price, sold_to_team_id);
+      await markPlayerAsSold(id, final_price, sold_to_team_id, sold_to_team);
     } catch (error) {
       console.error("Error in marking as sold:", error.message);
     }
@@ -68,7 +68,7 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
     getTeamAndPlayers();
   };
 
-  const handleBid = async (sold_to_team_id) => {
+  const handleBid = async (sold_to_team_id, bidding_team) => {
     setCurrentBid((prevBid) => {
       let final_bid;
       if (prevBid === 0) {
@@ -83,7 +83,7 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
       try {
         setPlayersList(prevList => {
           const updatedList = [...prevList];
-          updatedList[0] = { ...updatedList[0], final_price: final_bid, sold_to_team_id: parseInt(sold_to_team_id) };
+          updatedList[0] = { ...updatedList[0], final_price: final_bid, sold_to_team_id: parseInt(sold_to_team_id), sold_to_team: bidding_team };
           return updatedList;
         });
       } catch (error) {
@@ -99,9 +99,10 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
       if (key == 0) {
         key = 10;
       }
-      setCurrentBidder(teamsList[key - 1].name);
+      var bidding_team = teamsList[key - 1].name;
+      setCurrentBidder(bidding_team);
       setCurrentBidderId(key);
-      await handleBid(key);
+      await handleBid(key, bidding_team);
     }
   };
   useEffect(() => {
@@ -169,6 +170,12 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
               className="flexw-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
             >
               Team Squad
+            </Link>
+            <Link
+              to={"/break"}
+              className="flexw-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+            >
+              Break
             </Link>
             <button
               onClick={nextPlayer}
