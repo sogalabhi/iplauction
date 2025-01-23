@@ -15,6 +15,7 @@ export const markPlayerAsSold = async (playerId, finalPrice, soldToTeamId) => {
       body: JSON.stringify({
         'final_price': finalPrice,
         'sold_to_team_id': soldToTeamId,
+        'time_of_selling': new Date().toISOString()
       }),
     });
 
