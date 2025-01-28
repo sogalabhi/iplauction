@@ -6,6 +6,19 @@ import { getTeamFromTeamID } from '../../utils/getTeamfromTeamId.js';
 
 const LeftComponent = () => {
 
+  function formatPriceInLakhs(price) {
+
+    if (price >= 100) {
+      // Convert to crore
+      const crore = (price / 100).toFixed(2); // 2 decimal places
+      return `${Number(crore).toLocaleString('en-IN')} Crore`;
+    } else {
+      // Keep it in lakh
+      return `${Number(price).toLocaleString('en-IN')} Lakh`;
+      // return price;
+    }
+  }
+
   const [mostExpensivePlayer1, setPlayerData] = useState([]);
   const [lastSoldPlayer1, setLastSoldPlayer] = useState(null);
   const [mostExpensiveTeam, setMostExpensiveTeam] = useState(null); // Store data2
@@ -24,6 +37,8 @@ const LeftComponent = () => {
     };
     getPlayerData(); // Fetch data on component mount
     getLastSoldPlayer();
+    /*formatPriceInLakhs(mostExpensivePlayer1[0].final_price);
+    formatPriceInLakhs(lastSoldPlayer1[0].final_price);*/
   }, []);
   useEffect(() => {
     if (mostExpensivePlayer1.length > 0) {
@@ -80,7 +95,7 @@ const LeftComponent = () => {
                 <div className="flex-grow p-4">
                   <h2 className="text-[20px] font-bold">{mostExpensivePlayer1[0].player_name}</h2>
                   <p className="text-[18px]">{mostExpensiveTeam?.team_name || 'Loading...'}</p>
-                  <p className="text-[18px]">&#8377; {mostExpensivePlayer1[0].final_price / 100} Crores</p>
+                  <p className="text-[18px]">&#8377; {formatPriceInLakhs(mostExpensivePlayer1[0].final_price)}</p>
                 </div>
               </>
             ) : (
@@ -119,7 +134,7 @@ const LeftComponent = () => {
                 <div className="flex-grow p-4">
                   <h2 className="text-[20px] font-bold">{lastSoldPlayer1[0].player_name}</h2>
                   <p className="text-[18px]">{lastSoldTeam?.team_name || 'Loading...'}</p>
-                  <p className="text-[18px]">&#8377; {lastSoldPlayer1[0].final_price / 100} Crores</p>
+                  <p className="text-[18px]">&#8377; {formatPriceInLakhs(lastSoldPlayer1[0].final_price)}</p>
                 </div>
               </>
             ) : (
