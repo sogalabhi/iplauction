@@ -23,9 +23,13 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
     setPlayersList(initplayersList);
   }, [initplayersList])
   useEffect(() => {
+    if (!showPlayerCard)
+      getTeamAndPlayers();
+  }, [])
+
+  useEffect(() => {
     setTeamsList(initteamlist);
   }, [initteamlist])
-
   const getTeamAndPlayers = async () => {
     fetchUnsoldPlayers().then((players) => {
       setPlayersList(players);
@@ -36,6 +40,7 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
   }
 
   const markAsSold = async () => {
+    console.log("Mark as Sold");
     setShowHammer(true);
     var player = playersList[0];
     const { id, final_price, sold_to_team_id, sold_to_team } = player;
@@ -59,50 +64,63 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
   };
 
 
-  const nextPlayer = () => {
+  const nextPlayer = async () => {
     setShowPlayerCard(false);
     setIsPlayerSold(false);
     setCurrentBid(0);
     setCurrentBidderId(0);
     setCurrentBidder(null);
-    getTeamAndPlayers();
+    await getTeamAndPlayers();
   };
 
-  const handleBid = async (sold_to_team_id, bidding_team) => {
-    setCurrentBid((prevBid) => {
-      let final_bid;
-      if (prevBid === 0) {
-        final_bid = playersList[0].base_price;
-      } else if (prevBid < 100) {
-        final_bid = prevBid + 10;
-      } else if (prevBid < 500) {
-        final_bid = prevBid + 20;
-      } else {
-        final_bid = prevBid + 50;
-      }
-      try {
-        setPlayersList(prevList => {
-          const updatedList = [...prevList];
-          updatedList[0] = { ...updatedList[0], final_price: final_bid, sold_to_team_id: parseInt(sold_to_team_id), sold_to_team: bidding_team };
-          return updatedList;
-        });
-      } catch (error) {
-        console.error('Error during bidding:', error.message);
-      }
-      return final_bid;
-    });
-  };
+  const markAsUnSold = async () => {
 
+    try {
+      await markPlayerAsSold(playersList[0].id, 0, -1, null);
+    } catch (error) {
+      console.error("Error in marking as unsold:", error.message);
+    }
+    await getTeamAndPlayers();
+  }
   const handleKeyPress = async (event) => {
     var key = event.key;
     if (key >= 0 && key <= teamsList.length) {
       if (key == 0) {
         key = 10;
       }
-      var bidding_team = teamsList[key - 1].name;
-      setCurrentBidder(bidding_team);
-      setCurrentBidderId(key);
-      await handleBid(key, bidding_team);
+      setCurrentBid((prevBid) => {
+        let final_bid;
+        if (prevBid === 0) {
+          final_bid = playersList[0].base_price;
+        } else if (prevBid < 100) {
+          final_bid = prevBid + 10;
+        } else if (prevBid < 500) {
+          final_bid = prevBid + 20;
+        } else {
+          final_bid = prevBid + 50;
+        }
+        var bidding_team = teamsList[key - 1].name;
+        var bidding_team_purse = teamsList[key - 1].purse;
+        if (final_bid > bidding_team_purse) {
+          console.log("not possible");
+          return prevBid;
+        }
+        else {
+          setCurrentBidder(bidding_team);
+          setCurrentBidderId(key);
+          try {
+            setPlayersList(prevList => {
+              const updatedList = [...prevList];
+              updatedList[0] = { ...updatedList[0], final_price: final_bid, sold_to_team_id: parseInt(key), sold_to_team: bidding_team };
+              return updatedList;
+            });
+          } catch (error) {
+            console.error('Error during bidding:', error.message);
+          }
+        }
+        return final_bid;
+      });
+
     }
   };
   useEffect(() => {
@@ -111,11 +129,14 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
   }, [teamsList]);
 
   return (
-    // <div className={`min-h-screen bg-gradient-to-b from-indigo-500 to-purple-600 text-white`}>
-    <div className={`min-h-screen from-[#361602] from-40% to-[#021e31] text-white bg-[url('https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/sign/teamlogo/bg-2.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0ZWFtbG9nby9iZy0yLmpwZyIsImlhdCI6MTczNzY3MDYyNywiZXhwIjoxNzQwMjYyNjI3fQ.u3Xm0UO108oG0s8RbQ6btlaz-_1xkU7PWmROqteth_A&t=2025-01-23T22%3A17%3A04.862Z')] bg-no-repeat bg-cover`}>
+    <div className={`min-h-screen bg-[#193153]  text-white`}>
+      <video src=
+        "https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/public/video//video_2025-01-28%2022_42_02.webm"
+        autoplay="{true}" loop muted
+        className="absolute w-auto h-full max-h-full object-cover opacity-40"></video>
       {!isPlayerSold && !showPlayerCard && (
-        <div className="py-1">
-          <h1 className="text-center text-5xl pt-10" style={{ 'fontFamily': "Alinea Incise W01 Regular" }}>E-CELL NITK IPL AUCTION</h1>
+        <div className="py-1 relative z-10">
+          <h1 className="text-center text-5xl pt-10 relati z-10 heading-font" style={{ textShadow: "4px 4px 0px #4f829c" }}>MOCK IPL AUCTION</h1>
           <h2 className="text-center text-2xl pt-2">Sponsored By</h2>
           <div className="flex justify-center items-center gap-4 my-4">
             <img src="https://banner2.cleanpng.com/20240111/qtv/transparent-google-logo-colorful-google-logo-with-bold-green-1710929465092.webp" className="w-10 h-10 rounded-full hover:scale-105 transition" alt="" />
@@ -158,7 +179,7 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
       }
       {
         !isPlayerSold && !showPlayerCard && playersList.length > 0 && (
-          <div className="text-center flex gap-4 justify-center py-2">
+          <div className="text-center flex gap-4 justify-center relative z-10">
             {currentBid > 0 && <button
               onClick={markAsSold}
               className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
@@ -178,7 +199,7 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
               Break
             </Link>
             <button
-              onClick={nextPlayer}
+              onClick={markAsUnSold}
               className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
             >
               Mark as Unsold
@@ -204,7 +225,7 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
             <div className="text-center mt-4">
               <button
                 onClick={nextPlayer}
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 relative z-30"
               >
                 Next Player
               </button>

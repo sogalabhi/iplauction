@@ -4,6 +4,12 @@ const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 
 export const markPlayerAsSold = async (playerId, finalPrice, soldToTeamId, sold_to_team) => {
   console.log("Marking player as sold:", playerId, (finalPrice), (soldToTeamId), sold_to_team);
+  if (finalPrice === 0) {
+    var date = new Date('2000-01-01');
+  }
+  else{
+   var date =  new Date().toISOString()
+  }
   try {
     const response = await fetch(`${SUPABASE_URL}CricketPlayers?id=eq.${playerId}`, {
       method: "PATCH",
@@ -16,7 +22,7 @@ export const markPlayerAsSold = async (playerId, finalPrice, soldToTeamId, sold_
         'final_price': finalPrice,
         'sold_to_team_id': soldToTeamId,
         'sold_to_team': sold_to_team,
-        'time_of_selling': new Date().toISOString()
+        'time_of_selling': date
       }),
     });
 
