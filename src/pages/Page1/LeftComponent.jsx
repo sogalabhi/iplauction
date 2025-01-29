@@ -3,8 +3,23 @@ import { useEffect, useState } from 'react';
 import { fetchExpensivePlayer } from '../../utils/expensivePlayer.js';
 import { fetchPrevPlayer } from '../../utils/previousPlayer.js';
 import { getTeamFromTeamID } from '../../utils/getTeamfromTeamId.js';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+
 
 const LeftComponent = () => {
+
+  function formatPriceInLakhs(price) {
+
+    if (price >= 100) {
+      // Convert to crore
+      const crore = (price / 100).toFixed(2); // 2 decimal places
+      return `${Number(crore).toLocaleString('en-IN')} Crore`;
+    } else {
+      // Keep it in lakh
+      return `${Number(price).toLocaleString('en-IN')} Lakh`;
+      // return price;
+    }
+  }
 
   const [mostExpensivePlayer1, setPlayerData] = useState([]);
   const [lastSoldPlayer1, setLastSoldPlayer] = useState(null);
@@ -24,6 +39,8 @@ const LeftComponent = () => {
     };
     getPlayerData(); // Fetch data on component mount
     getLastSoldPlayer();
+    /*formatPriceInLakhs(mostExpensivePlayer1[0].final_price);
+    formatPriceInLakhs(lastSoldPlayer1[0].final_price);*/
   }, []);
   useEffect(() => {
     if (mostExpensivePlayer1.length > 0) {
@@ -46,6 +63,8 @@ const LeftComponent = () => {
   }, [lastSoldPlayer1]);
 
   console.log(mostExpensivePlayer1);
+  console.log("lastSold",lastSoldPlayer1);
+  console.log("id:",getTeamFromTeamID(0));
 
   console.log(mostExpensiveTeam);
 
@@ -80,11 +99,23 @@ const LeftComponent = () => {
                 <div className="flex-grow p-4">
                   <h2 className="text-[20px] font-bold">{mostExpensivePlayer1[0].player_name}</h2>
                   <p className="text-[18px]">{mostExpensiveTeam?.team_name || 'Loading...'}</p>
-                  <p className="text-[18px]">&#8377; {mostExpensivePlayer1[0].final_price / 100} Crores</p>
+                  <p className="text-[18px]">&#8377; {formatPriceInLakhs(mostExpensivePlayer1[0].final_price)}</p>
                 </div>
               </>
             ) : (
-              <p className="p-4 text-gray-400">Loading...</p>
+              //<p className="p-4 text-gray-400">Loading...</p>
+              <div className="flex items-center mr-10 mb-50 p-4">
+              <DotLottieReact
+                      src="https://lottie.host/e03cc549-83a8-4fd0-b662-7351abed847c/ziI4NFMwPL.lottie"
+                      loop
+                      autoplay
+                      style={{ width: "100px", height: "100px" }}
+                    />
+              <div className="flex flex-col gap-y-1">
+              <p className="p-1 text-white text-3xl">IPL Auction</p>
+              <p className="p-1 text-white text-lg">Starting Soon...</p>
+              </div>
+              </div>
             )}
           </div>
         </div>
@@ -119,11 +150,23 @@ const LeftComponent = () => {
                 <div className="flex-grow p-4">
                   <h2 className="text-[20px] font-bold">{lastSoldPlayer1[0].player_name}</h2>
                   <p className="text-[18px]">{lastSoldTeam?.team_name || 'Loading...'}</p>
-                  <p className="text-[18px]">&#8377; {lastSoldPlayer1[0].final_price / 100} Crores</p>
+                  <p className="text-[18px]">&#8377; {formatPriceInLakhs(lastSoldPlayer1[0].final_price)}</p>
                 </div>
               </>
             ) : (
-              <p className="p-4 text-gray-400">Loading...</p>
+              //<p className="p-4 text-gray-400">Loading...</p>
+              <div className="flex items-center mr-10 mb-50 p-4">
+              <DotLottieReact
+                      src="https://lottie.host/e03cc549-83a8-4fd0-b662-7351abed847c/ziI4NFMwPL.lottie"
+                      loop
+                      autoplay
+                      style={{ width: "100px", height: "100px" }}
+                    />
+              <div className="flex flex-col gap-y-1">
+              <p className="p-1 text-white text-3xl">IPL Auction</p>
+              <p className="p-1 text-white text-lg">Starting Soon...</p>
+              </div>
+              </div>
             )}
           </div>
         </div>
