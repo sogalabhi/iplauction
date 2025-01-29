@@ -5,7 +5,7 @@ import StatsForHomePage from "../../components/StatsForHomePage";
 
 const PlayerCard = ({ player, showHammer, currentBidder, currentBid, showPlayerCard }) => {
   const [isSold, setIsSold] = useState(false);
- 
+
   const roleIcons = {
     "Batsmen": "🏏",
     "Bowler": "⚾",
@@ -56,7 +56,6 @@ const PlayerCard = ({ player, showHammer, currentBidder, currentBid, showPlayerC
       </div>
       <h2 className="text-xl font-bold mt-4">{player.player_name} {roleIcons[player.category]}</h2>
 
-
       <div className="flex gap-4 mt-2 py-5 justify-center items-center">
         <div className="border-slate-200 rounded-lg border-4 transform skew-x-12 px-4 py-2">
           <span className="inline-block transform -skew-x-12 ">
@@ -71,7 +70,7 @@ const PlayerCard = ({ player, showHammer, currentBidder, currentBid, showPlayerC
         </div>
       </div>
       {currentBidder != null &&
-        <h2 className="text-xl font-bold animate-pulse mt-4 text-red-500 "> {showPlayerCard == true ? 'Bought By' : 'Current Bidder'}: {currentBidder}</h2>
+        <h2 className={`text-xl font-bold animate-pulse mt-4 ${showPlayerCard == true ? 'text-green-500' : 'text-yellow-400'}`}> {showPlayerCard == true ? 'Sold to' : 'Current Bidder'}: {currentBidder}</h2>
       }
 
       <StatsForHomePage stats={player} />
@@ -80,6 +79,7 @@ const PlayerCard = ({ player, showHammer, currentBidder, currentBid, showPlayerC
         <div className="absolute text-3xl font-bold text-green-600 top-10">
           🎉 Player Sold! 🎉
         </div>
+
       )}
     </div>
   );

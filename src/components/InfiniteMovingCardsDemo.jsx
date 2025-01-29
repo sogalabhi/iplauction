@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import "tailwindcss/tailwind.css";
 import { fetcnsoldPlayers } from "../utils/getSoldPlayers";
+import { InfiniteMovingCards } from "../components/ui/infinite-moving-cards";
 
 export function InfiniteMovingCardsDemo() {
   const [soldPlayers, setsoldPlayers] = useState([]);
@@ -10,16 +11,27 @@ export function InfiniteMovingCardsDemo() {
     const fetchPlayers = async () => {
       try {
         const data = await fetcnsoldPlayers();
-        console.log("Fetched sold players:", data);
-        setsoldPlayers(data); // Update state with the fetched players
+        const filteredPlayers = data.filter(player => player.sold_to_team_id > 0);
+        setsoldPlayers(filteredPlayers); // Update state with the fetched players
       } catch (error) {
         console.error("Error fetching players:", error);
       }
     };
 
     fetchPlayers();
-  }, [])
+  }, [soldPlayers])
+  function formatPriceInLakhs(price) {
 
+    if (price >= 100) {
+      // Convert to crore
+      const crore = (price / 100).toFixed(2); // 2 decimal places
+      return `${Number(crore).toLocaleString('en-IN')} Cr`;
+    } else {
+      // Keep it in lakh
+      return `${Number(price).toLocaleString('en-IN')} Lakh`;
+      // return price;
+    }
+  }
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -29,17 +41,21 @@ export function InfiniteMovingCardsDemo() {
       <h2 className="text-3xl font-bold text-white mb-6 text-center">
         Purchased Players
       </h2>
-
+      <InfiniteMovingCards
+        items={soldPlayers}
+        direction="right"
+        speed="slow"
+      />
       <div className="h-96 rounded-md flex items-center justify-center relative overflow-hidden">
         <div className="relative w-full overflow-hidden">
           {/* Infinite scroll container */}
           <div
-            className={`flex gap-8 ${isHovered ? "pause" : "animate-[scroll_15s_linear_infinite]"
+            className={`flex gap-8 ${isHovered ? "pause" : "animate-[scroll_5s_linear_infinite]"
               }`}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
-            {soldPlayers.concat(soldPlayers).concat(soldPlayers).concat(soldPlayers).map((player, index) => (
+            {soldPlayers.map((player, index) => (
               <div
                 key={index}
                 className="w-72 h-96 p-4 bg-gray-800 dark:bg-gray-900 rounded-xl shadow-xl flex-shrink-0 border border-gray-700 relative transform transition-transform duration-300 hover:scale-110"
@@ -54,7 +70,7 @@ export function InfiniteMovingCardsDemo() {
                 <div className="p-4 text-center flex flex-col justify-between h-1/3">
                   <p className="text-lg text-gray-300">Team: {player.player_name}</p>
                   <p className="text-lg text-green-400 font-semibold">
-                    Amount: {player.final_price}
+                    Sold Price: {formatPriceInLakhs(player.final_price)}
                   </p>
                   <p className="text-lg text-green-400 font-semibold">
                     Sold To: {player.sold_to_team}
@@ -65,26 +81,6 @@ export function InfiniteMovingCardsDemo() {
           </div>
         </div>
       </div>
-
-      {/* Custom Styles for Animation */}
-      <style jsx>{`
-        @keyframes scroll {
-          from {
-            transform: translateX(0);
-          }
-          to {
-            transform: translateX(-50%);
-          }
-        }
-
-        .pause {
-          animation-play-state: paused;
-        }
-
-        .animate-[scroll_15s_linear_infinite] {
-          animation: scroll 15s linear infinite;
-        }
-      `}</style>
     </div>
   );
 }
