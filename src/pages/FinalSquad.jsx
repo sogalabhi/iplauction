@@ -4,8 +4,6 @@ import { fetchTeamsWithSquads } from "../utils/teamswithplayers";
 
 const roleIcons = {
   "Batsmen": "🏏",
-  "Bowler": "🎯",
-  "All-rounder": "🏏🎯",
   "WK": "🧤",
 };
 
@@ -90,7 +88,19 @@ const TeamsWithCompactDesign = () => {
                             <span className="text-blue-500 text-lg animate-bounce">✈️</span>
                           )}
                         </div>
-                        <span className="text-gray-600 text-xs">{roleIcons[player.role]}</span>
+                        {console.log((player.role == "Batsman" || player.role == 'Wicket Keeper'))}
+                        {
+                          (player.role == "Batsman") && <span className="text-gray-600 text-xs"></span>
+                        }
+                        {
+                          (player.role == "Bowler") && <img src="https://cdn-icons-png.flaticon.com/512/5140/5140413.png" alt="ball" className="w-4" />
+                        }
+                        {
+                          (player.role == "Wicket Keeper") && <img src="https://cdn-icons-png.flaticon.com/512/13132/13132322.png" alt="ball" className="w-4" />
+                        }
+                        {
+                          (player.role == "All Rounder") && <img src="https://cdn-icons-png.flaticon.com/512/4744/4744891.png" alt="ball" className="w-4" />
+                        }
                       </li>
                     ))}
                   </ul>

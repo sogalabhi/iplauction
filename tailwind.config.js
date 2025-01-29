@@ -8,9 +8,16 @@ export default {
           "0%": { transform: "translateX(100%)" },
           "100%": { transform: "translateX(-100%)" },
         },
+        scroll2: {
+          to: {
+            transform: "translate(calc(-50% - 0.5rem))",
+          },
+        },
       },
       animation: {
-        scroll: "scroll 15s linear infinite",
+        scroll: "scroll 5s linear infinite",
+        scroll2:
+          "scroll2 var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite",
       },
     },
   },

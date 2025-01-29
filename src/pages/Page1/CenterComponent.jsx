@@ -80,6 +80,9 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
     } catch (error) {
       console.error("Error in marking as unsold:", error.message);
     }
+    setCurrentBid(0);
+    setCurrentBidderId(0);
+    setCurrentBidder(null);
     await getTeamAndPlayers();
   }
   const handleKeyPress = async (event) => {
@@ -92,7 +95,11 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
         let final_bid;
         if (prevBid === 0) {
           final_bid = playersList[0].base_price;
-        } else if (prevBid < 100) {
+        }
+        else if (prevBid === 150) {
+          final_bid = prevBid + 10;
+        }
+        else if (prevBid < 100) {
           final_bid = prevBid + 10;
         } else if (prevBid < 500) {
           final_bid = prevBid + 20;
@@ -136,9 +143,9 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
         className="absolute w-auto h-full max-h-full object-cover opacity-40"></video>
       {!isPlayerSold && !showPlayerCard && (
         <div className="py-1 relative z-10">
-          <h1 className="text-center text-5xl pt-10 relati z-10 heading-font" style={{ textShadow: "4px 4px 0px #4f829c" }}>MOCK IPL AUCTION</h1>
-          <h2 className="text-center text-2xl pt-2">Sponsored By</h2>
-          <div className="flex justify-center items-center gap-4 my-4">
+          <h1 className="text-center text-5xl pt-2 relati z-10 heading-font" style={{ textShadow: "4px 4px 0px #4f829c" }}>IPL MOCK AUCTION</h1>
+          <h2 className="text-center text-lg pt-4">Sponsored by</h2>
+          <div className="flex justify-center items-center gap-4  mt-2">
             <img src="https://banner2.cleanpng.com/20240111/qtv/transparent-google-logo-colorful-google-logo-with-bold-green-1710929465092.webp" className="w-10 h-10 rounded-full hover:scale-105 transition" alt="" />
             <img src="https://banner2.cleanpng.com/20240111/qtv/transparent-google-logo-colorful-google-logo-with-bold-green-1710929465092.webp" className="w-10 h-10 rounded-full hover:scale-105 transition" alt="" />
             <img src="https://banner2.cleanpng.com/20240111/qtv/transparent-google-logo-colorful-google-logo-with-bold-green-1710929465092.webp" className="w-10 h-10 rounded-full hover:scale-105 transition" alt="" />
@@ -188,7 +195,7 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
             </button>}
             <Link
               to={"/teamswithsquad"}
-              className="flexw-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+              className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
             >
               Team Squad
             </Link>
@@ -221,14 +228,22 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
               onSold={setIsPlayerSold}
               currentBidder={currentBidder}
               currentBid={currentBid}
+              showPlayerCard={showPlayerCard}
             />}
-            <div className="text-center mt-4">
+            <div className="text-center mt-4 flex gap-4">
               <button
                 onClick={nextPlayer}
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 relative z-30"
               >
                 Next Player
               </button>
+
+              <Link
+                to={"/break"}
+                className="w-36 h-12 relative z-30 max-w-xs bg-green-500 text-white px-2 py-2 rounded hover:bg-green-600"
+              >
+                Break
+              </Link>
             </div>
           </div>
         )
