@@ -80,6 +80,9 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
     } catch (error) {
       console.error("Error in marking as unsold:", error.message);
     }
+    setCurrentBid(0);
+    setCurrentBidderId(0);
+    setCurrentBidder(null);
     await getTeamAndPlayers();
   }
   const handleKeyPress = async (event) => {
@@ -221,6 +224,7 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
               onSold={setIsPlayerSold}
               currentBidder={currentBidder}
               currentBid={currentBid}
+              showPlayerCard={showPlayerCard}
             />}
             <div className="text-center mt-4">
               <button
