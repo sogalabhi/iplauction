@@ -3,7 +3,7 @@ import Confetti from "react-confetti";
 import Ha from "./Ha";
 import StatsForHomePage from "../../components/StatsForHomePage";
 
-const PlayerCard = ({ player, showHammer, currentBidder, currentBid }) => {
+const PlayerCard = ({ player, showHammer, currentBidder, currentBid, onSold }) => {
   const [isSold, setIsSold] = useState(false);
   const roleIcons = {
     "Batsmen": "🏏",
@@ -11,7 +11,6 @@ const PlayerCard = ({ player, showHammer, currentBidder, currentBid }) => {
     "All-rounder": "🏏⚾",
     "WK": "🧤",
   };
-
   useEffect(() => {
     setIsSold(false);
   }, [player]);
@@ -38,7 +37,7 @@ const PlayerCard = ({ player, showHammer, currentBidder, currentBid }) => {
       )}
 
       <div className="relative flex justify-center items-center">
-        <div className="absolute w-[30rem] h-[15rem] rounded-t-full bg-gradient-to-r from-blue-500 to-purple-500 opacity-50 blur-lg animate-pulse"></div>
+        <div className="absolute w-[30rem] h-[15rem] rounded-t-full bg-gradient-to-br from-[#00d4e1] to-purple-500 opacity-50 blur-lg animate-pulse"></div>
         <div
           className={`relative w-96 h-48 rounded-t-full overflow-visible shadow-xl`}
         >
@@ -55,7 +54,7 @@ const PlayerCard = ({ player, showHammer, currentBidder, currentBid }) => {
         </div>
       </div>
       <h2 className="text-xl font-bold mt-4">{player.player_name} {roleIcons[player.category]}</h2>
-      
+
 
       <div className="flex gap-4 mt-2 py-5 justify-center items-center">
         <div className="border-slate-200 rounded-lg border-4 transform skew-x-12 px-4 py-2">
@@ -66,12 +65,12 @@ const PlayerCard = ({ player, showHammer, currentBidder, currentBid }) => {
 
         <div className="border-slate-200 rounded-lg border-4 transform -skew-x-12 px-4 py-2">
           <span className="inline-block transform skew-x-12 ">
-            {showHammer ? 'Current Bid' : 'Final Price'}: ₹{formatPriceInLakhs(currentBid)}
+            {isSold ? 'Current Bid' : 'Final Price'}: ₹{formatPriceInLakhs(currentBid)}
           </span>
         </div>
       </div>
       {currentBidder != null &&
-        <h2 className="text-xl font-bold animate-pulse mt-4 text-red-500 "> {showHammer ? 'Current Bidder' : 'Bought By'}: {currentBidder}</h2>
+        <h2 className="text-xl font-bold animate-pulse mt-4 text-red-500 "> {isSold ? 'Current Bidder' : 'Bought By'}: {currentBidder}</h2>
       }
 
       <StatsForHomePage stats={player} />
