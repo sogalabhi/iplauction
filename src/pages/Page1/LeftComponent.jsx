@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { fetchExpensivePlayer } from '../../utils/expensivePlayer.js';
 import { fetchPrevPlayer } from '../../utils/previousPlayer.js';
 import { getTeamFromTeamID } from '../../utils/getTeamfromTeamId.js';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+
 
 const LeftComponent = () => {
 
@@ -61,6 +63,8 @@ const LeftComponent = () => {
   }, [lastSoldPlayer1]);
 
   console.log(mostExpensivePlayer1);
+  console.log("lastSold",lastSoldPlayer1);
+  console.log("id:",getTeamFromTeamID(0));
 
   console.log(mostExpensiveTeam);
 
@@ -99,7 +103,19 @@ const LeftComponent = () => {
                 </div>
               </>
             ) : (
-              <p className="p-4 text-gray-400">Loading...</p>
+              //<p className="p-4 text-gray-400">Loading...</p>
+              <div className="flex items-center mr-10 mb-50 p-4">
+              <DotLottieReact
+                      src="https://lottie.host/e03cc549-83a8-4fd0-b662-7351abed847c/ziI4NFMwPL.lottie"
+                      loop
+                      autoplay
+                      style={{ width: "100px", height: "100px" }}
+                    />
+              <div className="flex flex-col gap-y-1">
+              <p className="p-1 text-white text-3xl">IPL Auction</p>
+              <p className="p-1 text-white text-lg">Starting Soon...</p>
+              </div>
+              </div>
             )}
           </div>
         </div>
@@ -138,7 +154,19 @@ const LeftComponent = () => {
                 </div>
               </>
             ) : (
-              <p className="p-4 text-gray-400">Loading...</p>
+              //<p className="p-4 text-gray-400">Loading...</p>
+              <div className="flex items-center mr-10 mb-50 p-4">
+              <DotLottieReact
+                      src="https://lottie.host/e03cc549-83a8-4fd0-b662-7351abed847c/ziI4NFMwPL.lottie"
+                      loop
+                      autoplay
+                      style={{ width: "100px", height: "100px" }}
+                    />
+              <div className="flex flex-col gap-y-1">
+              <p className="p-1 text-white text-3xl">IPL Auction</p>
+              <p className="p-1 text-white text-lg">Starting Soon...</p>
+              </div>
+              </div>
             )}
           </div>
         </div>
