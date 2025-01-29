@@ -10,6 +10,7 @@ import { Route, Router, Routes } from 'react-router-dom';
 import { getTeamFromTeamID } from './utils/getTeamfromTeamId';
 import { fetchUnsoldPlayers } from './utils/getUnSoldPlayers';
 import TimerPage from './pages/TimerPage';
+import CricketPlayersTable from './pages/Page1/players_test';
 
 function App() {
   const [players, setPlayers] = useState([]);
@@ -54,6 +55,7 @@ function App() {
         <Route path="/" element={<CenterComponent initteamlist={teamswithsquad} initplayersList={players} />} />
         <Route path="/teamswithsquad" element={<TeamsWithCompactDesign />} />
         <Route path="/break" element={<TimerPage />} />
+        <Route path="/players" element={<CricketPlayersTable />} />
       </Routes>
 
     </>
