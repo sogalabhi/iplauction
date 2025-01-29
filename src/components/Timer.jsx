@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { fetchExpensivePlayer } from "../utils/expensivePlayer.js";
 import { fetchPrevPlayer } from '../utils/previousPlayer.js';
+
 const Timer = ({ auctionEndTime }) => {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
   const [expensivePlayer, setExpensivePlayer] = useState(null)
@@ -20,13 +21,10 @@ const Timer = ({ auctionEndTime }) => {
   }
   function formatPriceInLakhs(price) {
     if (price >= 100) {
-      // Convert to crore
       const crore = (price / 100).toFixed(2); // 2 decimal places
       return `${Number(crore).toLocaleString('en-IN')} Crore`;
     } else {
-      // Keep it in lakh
       return `${Number(price).toLocaleString('en-IN')} Lakh`;
-      // return price;
     }
   }
   useEffect(() => {
@@ -59,17 +57,17 @@ const Timer = ({ auctionEndTime }) => {
       </div>
     );
   }
-
   return (
-    <div className="flex items-center justify-between bg-gray-800 text-white p-6 rounded-lg shadow-lg max-w-4xl mx-auto space-x-4">
+    <div className="flex items-center justify-between bg-gray-800 text-white p-6 rounded-lg shadow-lg space-x-4 w-full">
       {/* Last Purchased Player */}
+      {console.log('lastSoldPlayer:', lastSoldPlayer)}
       {lastSoldPlayer &&
         <div className="flex items-center space-x-4">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/en/2/2b/Chennai_Super_Kings_Logo.svg"
+          {/* <img
+            src={lastSoldPlayerteamlogo}
             alt="MS Dhoni"
             className="w-16 h-16 rounded-full border border-gray-700"
-          />
+          /> */}
           <div>
             <p className="text-sm text-gray-400">Last Purchased Player</p>
             <p className="text-xl font-bold">{lastSoldPlayer[0].player_name}</p>
@@ -113,11 +111,11 @@ const Timer = ({ auctionEndTime }) => {
             <p className="text-sm text-gray-400">Player: {expensivePlayer[0].player_name}</p>
             <p className="text-sm text-gray-400">Team: {expensivePlayer[0].sold_to_team}</p>
           </div>
-          <img
+          {/* <img
             src="https://upload.wikimedia.org/wikipedia/en/2/2b/Chennai_Super_Kings_Logo.svg"
             alt="Ben Stokes"
             className="w-16 h-16 rounded-full border border-gray-700"
-          />
+          /> */}
         </div>}
     </div>
   );

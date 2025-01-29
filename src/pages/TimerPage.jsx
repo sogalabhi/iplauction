@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import Timer from "../components/Timer";
 import { InfiniteMovingCardsDemo } from "../components/InfiniteMovingCardsDemo";
 import { Header } from "../components/Header";
+import { Link } from "react-router-dom";
 
 const TimerPage = () => {
   useEffect(() => {
@@ -15,6 +16,12 @@ const TimerPage = () => {
 
   return (
     <div className="relative w-screen h-screen flex flex-col items-center justify-evenly text-white overflow-hidden">
+      <Link
+        to={"/"}
+        className="absolute z-20 top-5 left-10 bg-green-500 text-white px-4 py-2 my-2 rounded hover:bg-green-600"
+      >
+        Home
+      </Link>
       {/* Background Music */}
       <audio id="background-audio" loop>
         <source
@@ -35,7 +42,7 @@ const TimerPage = () => {
       </div>
 
       {/* Timer Section */}
-      <div className="relative z-10 w p-4">
+      <div className="relative z-10 w-full max-w-4xl p-4">
         <div className="p-3 rounded-lg border border-gray-700 shadow-lg backdrop-blur-m bg-white/10" >
           <Timer auctionEndTime="2025-02-20T18:30:00" />
         </div>
