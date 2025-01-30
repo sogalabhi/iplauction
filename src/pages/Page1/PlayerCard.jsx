@@ -84,7 +84,7 @@ const PlayerCard = ({ player, showHammer, currentBidder, currentBid, showPlayerC
       <StatsForHomePage stats={player} />
       {
         (showPlayerCard != true && player) && (
-          <div className="text-center flex gap-4 justify-center relative z-10">
+          <div className="text-center grid grid-cols-2 gap-4 justify-center relative z-10">
             {currentBid > 0 && <button
               onClick={markAsSold}
               className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"

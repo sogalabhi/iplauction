@@ -170,7 +170,7 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
             <div className="flex-1 pl-10">
               <LeftComponent />
             </div>
-            <div className="relative flex-1">
+            <div className="relative flex-1 mt-20">
               {playersList.length > 0 && <PlayerCard
                 markAsUnSold={markAsUnSold}
                 markAsSold={markAsSold}
