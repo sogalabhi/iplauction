@@ -70,63 +70,71 @@ const TeamsWithCompactDesign = () => {
             </div>
 
             {/* Squad Section */}
-            <div className="p-4">
-              <ul className="space-y-2">
-                <div className="grid grid-cols-2 gap-4">
-                  {/* First column */}
-                  <ul>
-                    {team.squad.slice(0, Math.ceil(team.squad.length / 2)).map((player, idx) => (
-                      <li
-                        key={idx}
-                        className="flex items-center justify-between bg-gray-200 p-2 my-1 rounded-lg transform hover:bg-gray-300 transition duration-200"
-                      >
-                        <div className="flex items-center">
-                          <span className="text-xs text-gray-800 font-semibold mr-2">
-                            {player.name}
-                          </span>
-                          {player.isOverseas && (
-                            <span className="text-blue-500 text-lg animate-bounce">✈️</span>
-                          )}
-                        </div>
-                        {console.log((player.role == "Batsman" || player.role == 'Wicket Keeper'))}
-                        {
-                          (player.role == "Batsman") && <span className="text-gray-600 text-xs"></span>
-                        }
-                        {
-                          (player.role == "Bowler") && <img src="https://cdn-icons-png.flaticon.com/512/5140/5140413.png" alt="ball" className="w-4" />
-                        }
-                        {
-                          (player.role == "Wicket Keeper") && <img src="https://cdn-icons-png.flaticon.com/512/13132/13132322.png" alt="ball" className="w-4" />
-                        }
-                        {
-                          (player.role == "All Rounder") && <img src="https://cdn-icons-png.flaticon.com/512/4744/4744891.png" alt="ball" className="w-4" />
-                        }
-                      </li>
-                    ))}
-                  </ul>
+            <div className="grid grid-cols-2 gap-1 px-2 py-1">
+              {/* First column */}
+              <ul>
+                {team.squad.slice(0, Math.ceil(team.squad.length / 2)).map((player, idx) => (
+                  <li
+                    key={idx}
+                    className="flex items-center justify-between bg-gray-200 p-2 my-1 rounded-lg transform hover:bg-gray-300 transition duration-200"
+                  >
+                    <div className="flex items-center justify-eve
+                        ">
+                      <span className="text-[8px]   text-gray-800 font-semibold mr-2">
+                        {player.name}
+                      </span>
+                      {player.isOverseas && (
+                        <img src="https://cdn-icons-png.flaticon.com/512/723/723955.png" alt="ball" className="w-3 absolute right-0 top-0" />
+                      )}
+                      {console.log((player.role == "Batsman" || player.role == 'Wicket Keeper'))}
+                      {
+                        (player.role == "Batsman") && <img src="https://cdn-icons-png.flaticon.com/512/1454/1454437.png" alt="ball" className="w-4" />
+                      }
+                      {
+                        (player.role == "Bowler") && <img src="https://cdn-icons-png.flaticon.com/512/5140/5140352.png" alt="ball" className="w-4" />
+                      }
+                      {
+                        (player.role == "Wicket Keeper") && <img src="https://cdn-icons-png.flaticon.com/512/13132/13132322.png" alt="ball" className="w-4" />
+                      }
+                      {
+                        (player.role == "All Rounder") && <img src="https://cdn-icons-png.flaticon.com/512/9097/9097536.png" alt="ball" className="w-4" />
+                      }
 
-                  {/* Second column */}
-                  <ul>
-                    {team.squad.slice(Math.ceil(team.squad.length / 2)).map((player, idx) => (
-                      <li
-                        key={idx}
-                        className="flex items-center justify-between bg-gray-200 px-1 my-1 rounded-lg transform hover:bg-gray-300 transition duration-200"
-                      >
-                        <div className="flex items-center">
-                          <span className="text-xs text-gray-800 font-semibold mr-2">
-                            {player.name}
-                          </span>
-                          {player.isOverseas && (
-                            <span className="text-blue-500 animate-bounce">✈️</span>
-                          )}
-                        </div>
-                        <span className="text-gray-600 text-xs">{roleIcons[player.role]}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
 
+              {/* Second column */}
+              <ul>
+                {team.squad.slice(Math.ceil(team.squad.length / 2)).map((player, idx) => (
+                  <li
+                    key={idx}
+                    className="flex items-center justify-between bg-gray-200 px-1 p-2 my-1 rounded-lg transform hover:bg-gray-300 transition duration-200"
+                  >
+                    <div className="flex items-center">
+                      <span className="text-[8px] text-gray-800 font-semibold mr-2">
+                        {player.name}
+                      </span>
+                      {player.isOverseas && (
+                        <img src="https://cdn-icons-png.flaticon.com/512/723/723955.png" alt="ball" className="w-3 absolute right-0 top-0" />
+                      )}
+                      {
+                        (player.role == "Batsman") && <img src="https://cdn-icons-png.flaticon.com/512/1454/1454437.png" alt="ball" className="w-4" />
+                      }
+                      {
+                        (player.role == "Bowler") && <img src="https://cdn-icons-png.flaticon.com/512/5140/5140352.png" alt="ball" className="w-4" />
+                      }
+                      {
+                        (player.role == "Wicket Keeper") && <img src="https://cdn-icons-png.flaticon.com/512/13132/13132322.png" alt="ball" className="w-4" />
+                      }
+                      {
+                        (player.role == "All Rounder") && <img src="https://cdn-icons-png.flaticon.com/512/9097/9097536.png" alt="ball" className="w-4" />
+                      }
+                    </div>
 
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
