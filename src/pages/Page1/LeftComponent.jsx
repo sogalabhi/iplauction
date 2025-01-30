@@ -62,12 +62,6 @@ const LeftComponent = () => {
     }
   }, [lastSoldPlayer1]);
 
-  console.log(mostExpensivePlayer1);
-  console.log("lastSold",lastSoldPlayer1);
-  console.log("id:",getTeamFromTeamID(0));
-
-  console.log(mostExpensiveTeam);
-
   return (
     <div className="p-8 font-sans space-y-6">
       {/* Most Expensive Player */}

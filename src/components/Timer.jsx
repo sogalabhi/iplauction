@@ -3,11 +3,12 @@ import React, { useEffect, useState } from "react";
 import { fetchExpensivePlayer } from "../utils/expensivePlayer.js";
 import { fetchPrevPlayer } from '../utils/previousPlayer.js';
 
-const Timer = ({ auctionEndTime }) => {
+const Timer = ({ auctionEndTime, setAuctionEndTime }) => {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
   const [expensivePlayer, setExpensivePlayer] = useState(null)
   const [lastSoldPlayer, setLastSoldPlayer] = useState(null)
   function calculateTimeLeft() {
+    console.log(new Date(auctionEndTime));
     const difference = new Date(auctionEndTime) - new Date();
     if (difference > 0) {
       return {
@@ -19,6 +20,12 @@ const Timer = ({ auctionEndTime }) => {
       return null;
     }
   }
+  useEffect(() => {
+    if (auctionEndTime) {
+      setTimeLeft(calculateTimeLeft(auctionEndTime));
+    }
+  }, [auctionEndTime]);
+
   function formatPriceInLakhs(price) {
     if (price >= 100) {
       const crore = (price / 100).toFixed(2); // 2 decimal places
@@ -44,12 +51,14 @@ const Timer = ({ auctionEndTime }) => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
+      setTimeLeft((prevTimeLeft) => {
+        const updatedTimeLeft = calculateTimeLeft(auctionEndTime);
+        return updatedTimeLeft ? { ...updatedTimeLeft } : null;
+      });
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
-
+  }, [auctionEndTime]);
   if (!timeLeft) {
     return (
       <div className="text-red-600 text-xl font-bold text-center">
@@ -59,8 +68,8 @@ const Timer = ({ auctionEndTime }) => {
   }
   return (
     <div className="flex items-center justify-between bg-gray-800 text-white p-6 rounded-lg shadow-lg space-x-4 w-full">
+
       {/* Last Purchased Player */}
-      {console.log('lastSoldPlayer:', lastSoldPlayer)}
       {lastSoldPlayer &&
         <div className="flex items-center space-x-4">
           {/* <img

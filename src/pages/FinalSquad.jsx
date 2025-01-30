@@ -85,7 +85,6 @@ const TeamsWithCompactDesign = () => {
                       {player.isOverseas && (
                         <img src="https://cdn-icons-png.flaticon.com/512/723/723955.png" alt="ball" className="w-3 absolute right-0 top-0" />
                       )}
-                      {console.log((player.role == "Batsman" || player.role == 'Wicket Keeper'))}
                       {
                         (player.role == "Batsman") && <img src="https://cdn-icons-png.flaticon.com/512/1454/1454437.png" alt="ball" className="w-3 absolute right-4" />
                       }

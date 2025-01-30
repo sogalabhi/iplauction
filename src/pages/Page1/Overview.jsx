@@ -39,7 +39,6 @@ const Overview = () => {
           </tr>
         </thead>
         <tbody>
-          {console.log('teams:', teams)}
           {teams.map((team, idx) => (
             <tr key={idx} className="hover:bg-white/5 rounded-lg">
               <td className="p-2">{team.team_id}</td>

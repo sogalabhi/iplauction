@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 const PlayerCard = ({ player, showHammer, currentBidder, currentBid, showPlayerCard, markAsUnSold, markAsSold }) => {
   const [isSold, setIsSold] = useState(false);
-
+  var cols = currentBid > 0 ? "grid-cols-2" : "grid-cols-3"
   const roleIcons = {
     "Batsmen": "🏏",
     "Bowler": "⚾",
@@ -45,8 +45,8 @@ const PlayerCard = ({ player, showHammer, currentBidder, currentBid, showPlayerC
           className={`relative w-96 h-48 rounded-t-full overflow-visible shadow-xl`}
         >
           {isSold && (
-            <div className="text-3xl font-bold text-green-600 ">
-              🎉 Player Sold! 🎉
+            <div className="text-center text-5xl pt-2 relative z-10 heading-font" style={{ textShadow: "4px 4px 0px #4f829c" }}>
+              Player Sold!
             </div>
 
           )}
@@ -62,7 +62,7 @@ const PlayerCard = ({ player, showHammer, currentBidder, currentBid, showPlayerC
           )}
         </div>
       </div>
-      <h2 className="text-xl font-bold mt-4">{player.player_name} {roleIcons[player.category]}</h2>
+      <h2 className="text-xl font-bold mt-4 z-30">{player.player_name} {roleIcons[player.category]}</h2>
 
       <div className="flex gap-4 mt-2 py-5 justify-center items-center">
         <div className="border-slate-200 rounded-lg border-4 transform skew-x-12 px-4 py-2">
@@ -80,11 +80,10 @@ const PlayerCard = ({ player, showHammer, currentBidder, currentBid, showPlayerC
       {currentBidder != null &&
         <h2 className={`text-xl font-bold animate-pulse mt-4 ${showPlayerCard == true ? 'text-green-500' : 'text-yellow-400'}`}> {showPlayerCard == true ? 'Sold to' : 'Current Bidder'}: {currentBidder}</h2>
       }
-    {console.log(showPlayerCard != true && player)}
       <StatsForHomePage stats={player} />
       {
         (showPlayerCard != true && player) && (
-          <div className="text-center grid grid-cols-2 gap-4 justify-center relative z-10">
+          <div className={`text-center grid ${cols} gap-4 justify-center relative z-10`}>
             {currentBid > 0 && <button
               onClick={markAsSold}
               className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
@@ -99,7 +98,7 @@ const PlayerCard = ({ player, showHammer, currentBidder, currentBid, showPlayerC
             </Link>
             <Link
               to={"/break"}
-              className="flexw-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+              className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
             >
               Break
             </Link>
