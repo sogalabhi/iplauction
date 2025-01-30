@@ -78,8 +78,7 @@ const TeamsWithCompactDesign = () => {
                     key={idx}
                     className="flex items-center justify-between bg-gray-200 p-2 my-1 rounded-lg transform hover:bg-gray-300 transition duration-200"
                   >
-                    <div className="flex items-center justify-eve
-                        ">
+                    <div className="flex items-center justify-even">
                       <span className="text-[8px]   text-gray-800 font-semibold mr-2">
                         {player.name}
                       </span>
@@ -88,18 +87,17 @@ const TeamsWithCompactDesign = () => {
                       )}
                       {console.log((player.role == "Batsman" || player.role == 'Wicket Keeper'))}
                       {
-                        (player.role == "Batsman") && <img src="https://cdn-icons-png.flaticon.com/512/1454/1454437.png" alt="ball" className="w-4" />
+                        (player.role == "Batsman") && <img src="https://cdn-icons-png.flaticon.com/512/1454/1454437.png" alt="ball" className="w-3 absolute right-4" />
                       }
                       {
-                        (player.role == "Bowler") && <img src="https://cdn-icons-png.flaticon.com/512/5140/5140352.png" alt="ball" className="w-4" />
+                        (player.role == "Bowler") && <img src="https://cdn-icons-png.flaticon.com/512/5140/5140352.png" alt="ball" className="w-3 absolute right-4" />
                       }
                       {
-                        (player.role == "Wicket Keeper") && <img src="https://cdn-icons-png.flaticon.com/512/13132/13132322.png" alt="ball" className="w-4" />
+                        (player.role == "Wicket Keeper") && <img src="https://cdn-icons-png.flaticon.com/512/13132/13132322.png" alt="ball" className="w-3 absolute right-4" />
                       }
                       {
-                        (player.role == "All Rounder") && <img src="https://cdn-icons-png.flaticon.com/512/9097/9097536.png" alt="ball" className="w-4" />
+                        (player.role == "All Rounder") && <img src="https://cdn-icons-png.flaticon.com/512/9097/9097536.png" alt="ball" className="w-3 absolute right-4" />
                       }
-
                     </div>
                   </li>
                 ))}
@@ -120,16 +118,16 @@ const TeamsWithCompactDesign = () => {
                         <img src="https://cdn-icons-png.flaticon.com/512/723/723955.png" alt="ball" className="w-3 absolute right-0 top-0" />
                       )}
                       {
-                        (player.role == "Batsman") && <img src="https://cdn-icons-png.flaticon.com/512/1454/1454437.png" alt="ball" className="w-4" />
+                        (player.role == "Batsman") && <img src="https://cdn-icons-png.flaticon.com/512/1454/1454437.png" alt="ball" className="w-3 absolute right-4" />
                       }
                       {
-                        (player.role == "Bowler") && <img src="https://cdn-icons-png.flaticon.com/512/5140/5140352.png" alt="ball" className="w-4" />
+                        (player.role == "Bowler") && <img src="https://cdn-icons-png.flaticon.com/512/5140/5140352.png" alt="ball" className="w-3 absolute right-4" />
                       }
                       {
-                        (player.role == "Wicket Keeper") && <img src="https://cdn-icons-png.flaticon.com/512/13132/13132322.png" alt="ball" className="w-4" />
+                        (player.role == "Wicket Keeper") && <img src="https://cdn-icons-png.flaticon.com/512/13132/13132322.png" alt="ball" className="w-3 absolute right-4" />
                       }
                       {
-                        (player.role == "All Rounder") && <img src="https://cdn-icons-png.flaticon.com/512/9097/9097536.png" alt="ball" className="w-4" />
+                        (player.role == "All Rounder") && <img src="https://cdn-icons-png.flaticon.com/512/9097/9097536.png" alt="ball" className="w-3 absolute right-4" />
                       }
                     </div>
 
