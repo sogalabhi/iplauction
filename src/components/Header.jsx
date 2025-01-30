@@ -15,12 +15,8 @@ export function Header() {
 
       {/* Main Header: E-Cell NITK */}
       <div className="text-center relative z-10 flex-grow">
-        <h1 className="text-3xl font-semibold font-poppins text-green-400 mb-1">
-          E-Cell NITK
-        </h1>
-        <h2 className="text-xl font-semibold font-poppins text-white">
-          IPL Auction
-        </h2>
+        <h1 className="text-center text-5xl py-2 relative z-10 heading-font" style={{ textShadow: "4px 4px 0px #4f829c" }}>IPL MOCK AUCTION</h1>
+
       </div>
 
       {/* Right Logo */}

@@ -40,7 +40,6 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
   }
 
   const markAsSold = async () => {
-    console.log("Mark as Sold");
     setShowHammer(true);
     var player = playersList[0];
     const { id, final_price, sold_to_team_id, sold_to_team } = player;
@@ -109,7 +108,6 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
         var bidding_team = teamsList[key - 1].name;
         var bidding_team_purse = teamsList[key - 1].purse;
         if (final_bid > bidding_team_purse) {
-          console.log("not possible");
           return prevBid;
         }
         else {
@@ -145,7 +143,7 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
       <img src="https://ecell.nitk.ac.in/incub8L.png" alt="" className="w-32 absolute z-40 top-4 right-4" />
       {!isPlayerSold && !showPlayerCard && (
         <div className="py-1 relative z-10">
-          <h1 className="text-center text-5xl pt-2 relati z-10 heading-font" style={{ textShadow: "4px 4px 0px #4f829c" }}>IPL MOCK AUCTION</h1>
+          <h1 className="text-center text-5xl pt-2 relative z-10 heading-font" style={{ textShadow: "4px 4px 0px #4f829c" }}>IPL MOCK AUCTION</h1>
           <h2 className="text-center text-lg pt-4">Sponsored by</h2>
           <div className="flex justify-center items-center gap-4  mt-2">
             <img src="https://ecellnitk.netlify.app/sponsors/sponsor13.png" className=" bg-white p-2 h-10 rounded-full hover:scale-105 transition" alt="" />
@@ -210,7 +208,7 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
             {isPlayerSold && (
               <ReactConfetti width={window.innerWidth} height={window.innerHeight} />
             )}
-            <h1 className="text-4xl py-8 mb-20 z-20">🎉 Player Sold 🎉</h1>
+            <h1 className="text-center pt-2 relative heading-font text-5xl mt-6 py-8 mb-20 z-20" style={{ textShadow: "4px 4px 0px #4f829c" }}>Player Sold</h1>
             {playersList.length > 0 && <PlayerCard
               key={0}
               player={playersList[0]}
@@ -222,16 +220,22 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
             <div className="text-center mt-4 flex gap-4">
               <button
                 onClick={nextPlayer}
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 relative z-30"
+                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 relative z-30"
               >
                 Next Player
               </button>
 
               <Link
                 to={"/break"}
-                className="w-36 h-12 relative z-30 max-w-xs bg-green-500 text-white px-2 py-2 rounded hover:bg-green-600"
+                className="relative z-30 bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600"
               >
                 Break
+              </Link>
+              <Link
+                to={"/teamswithsquad"}
+                className="relative z-30 bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600"
+              >
+                Team Squad
               </Link>
             </div>
           </div>

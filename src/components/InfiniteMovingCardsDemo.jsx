@@ -37,18 +37,17 @@ export function InfiniteMovingCardsDemo() {
   return (
     <div className="w-full max-w-6xl bg-gray-900 p-6 rounded-lg border border-gray-700 shadow-xl mb-8">
       {/* Purchased Players Subheading */}
-      {console.log('soldplayers: ', soldPlayers)}
       <h2 className="text-3xl font-bold text-white mb-6 text-center">
         Purchased Players
       </h2>
       <InfiniteMovingCards
         items={soldPlayers}
         direction="right"
-        speed="slow"
+        speed="fast"
       />
-      <div className="h-96 rounded-md flex items-center justify-center relative overflow-hidden">
+      {/* <div className="h-96 rounded-md flex items-center justify-center relative overflow-hidden">
         <div className="relative w-full overflow-hidden">
-          {/* Infinite scroll container */}
+          {/* Infinite scroll container 
           <div
             className={`flex gap-8 ${isHovered ? "pause" : "animate-[scroll_5s_linear_infinite]"
               }`}
@@ -80,7 +79,7 @@ export function InfiniteMovingCardsDemo() {
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
