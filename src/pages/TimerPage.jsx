@@ -35,6 +35,12 @@ const TimerPage = () => {
       >
         Home
       </Link>
+      <Link
+        to={"/teamswithsquad"}
+        className="absolute z-20 top-20 left-10 bg-green-500 text-white px-4 py-2 my-2 rounded hover:bg-green-600"
+      >
+        Team Squad
+      </Link>
       <button onClick={incrementby5} className="rounded-full w-10 absolute bottom-4 left-4 bg-white text-black p-2 z-30">+5</button>
       <button onClick={incrementby30} className="rounded-full w-10 absolute bottom-4 left-16 bg-white text-black p-2 z-30">+30</button>
       <button onClick={decrementby5} className="rounded-full w-10 absolute bottom-4 right-4 bg-white text-black p-2 z-30">-5</button>
