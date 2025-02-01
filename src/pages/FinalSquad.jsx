@@ -32,7 +32,7 @@ const TeamsWithCompactDesign = () => {
   }, [])
 
   return (
-    <div className="p-4 bg-[url('https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/sign/teamlogo/bg.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0ZWFtbG9nby9iZy5qcGciLCJpYXQiOjE3Mzc2NjkyMTksImV4cCI6MTc2OTIwNTIxOX0.EV0N-PHzI_vLLYN6ImccszenCZbYuHWPf_DQ_5nWOaw&t=2025-01-23T21%3A53%3A36.437Z')] bg-no-repeat bg-cover from-[#361602] from-40% to-[#021e31] min-h-screen flex flex-col items-center justify-center">
+    <div className="p-4 bg-[url('https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/public/video//13859443_5392092.jpg')] bg-no-repeat bg-cover from-[#361602] from-40% to-[#021e31] min-h-screen flex flex-col items-center justify-center">
 
       <h1 className="text-6xl font-extrabold text-center mt-2 mb-4 tracking-wide animate-pulse text-white">
         Teams Squad
@@ -42,6 +42,12 @@ const TeamsWithCompactDesign = () => {
         className="absolute top-5 left-10 bg-green-500 text-white px-4 py-2 my-2 rounded hover:bg-green-600"
       >
         Home
+      </Link>
+      <Link
+        to={"/break"}
+        className="absolute top-5 right-10 bg-green-500 text-white px-4 py-2 my-2 rounded hover:bg-green-600"
+      >
+        Break
       </Link>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-6">
         {teamswithsquad.map((team, index) => (
