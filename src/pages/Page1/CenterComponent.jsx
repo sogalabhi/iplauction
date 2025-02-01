@@ -103,7 +103,7 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
         } else if (prevBid < 500) {
           final_bid = prevBid + 20;
         } else {
-          final_bid = prevBid + 50;
+          final_bid = prevBid + 25;
         }
         var bidding_team = teamsList[key - 1].name;
         var bidding_team_purse = teamsList[key - 1].purse;
