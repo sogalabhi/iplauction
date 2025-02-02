@@ -85,7 +85,7 @@ const TeamsWithCompactDesign = () => {
                     className="flex items-center justify-between bg-gray-200 p-2 my-1 rounded-lg transform hover:bg-gray-300 transition duration-200"
                   >
                     <div className="flex items-center justify-even">
-                      <span className="text-[8px]   text-gray-800 font-semibold mr-2">
+                      <span className="text-[12px]   text-gray-800 font-semibold mr-2">
                         {player.name}
                       </span>
                       {player.isOverseas && (
@@ -116,7 +116,7 @@ const TeamsWithCompactDesign = () => {
                     className="flex items-center justify-between bg-gray-200 px-1 p-2 my-1 rounded-lg transform hover:bg-gray-300 transition duration-200"
                   >
                     <div className="flex items-center">
-                      <span className="text-[8px] text-gray-800 font-semibold mr-2">
+                      <span className="text-[12px] text-gray-800 font-semibold mr-2">
                         {player.name}
                       </span>
                       {player.isOverseas && (
