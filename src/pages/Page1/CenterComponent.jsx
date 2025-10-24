@@ -9,6 +9,7 @@ import { markPlayerAsSold } from "../../utils/updatePlayer";
 import { fetchTeamsWithSquads } from "../../utils/teamswithplayers";
 import { fetchUnsoldPlayers } from "../../utils/getUnSoldPlayers";
 import { updatePurseOfTeam } from "../../utils/updateTeam";
+import { supabase } from "../../lib/supabase.js";
 
 const CenterComponent = ({ initteamlist, initplayersList }) => {
   const [isPlayerSold, setIsPlayerSold] = useState(false);
@@ -135,8 +136,7 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
 
   return (
     <div className={`min-h-screen bg-[#193153]  text-white`}>
-      <video src=
-        "https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/public/video//video_2025-01-28%2022_42_02.webm"
+      <video src={`${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/video//video_2025-01-28%2022_42_02.webm`}
         autoplay="{true}" loop muted
         className="absolute w-auto h-full max-h-full object-cover opacity-40 z-0"></video>
       <img src="https://ecell.nitk.ac.in/navLogo.png" alt="" className="w-40 absolute z-40 top-5 left-4" />

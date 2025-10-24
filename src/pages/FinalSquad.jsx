@@ -32,7 +32,7 @@ const TeamsWithCompactDesign = () => {
   }, [])
 
   return (
-    <div className="p-4 bg-[url('https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/public/video//13859443_5392092.jpg')] bg-no-repeat bg-cover from-[#361602] from-40% to-[#021e31] min-h-screen flex flex-col items-center justify-center">
+    <div className={`p-4 bg-[url('${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/video//13859443_5392092.jpg')] bg-no-repeat bg-cover from-[#361602] from-40% to-[#021e31] min-h-screen flex flex-col items-center justify-center`}>
 
       <h1 className="text-6xl font-extrabold text-center mt-2 mb-4 tracking-wide animate-pulse text-white">
         Teams Squad
