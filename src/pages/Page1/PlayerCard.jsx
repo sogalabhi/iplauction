@@ -4,9 +4,8 @@ import Ha from "./Ha";
 import StatsForHomePage from "../../components/StatsForHomePage";
 import { Link } from 'react-router-dom';
 
-const PlayerCard = ({ player, showHammer, currentBidder, currentBid, showPlayerCard, markAsUnSold, markAsSold }) => {
+const PlayerCard = ({ player, showHammer, currentBidder, currentBid, showPlayerCard, markAsUnSold, markAsSold, isMarkingSold, isMarkingUnsold }) => {
   const [isSold, setIsSold] = useState(false);
-  var cols = currentBid > 0 ? "grid-cols-2" : "grid-cols-3"
   const roleIcons = {
     "Batsmen": "🏏",
     "Bowler": "⚾",
@@ -69,6 +68,9 @@ const PlayerCard = ({ player, showHammer, currentBidder, currentBid, showPlayerC
           </span>
         </div>
       </div>
+      {currentBidder != null &&
+        <h2 className={`text-xl font-bold animate-pulse mt-4 ${showPlayerCard == true ? 'text-green-500' : 'text-yellow-400'}`}> {showPlayerCard == true ? 'Sold to' : 'Current Bidder'}: {currentBidder}</h2>
+      }
       <StatsForHomePage stats={player} />
       {
         (showPlayerCard != true && player) && (
@@ -76,9 +78,14 @@ const PlayerCard = ({ player, showHammer, currentBidder, currentBid, showPlayerC
 
             <button
               onClick={markAsUnSold}
-              className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+              disabled={isMarkingUnsold || isMarkingSold}
+              className={`w-36 h-12 max-w-xs px-4 py-2 rounded transition ${
+                isMarkingUnsold || isMarkingSold 
+                  ? 'bg-gray-400 cursor-not-allowed' 
+                  : 'bg-green-500 text-white hover:bg-green-600'
+              }`}
             >
-              Mark as Unsold
+              {isMarkingUnsold ? 'Processing...' : 'Mark as Unsold'}
             </button>
           </div>
         )

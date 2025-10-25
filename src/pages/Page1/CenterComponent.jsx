@@ -25,6 +25,10 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
   const [showBidModal, setShowBidModal] = useState(false);
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [finalBidAmount, setFinalBidAmount] = useState('');
+  
+  // Loading states
+  const [isMarkingSold, setIsMarkingSold] = useState(false);
+  const [isMarkingUnsold, setIsMarkingUnsold] = useState(false);
   useEffect(() => {
     setPlayersList(initplayersList);
   }, [initplayersList])
@@ -46,26 +50,56 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
   }
 
   const markAsSold = async () => {
+    setIsMarkingSold(true);
     setShowHammer(true);
-    var player = playersList[0];
-    const { id, final_price, sold_to_team_id, sold_to_team } = player;
+    
     try {
+      var player = playersList[0];
+      const { id, final_price, sold_to_team_id, sold_to_team } = player;
+      
+      // Update player in database
       await markPlayerAsSold(id, final_price, sold_to_team_id, sold_to_team);
+      
+      // Update team purse in database
+      var team = teamsList[sold_to_team_id - 1];
+      const newPurse = team.purse - final_price;
+      await updatePurseOfTeam(sold_to_team_id, newPurse);
+      
+      // Update teams list with new purse
+      setTeamsList(prevTeams => 
+        prevTeams.map(t => 
+          t.team_id === sold_to_team_id 
+            ? { ...t, purse: newPurse }
+            : t
+        )
+      );
+      
+      // Show sold animation
+      setTimeout(() => {
+        setShowHammer(false);
+        setShowPlayerCard(true);
+        setIsPlayerSold(true);
+      }, 2000);
+      
+      // Auto refresh after animation
+      setTimeout(async () => {
+        setShowPlayerCard(false);
+        setIsPlayerSold(false);
+        setCurrentBid(0);
+        setCurrentBidderId(0);
+        setCurrentBidder(null);
+        
+        // Refresh player list
+        await getTeamAndPlayers();
+        setIsMarkingSold(false);
+      }, 5000);
+      
     } catch (error) {
       console.error("Error in marking as sold:", error.message);
-    }
-    var team = teamsList[sold_to_team_id - 1];
-    team.purse = team.purse - final_price;
-    try {
-      await updatePurseOfTeam(sold_to_team_id, team.purse);
-    } catch (error) {
-      console.error("Error in marking as sold:", error.message);
-    }
-    setTimeout(() => {
+      alert('Error marking player as sold. Please try again.');
       setShowHammer(false);
-      setShowPlayerCard(true);
-      setIsPlayerSold(true);
-    }, 2000);
+      setIsMarkingSold(false);
+    }
   };
 
 
@@ -79,16 +113,20 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
   };
 
   const markAsUnSold = async () => {
-
+    setIsMarkingUnsold(true);
+    
     try {
       await markPlayerAsSold(playersList[0].id, 0, 0, null);
+      setCurrentBid(0);
+      setCurrentBidderId(0);
+      setCurrentBidder(null);
+      await getTeamAndPlayers();
+      setIsMarkingUnsold(false);
     } catch (error) {
       console.error("Error in marking as unsold:", error.message);
+      alert('Error marking player as unsold. Please try again.');
+      setIsMarkingUnsold(false);
     }
-    setCurrentBid(0);
-    setCurrentBidderId(0);
-    setCurrentBidder(null);
-    await getTeamAndPlayers();
   }
   const handleSellClick = () => {
     setShowBidModal(true);
@@ -201,6 +239,8 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
                 showHammer={showHammer}
                 currentBidder={currentBidder}
                 currentBid={currentBid}
+                isMarkingSold={isMarkingSold}
+                isMarkingUnsold={isMarkingUnsold}
               />}
               
               {/* Sell Button */}
@@ -208,9 +248,14 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
                 <div className="mt-8 text-center">
                   <button
                     onClick={handleSellClick}
-                    className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white px-8 py-4 rounded-lg font-bold text-xl transition-all duration-200 transform hover:scale-105 shadow-lg"
+                    disabled={isMarkingSold || isMarkingUnsold}
+                    className={`px-8 py-4 rounded-lg font-bold text-xl transition-all duration-200 transform shadow-lg ${
+                      isMarkingSold || isMarkingUnsold
+                        ? 'bg-gray-400 cursor-not-allowed'
+                        : 'bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white hover:scale-105'
+                    }`}
                   >
-                    🏆 SELL PLAYER
+                    {isMarkingSold ? 'Processing...' : '🏆 SELL PLAYER'}
                   </button>
                 </div>
               )}
