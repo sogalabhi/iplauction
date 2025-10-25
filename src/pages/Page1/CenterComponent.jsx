@@ -30,6 +30,8 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
   const [isMarkingSold, setIsMarkingSold] = useState(false);
   const [isMarkingUnsold, setIsMarkingUnsold] = useState(false);
   useEffect(() => {
+    console.log('Initial players list:', initplayersList);
+    console.log('Initial players count:', initplayersList?.length || 0);
     setPlayersList(initplayersList);
   }, [initplayersList])
   useEffect(() => {
@@ -41,13 +43,24 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
     setTeamsList(initteamlist);
   }, [initteamlist])
   const getTeamAndPlayers = async () => {
+    console.log('Fetching unsold players...');
     fetchUnsoldPlayers().then((players) => {
+      console.log('Received players:', players);
+      console.log('Players count:', players.length);
       setPlayersList(players);
     });
     fetchTeamsWithSquads().then((teams) => {
       setTeamsList(teams);
     });
   }
+
+  // Auto-skip players marked as unsold (final_price = -1)
+  useEffect(() => {
+    if (playersList.length > 0 && playersList[0].final_price === -1) {
+      nextPlayer();
+    }
+  }, [playersList]);
+
 
   const markAsSold = async () => {
     setIsMarkingSold(true);
@@ -89,8 +102,12 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
         setCurrentBidderId(0);
         setCurrentBidder(null);
         
-        // Refresh player list
-        await getTeamAndPlayers();
+        // Remove the sold player from the list
+        setPlayersList(prevList => {
+          const newList = prevList.slice(1); // Remove first player
+          return newList;
+        });
+        
         setIsMarkingSold(false);
       }, 5000);
       
@@ -109,18 +126,35 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
     setCurrentBid(0);
     setCurrentBidderId(0);
     setCurrentBidder(null);
-    await getTeamAndPlayers();
+    
+    // Remove the first player (current player) from the list
+    setPlayersList(prevList => {
+      const newList = prevList.slice(1); // Remove first player
+      return newList;
+    });
   };
 
   const markAsUnSold = async () => {
     setIsMarkingUnsold(true);
     
     try {
-      await markPlayerAsSold(playersList[0].id, 0, 0, null);
+      await markPlayerAsSold(playersList[0].id, -1, null, null);
+      
+      // Update local state to mark current player as unsold
+      setPlayersList(prevList => {
+        const updatedList = [...prevList];
+        updatedList[0] = { 
+          ...updatedList[0], 
+          final_price: -1, 
+          sold_to_team_id: null, 
+          sold_to_team: null 
+        };
+        return updatedList;
+      });
+      
       setCurrentBid(0);
       setCurrentBidderId(0);
       setCurrentBidder(null);
-      await getTeamAndPlayers();
       setIsMarkingUnsold(false);
     } catch (error) {
       console.error("Error in marking as unsold:", error.message);
@@ -129,22 +163,48 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
     }
   }
   const handleSellClick = () => {
+    console.log('Sell button clicked');
+    console.log('Current player:', playersList[0]);
+    console.log('Teams list:', teamsList);
+    
+    // Set default team to first team
+    if (teamsList.length > 0) {
+      setSelectedTeam(teamsList[0]);
+    }
+    
     setShowBidModal(true);
   };
 
   const handleBidSubmit = async () => {
-    if (!selectedTeam || !finalBidAmount) return;
+    console.log('handleBidSubmit called');
+    console.log('Selected team:', selectedTeam);
+    console.log('Final bid amount:', finalBidAmount);
+    
+    if (!selectedTeam || !finalBidAmount) {
+      console.log('Missing team or bid amount');
+      return;
+    }
     
     const bidAmount = parseFloat(finalBidAmount);
-    if (bidAmount <= 0) return;
+    console.log('Parsed bid amount:', bidAmount);
+    
+    if (bidAmount <= 0) {
+      console.log('Invalid bid amount');
+      return;
+    }
     
     // Check if team has enough purse
     if (bidAmount > selectedTeam.purse) {
+      console.log('Insufficient purse:', bidAmount, '>', selectedTeam.purse);
       alert('Team does not have enough purse!');
       return;
     }
     
+    setIsMarkingSold(true);
+    console.log('Starting to sell player...');
+    
     try {
+      console.log('Updating player in database...');
       // Update player in database
       await markPlayerAsSold(
         playersList[0].id, 
@@ -152,52 +212,68 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
         selectedTeam.team_id, 
         selectedTeam.name
       );
+      console.log('Player updated in database successfully');
       
+      console.log('Updating team purse in database...');
       // Update team purse in database
       const newPurse = selectedTeam.purse - bidAmount;
       await updatePurseOfTeam(selectedTeam.team_id, newPurse);
+      console.log('Team purse updated successfully');
       
       // Set the bid in UI
       setCurrentBidder(selectedTeam.name);
       setCurrentBidderId(selectedTeam.team_id);
       setCurrentBid(bidAmount);
       
-      // Update player list
-      setPlayersList(prevList => {
-        const updatedList = [...prevList];
-        updatedList[0] = { 
-          ...updatedList[0], 
-          final_price: bidAmount, 
-          sold_to_team_id: selectedTeam.team_id, 
-          sold_to_team: selectedTeam.name 
-        };
-        return updatedList;
-      });
-      
-      // Update teams list with new purse
-      setTeamsList(prevTeams => 
-        prevTeams.map(team => 
-          team.team_id === selectedTeam.team_id 
-            ? { ...team, purse: newPurse }
-            : team
-        )
-      );
-      
-      // Close modal
+      // Close modal immediately after successful database update
       setShowBidModal(false);
       setFinalBidAmount('');
       setSelectedTeam(null);
       
+      // Show sold animation
+      setShowHammer(true);
+      setTimeout(() => {
+        setShowHammer(false);
+        setShowPlayerCard(true);
+        setIsPlayerSold(true);
+      }, 2000);
+      
+      // Remove the sold player from the list after animation
+      setTimeout(() => {
+        setPlayersList(prevList => {
+          const newList = prevList.slice(1); // Remove first player
+          return newList;
+        });
+        
+        // Update teams list with new purse
+        setTeamsList(prevTeams => 
+          prevTeams.map(team => 
+            team.team_id === selectedTeam.team_id 
+              ? { ...team, purse: newPurse }
+              : team
+          )
+        );
+        
+        // Reset states after animation
+        setShowPlayerCard(false);
+        setIsPlayerSold(false);
+        setCurrentBid(0);
+        setCurrentBidderId(0);
+        setCurrentBidder(null);
+        setIsMarkingSold(false);
+        
+        console.log('Player sold successfully!');
+      }, 5000);
+      
     } catch (error) {
       console.error('Error selling player:', error);
       alert('Error selling player. Please try again.');
+      setIsMarkingSold(false);
     }
   };
 
   return (
     <div className={`min-h-screen bg-[#985c01]  text-white`}>
-      <video src={`${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/video//video_2025-01-28%2022_42_02.webm`}
-        autoPlay loop muted></video>
     {/* // <div className={`min-h-screen text-white bg-[#1c439e]`}> */}
       {/* <video src=
         "https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/public/video//video_2025-01-28%2022_42_02.webm"
@@ -207,8 +283,8 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
       <img src="https://ecell.nitk.ac.in/incub8L.png" alt="" className="w-32 absolute z-40 top-4 right-4" />
       {!isPlayerSold && !showPlayerCard && (
         <div className="py-1 relative z-10">
-          <h1 className="text-center text-5xl pt-2 relative z-10 heading-font" style={{ textShadow: "4px 4px 0px #4f829c" }}>IPL MOCK AUCTION</h1>
-          <h2 className="text-center text-lg pt-4">Sponsored by</h2>
+          <h1 className="text-center text-5xl pt-2 relative z-10 heading-font">IPL MOCK AUCTION</h1>
+          <h2 className="text-center text-lg">Sponsored by</h2>
           <div className="flex justify-center items-center gap-4 mt-2 p-4 rounded-lg">
             <img src="/sponsers/unstop.jpg" className="h-10 hover:scale-105 transition" alt="Unstop Logo" />
             <img src="/sponsers/indiastack.png" className="h-10 hover:scale-105 transition" alt="IndiaStack Logo" />
@@ -329,7 +405,7 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
                 Select Team
               </label>
               <select
-                value={selectedTeam?.team_id || ''}
+                value={(teamsList.length > 0 ? teamsList[0].team_id : '')}
                 onChange={(e) => {
                   const teamId = parseInt(e.target.value);
                   const team = teamsList.find(t => t.team_id === teamId);
@@ -337,7 +413,6 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
                 }}
                 className="w-full px-3 py-2 border border-gray-300 text-black rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                <option value="">Choose a team...</option>
                 {teamsList.map((team) => (
                   <option key={team.team_id} value={team.team_id}>
                     {team.name} (₹{team.purse?.toLocaleString('en-IN')} Cr)
@@ -366,9 +441,14 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
             <div className="flex gap-3">
               <button
                 onClick={handleBidSubmit}
-                className="flex-1 bg-green-500 px-4 py-2 rounded hover:bg-green-600 transition"
+                disabled={isMarkingSold}
+                className={`flex-1 px-4 py-2 rounded transition ${
+                  isMarkingSold 
+                    ? 'bg-gray-400 cursor-not-allowed' 
+                    : 'bg-green-500 hover:bg-green-600'
+                }`}
               >
-                Sell Player
+                {isMarkingSold ? 'Selling...' : 'Sell Player'}
               </button>
               <button
                 onClick={() => {

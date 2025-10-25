@@ -1,10 +1,10 @@
 import { SUPABASE_URL, SUPABASE_KEY } from '../lib/supabase.js';
 
 export const markPlayerAsSold = async (playerId, finalPrice, soldToTeamId, sold_to_team) => {
-  if (finalPrice === 0) {
+  if (finalPrice === -1) {
     // Player is unsold - reset all sold fields
     var date = new Date('2000-01-01');
-    soldToTeamId = 0;
+    soldToTeamId = null;
     sold_to_team = null;
   }
   else {

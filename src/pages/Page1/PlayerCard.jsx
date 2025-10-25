@@ -12,6 +12,20 @@ const PlayerCard = ({ player, showHammer, currentBidder, currentBid, showPlayerC
     "All-rounder": "🏏⚾",
     "WK": "🧤",
   };
+
+  // Team logos mapping
+  const teamLogos = {
+    "Mumbai Indians": "https://upload.wikimedia.org/wikipedia/en/thumb/c/cd/Mumbai_Indians_Logo.svg/1200px-Mumbai_Indians_Logo.svg.png",
+    "Chennai Super Kings": "https://upload.wikimedia.org/wikipedia/en/thumb/2/2b/Chennai_Super_Kings_Logo.svg/1200px-Chennai_Super_Kings_Logo.svg.png",
+    "Royal Challengers Bengaluru": "https://1000logos.net/wp-content/uploads/2024/03/Royal-Challengers-Bengaluru-Logo.png",
+    "Kolkata Knight Riders": "https://upload.wikimedia.org/wikipedia/en/thumb/4/4c/Kolkata_Knight_Riders_Logo.svg/778px-Kolkata_Knight_Riders_Logo.svg.png",
+    "Rajasthan Royals": "https://upload.wikimedia.org/wikipedia/en/thumb/5/5c/This_is_the_logo_for_Rajasthan_Royals%2C_a_cricket_team_playing_in_the_Indian_Premier_League_%28IPL%29.svg/1200px-This_is_the_logo_for_Rajasthan_Royals%2C_a_cricket_team_playing_in_the_Indian_Premier_League_%28IPL%29.svg.png",
+    "Sunrisers Hyderabad": "https://upload.wikimedia.org/wikipedia/en/thumb/5/51/Sunrisers_Hyderabad_Logo.svg/1200px-Sunrisers_Hyderabad_Logo.svg.png",
+    "Delhi Capitals": "https://upload.wikimedia.org/wikipedia/en/thumb/2/2f/Delhi_Capitals.svg/1200px-Delhi_Capitals.svg.png",
+    "Punjab Kings": "https://upload.wikimedia.org/wikipedia/en/thumb/d/d4/Punjab_Kings_Logo.svg/935px-Punjab_Kings_Logo.svg.png",
+    "Gujarat Titans": "https://upload.wikimedia.org/wikipedia/en/thumb/0/09/Gujarat_Titans_Logo.svg/1200px-Gujarat_Titans_Logo.svg.png",
+    "Lucknow Super Giants": "https://upload.wikimedia.org/wikipedia/en/thumb/a/a9/Lucknow_Super_Giants_IPL_Logo.svg/1200px-Lucknow_Super_Giants_IPL_Logo.svg.png"
+  };
   useEffect(() => {
     setIsSold(false);
   }, [player]);
@@ -46,6 +60,18 @@ const PlayerCard = ({ player, showHammer, currentBidder, currentBid, showPlayerC
             alt={player.player_name}
             className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-auto h-64"
           />
+          
+          {/* Team Logo */}
+          {player.team && teamLogos[player.team] && (
+            <div className="absolute top-4 right-4 z-20">
+              <img
+                src={teamLogos[player.team]}
+                alt={player.team}
+                className="w-12 h-12 rounded-full border-2 border-white shadow-lg"
+              />
+            </div>
+          )}
+          
           {showHammer && (
             <div className="absolute inset-0 flex justify-center items-center">
               <Ha className="w-2 h-2" />
@@ -53,18 +79,15 @@ const PlayerCard = ({ player, showHammer, currentBidder, currentBid, showPlayerC
           )}
         </div>
       </div>
-      <h2 className="text-xl font-bold mt-4 z-30">{player.player_name} {roleIcons[player.role]}</h2>
+      <h2 className="text-xl font-bold mt-4 z-30">
+        {player.player_name} {roleIcons[player.role]}
+        {player.indian === false && <span className="ml-2">✈️</span>}
+      </h2>
 
-      <div className="flex gap-4 mt-2 py-5 justify-center items-center">
-        <div className="border-slate-200 rounded-lg border-4 transform skew-x-12 px-4 py-2">
-          <span className="inline-block transform -skew-x-12 ">
+      <div className="flex gap-4 mt-2 pt-5 justify-center items-center">
+        <div className="border-slate-200 rounded-lg border-4 px-4 py-2">
+          <span className="inline-block">
             Base Price: ₹{formatPriceInCrores(player.base_price)}
-          </span>
-        </div>
-
-        <div className="border-slate-200 rounded-lg border-4 transform -skew-x-12 px-4 py-2">
-          <span className="inline-block transform skew-x-12 ">
-            {showPlayerCard == true ? 'Final Price' : 'Current Bid'}: ₹{formatPriceInCrores(currentBid)}
           </span>
         </div>
       </div>

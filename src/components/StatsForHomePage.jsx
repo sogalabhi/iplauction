@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function StatsForHomePage({ stats }) {
     return (
-        <div className="my-8 mx-8 bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 cursor-default transform hover:scale-110 transition duration-500 rounded-2xl shadow-2xl border-2 border-white/30 p-8 backdrop-blur-lg">
+        <div className="my-8 mx-8 bg-[#985c01] cursor-default transform hover:scale-110 transition duration-500 rounded-2xl shadow-2xl border-2 border-white/30 p-8 backdrop-blur-lg">
             <div className="flex flex-col items-center justify-center gap-6">
 
 
