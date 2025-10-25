@@ -20,6 +20,11 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
   const [currentBid, setCurrentBid] = useState(0);
   const [playersList, setPlayersList] = useState(initplayersList);
   const [teamsList, setTeamsList] = useState(initteamlist);
+  
+  // Modal states
+  const [showBidModal, setShowBidModal] = useState(false);
+  const [selectedTeam, setSelectedTeam] = useState(null);
+  const [finalBidAmount, setFinalBidAmount] = useState('');
   useEffect(() => {
     setPlayersList(initplayersList);
   }, [initplayersList])
@@ -76,7 +81,7 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
   const markAsUnSold = async () => {
 
     try {
-      await markPlayerAsSold(playersList[0].id, 0, -1, null);
+      await markPlayerAsSold(playersList[0].id, 0, 0, null);
     } catch (error) {
       console.error("Error in marking as unsold:", error.message);
     }
@@ -85,54 +90,71 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
     setCurrentBidder(null);
     await getTeamAndPlayers();
   }
-  const handleKeyPress = async (event) => {
-    var key = event.key;
-    if (key >= 0 && key <= teamsList.length) {
-      if (key == 0) {
-        key = 10;
-      }
-      setCurrentBid((prevBid) => {
-        let final_bid;
-        if (prevBid === 0) {
-          final_bid = playersList[0].base_price;
-        }
-        else if (prevBid === 150) {
-          final_bid = prevBid + 10;
-        }
-        else if (prevBid < 100) {
-          final_bid = prevBid + 10;
-        } else if (prevBid < 500) {
-          final_bid = prevBid + 20;
-        } else {
-          final_bid = prevBid + 25;
-        }
-        var bidding_team = teamsList[key - 1].name;
-        var bidding_team_purse = teamsList[key - 1].purse;
-        if (final_bid > bidding_team_purse) {
-          return prevBid;
-        }
-        else {
-          setCurrentBidder(bidding_team);
-          setCurrentBidderId(key);
-          try {
-            setPlayersList(prevList => {
-              const updatedList = [...prevList];
-              updatedList[0] = { ...updatedList[0], final_price: final_bid, sold_to_team_id: parseInt(key), sold_to_team: bidding_team };
-              return updatedList;
-            });
-          } catch (error) {
-            console.error('Error during bidding:', error.message);
-          }
-        }
-        return final_bid;
-      });
+  const handleSellClick = () => {
+    setShowBidModal(true);
+  };
 
+  const handleBidSubmit = async () => {
+    if (!selectedTeam || !finalBidAmount) return;
+    
+    const bidAmount = parseFloat(finalBidAmount);
+    if (bidAmount <= 0) return;
+    
+    // Check if team has enough purse
+    if (bidAmount > selectedTeam.purse) {
+      alert('Team does not have enough purse!');
+      return;
+    }
+    
+    try {
+      // Update player in database
+      await markPlayerAsSold(
+        playersList[0].id, 
+        bidAmount, 
+        selectedTeam.team_id, 
+        selectedTeam.name
+      );
+      
+      // Update team purse in database
+      const newPurse = selectedTeam.purse - bidAmount;
+      await updatePurseOfTeam(selectedTeam.team_id, newPurse);
+      
+      // Set the bid in UI
+      setCurrentBidder(selectedTeam.name);
+      setCurrentBidderId(selectedTeam.team_id);
+      setCurrentBid(bidAmount);
+      
+      // Update player list
+      setPlayersList(prevList => {
+        const updatedList = [...prevList];
+        updatedList[0] = { 
+          ...updatedList[0], 
+          final_price: bidAmount, 
+          sold_to_team_id: selectedTeam.team_id, 
+          sold_to_team: selectedTeam.name 
+        };
+        return updatedList;
+      });
+      
+      // Update teams list with new purse
+      setTeamsList(prevTeams => 
+        prevTeams.map(team => 
+          team.team_id === selectedTeam.team_id 
+            ? { ...team, purse: newPurse }
+            : team
+        )
+      );
+      
+      // Close modal
+      setShowBidModal(false);
+      setFinalBidAmount('');
+      setSelectedTeam(null);
+      
+    } catch (error) {
+      console.error('Error selling player:', error);
+      alert('Error selling player. Please try again.');
     }
   };
-  useEffect(() => {
-    window.addEventListener("keydown", handleKeyPress);
-    return () => window.removeEventListener("keydown", handleKeyPress);
-  }, [teamsList]);
 
   return (
     <div className={`min-h-screen bg-[#193153]  text-white`}>
@@ -180,6 +202,18 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
                 currentBidder={currentBidder}
                 currentBid={currentBid}
               />}
+              
+              {/* Sell Button */}
+              {playersList.length > 0 && !showPlayerCard && (
+                <div className="mt-8 text-center">
+                  <button
+                    onClick={handleSellClick}
+                    className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white px-8 py-4 rounded-lg font-bold text-xl transition-all duration-200 transform hover:scale-105 shadow-lg"
+                  >
+                    🏆 SELL PLAYER
+                  </button>
+                </div>
+              )}
               {playersList.length == 0 &&
                 <div className="text-center">
                   <h1 className="text-2xl mb-5">No Players Left</h1>
@@ -241,6 +275,73 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
           </div>
         )
       }
+
+      {/* Sell Modal */}
+      {showBidModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-96 max-w-md mx-4">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">Sell Player</h2>
+            
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Select Team
+              </label>
+              <select
+                value={selectedTeam?.team_id || ''}
+                onChange={(e) => {
+                  const teamId = parseInt(e.target.value);
+                  const team = teamsList.find(t => t.team_id === teamId);
+                  setSelectedTeam(team);
+                }}
+                className="w-full px-3 py-2 border border-gray-300 text-black rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">Choose a team...</option>
+                {teamsList.map((team) => (
+                  <option key={team.team_id} value={team.team_id}>
+                    {team.name} (₹{team.purse?.toLocaleString('en-IN')} Cr)
+                  </option>
+                ))}
+              </select>
+            </div>
+            
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Final Price (in Crores)
+              </label>
+              <input
+                type="number"
+                step="0.1"
+                min="0"
+                max={selectedTeam?.purse || 1000}
+                value={finalBidAmount}
+                onChange={(e) => setFinalBidAmount(e.target.value)}
+                className="w-full px-3 py-2 border text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter amount in crores "
+                autoFocus
+              />
+            </div>
+            
+            <div className="flex gap-3">
+              <button
+                onClick={handleBidSubmit}
+                className="flex-1 bg-green-500 px-4 py-2 rounded hover:bg-green-600 transition"
+              >
+                Sell Player
+              </button>
+              <button
+                onClick={() => {
+                  setShowBidModal(false);
+                  setFinalBidAmount('');
+                  setSelectedTeam(null);
+                }}
+                className="flex-1 bg-gray-500 px-4 py-2 rounded hover:bg-gray-600 transition"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div >
   );
 };

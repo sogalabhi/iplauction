@@ -15,17 +15,9 @@ const TeamsWithCompactDesign = () => {
       setTeamsWithSquad(teams);
     });
   }
-  function formatPriceInLakhs(price) {
-
-    if (price >= 100) {
-      // Convert to crore
-      const crore = (price / 100).toFixed(2); // 2 decimal places
-      return `${Number(crore).toLocaleString('en-IN')} Crore`;
-    } else {
-      // Keep it in lakh
-      return `${Number(price).toLocaleString('en-IN')} Lakh`;
-      // return price;
-    }
+  function formatPriceInCrores(price) {
+    // Price is already in crores - show as crores regardless of value
+    return `${Number(price).toLocaleString('en-IN')} Crore`;
   }
   useEffect(() => {
     getAllTeamswithplayers();
@@ -65,7 +57,7 @@ const TeamsWithCompactDesign = () => {
               <div>
                 <h2 className="text-lg font-extrabold">{team.name}</h2>
                 <p className="text-xs font-medium">
-                  Purse Balance: {formatPriceInLakhs(team.purse)}
+                  Purse Balance: {formatPriceInCrores(team.purse)}
                 </p>
               </div>
               <img
@@ -103,6 +95,7 @@ const TeamsWithCompactDesign = () => {
                       {
                         (player.role == "All Rounder") && <img src="https://cdn-icons-png.flaticon.com/512/9097/9097536.png" alt="ball" className="w-3 absolute right-4" />
                       }
+                      <span className="text-xs text-orange-600 font-bold ml-2">OPI: {player.opi}</span>
                     </div>
                   </li>
                 ))}

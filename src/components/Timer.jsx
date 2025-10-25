@@ -26,13 +26,9 @@ const Timer = ({ auctionEndTime, setAuctionEndTime }) => {
     }
   }, [auctionEndTime]);
 
-  function formatPriceInLakhs(price) {
-    if (price >= 100) {
-      const crore = (price / 100).toFixed(2); // 2 decimal places
-      return `${Number(crore).toLocaleString('en-IN')} Crore`;
-    } else {
-      return `${Number(price).toLocaleString('en-IN')} Lakh`;
-    }
+  function formatPriceInCrores(price) {
+    // Price is already in crores - show as crores regardless of value
+    return `${Number(price).toLocaleString('en-IN')} Crore`;
   }
   useEffect(() => {
     const getPlayerData = async () => {
@@ -81,7 +77,7 @@ const Timer = ({ auctionEndTime, setAuctionEndTime }) => {
             <p className="text-sm text-gray-400">Last Purchased Player</p>
             <p className="text-xl font-bold">{lastSoldPlayer[0].player_name}</p>
             <p className="text-sm text-gray-400">Team: {lastSoldPlayer[0].sold_to_team}</p>
-            <p className="text-lg text-green-500">Rs. {formatPriceInLakhs(lastSoldPlayer[0].final_price)}</p>
+            <p className="text-lg text-green-500">Rs. {formatPriceInCrores(lastSoldPlayer[0].final_price)}</p>
           </div>
         </div>}
 
@@ -116,7 +112,7 @@ const Timer = ({ auctionEndTime, setAuctionEndTime }) => {
         <div className="flex items-center space-x-4">
           <div>
             <p className="text-sm text-gray-400">Highest Bid</p>
-            <p className="text-xl font-bold">Rs. {formatPriceInLakhs(expensivePlayer[0].final_price)}</p>
+            <p className="text-xl font-bold">Rs. {formatPriceInCrores(expensivePlayer[0].final_price)}</p>
             <p className="text-sm text-gray-400">Player: {expensivePlayer[0].player_name}</p>
             <p className="text-sm text-gray-400">Team: {expensivePlayer[0].sold_to_team}</p>
           </div>

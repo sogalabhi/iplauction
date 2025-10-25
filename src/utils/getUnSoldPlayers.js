@@ -2,7 +2,7 @@ import { SUPABASE_URL, SUPABASE_KEY } from '../lib/supabase.js';
 
 export const fetchUnsoldPlayers = async () => {
     try {
-        const response = await fetch(`${SUPABASE_URL}CricketPlayers?order=id.asc&sold_to_team_id=eq.0`, {
+        const response = await fetch(`${SUPABASE_URL}CricketPlayers?order=id.asc&final_price=eq.0`, {
             method: "GET",
             headers: {
                 apiKey: SUPABASE_KEY,

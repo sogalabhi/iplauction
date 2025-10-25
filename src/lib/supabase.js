@@ -1,8 +1,19 @@
 import { createClient } from '@supabase/supabase-js'
 
-// Get Supabase credentials from environment variables
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+// Temporary hardcoded values for testing
+const supabaseUrl = 'https://bmgqsophlxtmzrqayxft.supabase.co'
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJtZ3Fzb3BobHh0bXpycWF5eGZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEzMjE0NzYsImV4cCI6MjA3Njg5NzQ3Nn0.pABNgIubA0YwqTMoYlHOoNMKNdjfQ-Osm0Wq2_cSt8I'
+
+// Debug: Log the environment variables (remove this after testing)
+console.log('Environment variables:', {
+  VITE_SUPABASE_URL: import.meta.env.VITE_SUPABASE_URL,
+  VITE_SUPABASE_ANON_KEY: import.meta.env.VITE_SUPABASE_ANON_KEY ? 'Present' : 'Missing'
+})
+
+console.log('Using hardcoded values:', {
+  supabaseUrl,
+  supabaseAnonKey: supabaseAnonKey ? 'Present' : 'Missing'
+})
 
 // Validate that environment variables are set
 if (!supabaseUrl) {

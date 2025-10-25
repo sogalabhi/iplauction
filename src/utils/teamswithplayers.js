@@ -27,16 +27,17 @@ export const fetchTeamsWithSquads = async () => {
         const teamsWithSquads = teams.map((team) => ({
             team_id: team.id,
             name: team.team_name,
-            playerCount: players.filter((player) => player.sold_to_team_id === team.id).length,
+            playerCount: players.filter((player) => player.sold_to_team_id === team.id && player.final_price > 0).length,
             purse: team.purse,
             teamLogo: team.team_logo,
             textColor: team.text_color,
             squad: players
-                .filter((player) => player.sold_to_team_id === team.id)
+                .filter((player) => player.sold_to_team_id === team.id && player.final_price > 0)
                 .map((player) => ({
                     name: player.player_name,
-                    role: player.category,
-                    isOverseas: player.is_overseas,
+                    role: player.role,
+                    isOverseas: !player.indian, // indian=true means not overseas
+                    opi: player.opi,
                 })),
             color1: team.color1,
             color2: team.color2,

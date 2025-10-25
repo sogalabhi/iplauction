@@ -7,7 +7,7 @@ export default function CricketPlayersTable() {
 
     useEffect(() => {
         async function fetchPlayers() {
-            let { data, error } = await supabase.from("CricketPlayers").select("player_name, player_image");
+            let { data, error } = await supabase.from("CricketPlayers").select("player_name, image, opi");
             if (error) {
                 console.error("Error fetching players:", error);
             } else {
@@ -29,6 +29,7 @@ export default function CricketPlayersTable() {
                         <tr className="bg-gray-100">
                             <th className="border px-4 py-2">Player</th>
                             <th className="border px-4 py-2">Image</th>
+                            <th className="border px-4 py-2">OPI</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -36,8 +37,9 @@ export default function CricketPlayersTable() {
                             <tr key={index} className="text-center">
                                 <td className="border px-4 py-2">{player.player_name}</td>
                                 <td className="border px-4 py-2">
-                                    <img src={player.player_image} alt={player.player_name} className="w-60 h-60 object-cover mx-auto rounded-full" />
+                                    <img src={player.image} alt={player.player_name} className="w-60 h-60 object-cover mx-auto rounded-full" />
                                 </td>
+                                <td className="border px-4 py-2 font-bold text-orange-600">{player.opi}</td>
                             </tr>
                         ))}
                     </tbody>

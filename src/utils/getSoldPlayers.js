@@ -2,7 +2,7 @@ import { SUPABASE_URL, SUPABASE_KEY } from '../lib/supabase.js';
 
 export const fetcnsoldPlayers = async () => {
     try {
-        const response = await fetch(`${SUPABASE_URL}CricketPlayers?order=id.asc`, {
+        const response = await fetch(`${SUPABASE_URL}CricketPlayers?order=id.asc&final_price=gt.0`, {
             method: "GET",
             headers: {
                 apiKey: SUPABASE_KEY,
@@ -15,9 +15,8 @@ export const fetcnsoldPlayers = async () => {
         }
         const data = await response.json();
 
-        // Filter players where sold_to_team_id is not equal to 0
-        const soldPlayers = data.filter(player => player.sold_to_team_id !== 0);
-        return soldPlayers;
+        // Return players where final_price is greater than 0 (sold players)
+        return data;
     } catch (error) {
         console.error(error.message);
         return [];
