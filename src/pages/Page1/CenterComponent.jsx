@@ -195,37 +195,32 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
   };
 
   return (
-    <div className={`min-h-screen bg-[#193153]  text-white`}>
+    <div className={`min-h-screen bg-[#985c01]  text-white`}>
       <video src={`${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/video//video_2025-01-28%2022_42_02.webm`}
-        autoplay="{true}" loop muted
-        className="absolute w-auto h-full max-h-full object-cover opacity-40 z-0"></video>
-      <img src="https://ecell.nitk.ac.in/navLogo.png" alt="" className="w-40 absolute z-40 top-5 left-4" />
+        autoPlay loop muted></video>
+    {/* // <div className={`min-h-screen text-white bg-[#1c439e]`}> */}
+      {/* <video src=
+        "https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/public/video//video_2025-01-28%2022_42_02.webm"
+        autoPlay loop muted
+        className="absolute w-auto h-full max-h-full object-cover opacity-40 z-0"></video> */}
+      {/* <img src="https://ecell.nitk.ac.in/navLogo.png" alt="" className="w-40 absolute z-40 top-5 left-4" /> */}
       <img src="https://ecell.nitk.ac.in/incub8L.png" alt="" className="w-32 absolute z-40 top-4 right-4" />
       {!isPlayerSold && !showPlayerCard && (
         <div className="py-1 relative z-10">
           <h1 className="text-center text-5xl pt-2 relative z-10 heading-font" style={{ textShadow: "4px 4px 0px #4f829c" }}>IPL MOCK AUCTION</h1>
           <h2 className="text-center text-lg pt-4">Sponsored by</h2>
-          <div className="flex justify-center items-center gap-4  mt-2">
-            <img src="https://ecellnitk.netlify.app/sponsors/sponsor13.png" className=" bg-white p-2 h-10 rounded-full hover:scale-105 transition" alt="" />
-            <div className="w-24 h-10 overflow-hidden rounded-full bg-white flex items-center justify-center">
-              <img
-                src="https://ecellnitk.netlify.app/sponsors/sponsor7.png"
-                className="h-8 w-full object-cover transition-transform duration-300 hover:scale-110"
-                alt="Sponsor Logo"
-              />
-            </div>
-            <div className="w-24 h-10 p-2 overflow-hidden rounded-full bg-white flex items-center justify-center">
-              <img
-                src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcScjLrrFN2bwj-z-AsXUtrzZnR4_OI-3w-XkNC0ngVPsLUrdyCy"
-                className="h-8 w-full object-cover transition-transform duration-300 hover:scale-110"
-                alt="Sponsor Logo"
-              />
-            </div>
-            <img src="https://ecellnitk.netlify.app/sponsors/sponsor14.png" className=" bg-white p-2 h-10 rounded-full hover:scale-105 transition" alt="" />
-            <img src="https://ecellnitk.netlify.app/sponsors/sponsor1.png" className=" bg-white p-2 h-10 rounded-full hover:scale-105 transition" alt="" />
+          <div className="flex justify-center items-center gap-4 mt-2 p-4 rounded-lg">
+            <img src="/sponsers/unstop.jpg" className="h-10 hover:scale-105 transition" alt="Unstop Logo" />
+            <img src="/sponsers/indiastack.png" className="h-10 hover:scale-105 transition" alt="IndiaStack Logo" />
+            <img src="/sponsers/umbra.png" className="h-10 hover:scale-105 transition" alt="UmbraPrivacy Logo" />
+            <img src="/sponsers/justplace.png" className="h-10 hover:scale-105 transition" alt="JustPlace Logo" />
+            <img src="/sponsers/vilcart.png" className="h-10 hover:scale-105 transition" alt="Vilcart Logo" />
+            <img src="/sponsers/swipe.png" className="h-10 hover:scale-105 transition" alt="Swipe Logo" />
+            <img src="/sponsers/esamudaay.png" className="h-10 hover:scale-105 transition" alt="eSamuday Logo" />
+            <img src="/sponsers/abhibus.png" className="h-10 hover:scale-105 transition" alt="Abhibus Logo" />
           </div>
           <div className="relative flex justify-center items-center">
-            <div className="flex-1 pl-10">
+            <div className="flex-1 pl-10" >
               <LeftComponent />
             </div>
             <div className="relative flex-1 mt-20">
@@ -245,7 +240,7 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
               
               {/* Sell Button */}
               {playersList.length > 0 && !showPlayerCard && (
-                <div className="mt-8 text-center">
+                <div className="mt-8 text-center flex justify-center gap-4">
                   <button
                     onClick={handleSellClick}
                     disabled={isMarkingSold || isMarkingUnsold}
@@ -277,6 +272,8 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
           </div>
 
         </div>
+        
+      
       )
       }
 

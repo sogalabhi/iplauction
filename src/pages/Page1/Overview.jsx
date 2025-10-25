@@ -19,7 +19,8 @@ const Overview = () => {
     getAllTeamswithplayers();
   }, [])
   return (
-    <div className="w-11/12 mx-5 max-w-4xl bg-white/10 hover:bg-white/5 cursor-default hover:scale-105 transition backdrop-blur-md rounded-lg shadow-lg border border-white/20 p-6">
+  
+    <div className="w-11/12 mx-5 max-w-4xl  text-white bg-[#985c01] backdrop-blur-lg rounded-lg shadow-lg border border-white/20 p-6 hover:scale-105 transition-all duration-300 ">
       <h2 className="text-2xl font-bold text-white text-center">Team Overview</h2>
       <table className="table-auto w-full text-left  border-0">
         <thead className="">

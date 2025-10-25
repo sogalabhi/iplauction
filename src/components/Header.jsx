@@ -19,14 +19,14 @@ export function Header() {
 
       </div>
 
-      {/* Right Logo */}
+      {/* Right Logo
       <div className="flex items-center">
         <img
           src="src/assets/navLogo.png"
           alt="Right Logo"
           className="h-16 ml-2"
         />
-      </div>
+      </div> */}
 
       {/* Moving Border Animation */}
       <div className="absolute inset-0 border-4 border-transparent rounded-lg animate-borderGlow"></div>
