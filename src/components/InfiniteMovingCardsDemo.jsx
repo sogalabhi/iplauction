@@ -20,17 +20,9 @@ export function InfiniteMovingCardsDemo() {
 
     fetchPlayers();
   }, [soldPlayers])
-  function formatPriceInLakhs(price) {
-
-    if (price >= 100) {
-      // Convert to crore
-      const crore = (price / 100).toFixed(2); // 2 decimal places
-      return `${Number(crore).toLocaleString('en-IN')} Cr`;
-    } else {
-      // Keep it in lakh
-      return `${Number(price).toLocaleString('en-IN')} Lakh`;
-      // return price;
-    }
+  function formatPriceInCrores(price) {
+    // Price is already in crores - show as crores regardless of value
+    return `${Number(price).toLocaleString('en-IN')} Cr`;
   }
   const [isHovered, setIsHovered] = useState(false);
 
@@ -69,7 +61,7 @@ export function InfiniteMovingCardsDemo() {
                 <div className="p-4 text-center flex flex-col justify-between h-1/3">
                   <p className="text-lg text-gray-300">Team: {player.player_name}</p>
                   <p className="text-lg text-green-400 font-semibold">
-                    Sold Price: {formatPriceInLakhs(player.final_price)}
+                    Sold Price: {formatPriceInCrores(player.final_price)}
                   </p>
                   <p className="text-lg text-green-400 font-semibold">
                     Sold To: {player.sold_to_team}

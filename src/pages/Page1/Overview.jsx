@@ -10,17 +10,9 @@ const Overview = () => {
     });
   }
 
-  function formatPriceInLakhs(price) {
-
-    if (price >= 100) {
-      // Convert to crore
-      const crore = (price / 100).toFixed(2); // 2 decimal places
-      return `${Number(crore).toLocaleString('en-IN')} Crore`;
-    } else {
-      // Keep it in lakh
-      return `${Number(price).toLocaleString('en-IN')} Lakh`;
-      // return price;
-    }
+  function formatPriceInCrores(price) {
+    // Price is already in crores - show as crores regardless of value
+    return `${Number(price).toLocaleString('en-IN')} Crore`;
   }
 
   useEffect(() => {
@@ -45,7 +37,7 @@ const Overview = () => {
               <td className="p-2">{team.team_id}</td>
               <td className="p-2">{team.name}</td>
               <td className="p-2 text-center">{team.playerCount}</td>
-              <td className="p-2 text-right">₹{formatPriceInLakhs(team.purse)}</td>
+              <td className="p-2 text-right">₹{formatPriceInCrores(team.purse)}</td>
             </tr>
           ))}
         </tbody>

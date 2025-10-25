@@ -16,17 +16,9 @@ const PlayerCard = ({ player, showHammer, currentBidder, currentBid, showPlayerC
   useEffect(() => {
     setIsSold(false);
   }, [player]);
-  function formatPriceInLakhs(price) {
-
-    if (price >= 100) {
-      // Convert to crore
-      const crore = (price / 100).toFixed(2); // 2 decimal places
-      return `${Number(crore).toLocaleString('en-IN')} Crore`;
-    } else {
-      // Keep it in lakh
-      return `${Number(price).toLocaleString('en-IN')} Lakh`;
-      // return price;
-    }
+  function formatPriceInCrores(price) {
+    // Price is already in crores - show as crores regardless of value
+    return `${Number(price).toLocaleString('en-IN')} Crore`;
   }
   return (
     <div
@@ -51,8 +43,8 @@ const PlayerCard = ({ player, showHammer, currentBidder, currentBid, showPlayerC
 
           )}
           <img
-            src={player.player_image}
-            alt={player.name}
+            src={player.image}
+            alt={player.player_name}
             className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-auto h-64"
           />
           {showHammer && (
@@ -62,46 +54,26 @@ const PlayerCard = ({ player, showHammer, currentBidder, currentBid, showPlayerC
           )}
         </div>
       </div>
-      <h2 className="text-xl font-bold mt-4 z-30">{player.player_name} {roleIcons[player.category]}</h2>
+      <h2 className="text-xl font-bold mt-4 z-30">{player.player_name} {roleIcons[player.role]}</h2>
 
       <div className="flex gap-4 mt-2 py-5 justify-center items-center">
         <div className="border-slate-200 rounded-lg border-4 transform skew-x-12 px-4 py-2">
           <span className="inline-block transform -skew-x-12 ">
-            Base Price: ₹{formatPriceInLakhs(player.base_price)}
+            Base Price: ₹{formatPriceInCrores(player.base_price)}
           </span>
         </div>
 
         <div className="border-slate-200 rounded-lg border-4 transform -skew-x-12 px-4 py-2">
           <span className="inline-block transform skew-x-12 ">
-            {showPlayerCard == true ? 'Final Price' : 'Current Bid'}: ₹{formatPriceInLakhs(currentBid)}
+            {showPlayerCard == true ? 'Final Price' : 'Current Bid'}: ₹{formatPriceInCrores(currentBid)}
           </span>
         </div>
       </div>
-      {currentBidder != null &&
-        <h2 className={`text-xl font-bold animate-pulse mt-4 ${showPlayerCard == true ? 'text-green-500' : 'text-yellow-400'}`}> {showPlayerCard == true ? 'Sold to' : 'Current Bidder'}: {currentBidder}</h2>
-      }
       <StatsForHomePage stats={player} />
       {
         (showPlayerCard != true && player) && (
-          <div className={`text-center grid ${cols} gap-4 justify-center relative z-10`}>
-            {currentBid > 0 && <button
-              onClick={markAsSold}
-              className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-            >
-              Mark as Sold
-            </button>}
-            <Link
-              to={"/teamswithsquad"}
-              className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-            >
-              Team Squad
-            </Link>
-            <Link
-              to={"/break"}
-              className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-            >
-              Break
-            </Link>
+          <div className={`text-center justify-center relative z-10`}>
+
             <button
               onClick={markAsUnSold}
               className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"

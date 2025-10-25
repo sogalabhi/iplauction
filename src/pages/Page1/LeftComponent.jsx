@@ -8,17 +8,9 @@ import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 const LeftComponent = () => {
 
-  function formatPriceInLakhs(price) {
-
-    if (price >= 100) {
-      // Convert to crore
-      const crore = (price / 100).toFixed(2); // 2 decimal places
-      return `${Number(crore).toLocaleString('en-IN')} Crore`;
-    } else {
-      // Keep it in lakh
-      return `${Number(price).toLocaleString('en-IN')} Lakh`;
-      // return price;
-    }
+  function formatPriceInCrores(price) {
+    // Price is already in crores - show as crores regardless of value
+    return `${Number(price).toLocaleString('en-IN')} Crore`;
   }
 
   const [mostExpensivePlayer1, setPlayerData] = useState([]);
@@ -82,7 +74,7 @@ const LeftComponent = () => {
               <>
                 <div className="flex-shrink-0 p-4">
                   <img
-                    src={mostExpensivePlayer1[0].player_image}
+                    src={mostExpensivePlayer1[0].image}
                     alt={mostExpensivePlayer1[0].player_name}
                     style={{ backgroundImage: `linear-gradient(to bottom right, #${mostExpensiveTeam?.color1}, #${mostExpensiveTeam?.color2}),url(${mostExpensiveTeam?.team_logo})`, backdropFilter: 'blur(25px) saturate(150%)' }}
                     className="w-[100px] h-[100px] rounded-full border-2 border-white object-cover"
@@ -93,7 +85,7 @@ const LeftComponent = () => {
                 <div className="flex-grow p-4">
                   <h2 className="text-[20px] font-bold">{mostExpensivePlayer1[0].player_name}</h2>
                   <p className="text-[18px]">{mostExpensiveTeam?.team_name || 'Loading...'}</p>
-                  <p className="text-[18px]">&#8377; {formatPriceInLakhs(mostExpensivePlayer1[0].final_price)}</p>
+                  <p className="text-[18px]">&#8377; {formatPriceInCrores(mostExpensivePlayer1[0].final_price)}</p>
                 </div>
               </>
             ) : (
@@ -132,9 +124,8 @@ const LeftComponent = () => {
               <>
                 <div className="flex-shrink-0 p-4">
                   <img
-
                     style={{ backgroundImage: `linear-gradient(to bottom right, #${lastSoldTeam?.color1}, #${lastSoldTeam?.color2}), url(${lastSoldTeam?.team_logo})`, backdropFilter: 'blur(25px) saturate(150%)' }}
-                    src={lastSoldPlayer1[0].player_image}
+                    src={lastSoldPlayer1[0].image}
                     alt={lastSoldPlayer1[0].player_name}
                     className="w-[100px] h-[100px] rounded-full border-2 border-white object-cover"
                   />
@@ -144,7 +135,7 @@ const LeftComponent = () => {
                 <div className="flex-grow p-4">
                   <h2 className="text-[20px] font-bold">{lastSoldPlayer1[0].player_name}</h2>
                   <p className="text-[18px]">{lastSoldTeam?.team_name || 'Loading...'}</p>
-                  <p className="text-[18px]">&#8377; {formatPriceInLakhs(lastSoldPlayer1[0].final_price)}</p>
+                  <p className="text-[18px]">&#8377; {formatPriceInCrores(lastSoldPlayer1[0].final_price)}</p>
                 </div>
               </>
             ) : (

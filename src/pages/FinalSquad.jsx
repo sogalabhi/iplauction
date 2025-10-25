@@ -15,24 +15,16 @@ const TeamsWithCompactDesign = () => {
       setTeamsWithSquad(teams);
     });
   }
-  function formatPriceInLakhs(price) {
-
-    if (price >= 100) {
-      // Convert to crore
-      const crore = (price / 100).toFixed(2); // 2 decimal places
-      return `${Number(crore).toLocaleString('en-IN')} Crore`;
-    } else {
-      // Keep it in lakh
-      return `${Number(price).toLocaleString('en-IN')} Lakh`;
-      // return price;
-    }
+  function formatPriceInCrores(price) {
+    // Price is already in crores - show as crores regardless of value
+    return `${Number(price).toLocaleString('en-IN')} Crore`;
   }
   useEffect(() => {
     getAllTeamswithplayers();
   }, [])
 
   return (
-    <div className="p-4 bg-[url('https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/public/video//13859443_5392092.jpg')] bg-no-repeat bg-cover from-[#361602] from-40% to-[#021e31] min-h-screen flex flex-col items-center justify-center">
+    <div className={`p-4 bg-[url('${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/video//13859443_5392092.jpg')] bg-no-repeat bg-cover from-[#361602] from-40% to-[#021e31] min-h-screen flex flex-col items-center justify-center`}>
 
       <h1 className="text-6xl font-extrabold text-center mt-2 mb-4 tracking-wide animate-pulse text-white">
         Teams Squad
@@ -65,7 +57,7 @@ const TeamsWithCompactDesign = () => {
               <div>
                 <h2 className="text-lg font-extrabold">{team.name}</h2>
                 <p className="text-xs font-medium">
-                  Purse Balance: {formatPriceInLakhs(team.purse)}
+                  Purse Balance: {formatPriceInCrores(team.purse)}
                 </p>
               </div>
               <img
@@ -103,6 +95,7 @@ const TeamsWithCompactDesign = () => {
                       {
                         (player.role == "All Rounder") && <img src="https://cdn-icons-png.flaticon.com/512/9097/9097536.png" alt="ball" className="w-3 absolute right-4" />
                       }
+                      <span className="text-xs text-orange-600 font-bold ml-2">OPI: {player.opi}</span>
                     </div>
                   </li>
                 ))}

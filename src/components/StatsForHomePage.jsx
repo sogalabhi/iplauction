@@ -2,45 +2,22 @@ import React from 'react'
 
 export default function StatsForHomePage({ stats }) {
     return (
-        <div className="my-5 mx-5 bg-white/10 hover:bg-white/5 cursor-default hover:scale-105 transition backdrop-blur-md rounded-lg shadow-lg border border-white/20 p-4">
-            <div className="flex flex-row gap-7 items-center justify-center">
-                {stats.matches != 0 && <div className="flex flex-col">
-                    <span className="text-xs font-semibold">Matches</span>
-                    <span>{stats.matches}</span>
-                </div>}
-                {stats.runs != 0 && <div className="flex flex-col">
-                    <span className="text-xs font-semibold">Runs</span>
-                    <span>{stats.runs}</span>
-                </div>}
-                {stats.bat_avg != 0 && <div className="flex flex-col">
-                    <span className="text-xs font-semibold">Bat Avg</span>
-                    <span>{stats.bat_avg}</span>
-                </div>}
-                {stats.sr != 0 && <div className="flex flex-col">
-                    <span className="text-xs font-semibold">SR</span>
-                    <span>{stats.sr}</span>
-                </div>}
-                {stats.catches != 0 && <div className="flex flex-col">
-                    <span className="text-xs font-semibold">Catches</span>
-                    <span>{stats.catches}</span>
-                </div>}
-                {stats.stumpings != 0 && <div className="flex flex-col">
-                    <span className="text-xs font-semibold">Stumpings</span>
-                    <span>{stats.stumpings}</span>
-                </div>}
-                {stats.wickets != 0 && <div className="flex flex-col">
-                    <span className="text-xs font-semibold">Wickets</span>
-                    <span>{stats.wickets}</span>
-                </div>}
-                {stats.bowl_avg != 0 && <div className="flex flex-col">
-                    <span className="text-xs font-semibold">Bowl Avg.</span>
-                    <span>{stats.bowl_avg}</span>
-                </div>}
-                {stats.eco != 0 && <div className="flex flex-col">
-                    <span className="text-xs font-semibold">Economy</span>
-                    <span>{stats.eco}</span>
-                </div>}
+        <div className="my-8 mx-8 bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 cursor-default transform hover:scale-110 transition duration-500 rounded-2xl shadow-2xl border-2 border-white/30 p-8 backdrop-blur-lg">
+            <div className="flex flex-col items-center justify-center gap-6">
+
+
+                {/* Stats Container */}
+                <div className="flex flex-row gap-12 items-center justify-center w-full">
+                    {stats.opi != 0 && (
+                        <>
+                            <span className="text-lg font-semibold text-yellow-300">OPI</span>
+                            <span className="text-3xl font-bold text-white">{stats.opi}</span>
+                        </>
+                    )}
+
+                </div>
             </div>
         </div>
+
     )
 }
