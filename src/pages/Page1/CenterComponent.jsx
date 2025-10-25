@@ -284,7 +284,7 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
       {!isPlayerSold && !showPlayerCard && (
         <div className="py-1 relative z-10">
           <h1 className="text-center text-5xl pt-2 relative z-10 heading-font">IPL MOCK AUCTION</h1>
-          <h2 className="text-center text-lg">Sponsored by</h2>
+          <h2 className="text-center text-lg mt-4">Sponsored by</h2>
           <div className="flex justify-center items-center gap-4 mt-2 p-4 rounded-lg">
             <img src="/sponsers/unstop.jpg" className="h-10 hover:scale-105 transition" alt="Unstop Logo" />
             <img src="/sponsers/indiastack.png" className="h-10 hover:scale-105 transition" alt="IndiaStack Logo" />

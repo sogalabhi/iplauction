@@ -26,13 +26,15 @@ const PlayerCard = ({ player, showHammer, currentBidder, currentBid, showPlayerC
     "Gujarat Titans": "https://upload.wikimedia.org/wikipedia/en/thumb/0/09/Gujarat_Titans_Logo.svg/1200px-Gujarat_Titans_Logo.svg.png",
     "Lucknow Super Giants": "https://upload.wikimedia.org/wikipedia/en/thumb/a/a9/Lucknow_Super_Giants_IPL_Logo.svg/1200px-Lucknow_Super_Giants_IPL_Logo.svg.png"
   };
+
   useEffect(() => {
     setIsSold(false);
   }, [player]);
+
   function formatPriceInCrores(price) {
-    // Price is already in crores - show as crores regardless of value
     return `${Number(price).toLocaleString('en-IN')} Crore`;
   }
+
   return (
     <div
       className={`flex flex-col items-center justify-center hover:scale-105 transition ${isSold ? "fixed inset-0 z-50 bg-black" : ""
@@ -44,34 +46,35 @@ const PlayerCard = ({ player, showHammer, currentBidder, currentBid, showPlayerC
       )}
 
       <div className="relative flex justify-center items-center">
-        <div className="absolute w-[30rem] h-[15rem] rounded-t-full bg-gradient-to-br from-[#00d4e1] to-purple-500 opacity-50 blur-lg animate-pulse"></div>
-
         <div
-          className={`relative w-96 h-48 rounded-t-full overflow-visible shadow-xl`}
+          className={`relative w-96 h-48 rounded-t-full overflow-visible shadow-2xl border-2 border-white/20 backdrop-blur-sm`}
         >
           {isSold && (
-            <div className="text-center text-5xl pt-2 relative z-10 heading-font" style={{ textShadow: "4px 4px 0px #4f829c" }}>
+            <div className="text-center text-5xl pt-2 relative z-10 heading-font bg-gradient-to-r from-yellow-400 to-red-500 bg-clip-text text-transparent" style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.5)" }}>
               Player Sold!
             </div>
-
           )}
+
           <img
             src={player.image}
             alt={player.player_name}
-            className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-auto h-64"
+            className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-auto h-64 drop-shadow-2xl"
           />
-          
-          {/* Team Logo */}
+
+          {/* Team Logo with enhanced styling */}
           {player.team && teamLogos[player.team] && (
             <div className="absolute top-4 right-4 z-20">
-              <img
-                src={teamLogos[player.team]}
-                alt={player.team}
-                className="w-12 h-12 rounded-full border-2 border-white shadow-lg"
-              />
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full blur-sm opacity-75 animate-pulse"></div>
+                <img
+                  src={teamLogos[player.team]}
+                  alt={player.team}
+                  className="relative w-14 h-14 rounded-full border-2 border-white/80 shadow-xl bg-white p-1"
+                />
+              </div>
             </div>
           )}
-          
+
           {showHammer && (
             <div className="absolute inset-0 flex justify-center items-center">
               <Ha className="w-2 h-2" />
@@ -79,35 +82,62 @@ const PlayerCard = ({ player, showHammer, currentBidder, currentBid, showPlayerC
           )}
         </div>
       </div>
-      <h2 className="text-xl font-bold mt-4 z-30">
-        {player.player_name} {roleIcons[player.role]}
-        {player.indian === false && <span className="ml-2">✈️</span>}
-      </h2>
 
+      {/* Player Name with enhanced styling */}
+      <div className="relative mt-6 mb-2">
+        <div className="absolute inset-0 opacity-30"></div>
+        <h2 className="relative text-2xl font-bold z-30 bg-gradient-to-r from-blue-800 to-purple-800 bg-clip-text text-transparent px-6 py-2">
+          {player.player_name} {roleIcons[player.role]}
+          {player.indian === false && <span className="ml-3 text-xl">✈️</span>}
+        </h2>
+      </div>
+
+      {/* Price Card with new design */}
       <div className="flex gap-4 mt-2 pt-5 justify-center items-center">
-        <div className="border-slate-200 rounded-lg border-4 px-4 py-2">
-          <span className="inline-block">
-            Base Price: ₹{formatPriceInCrores(player.base_price)}
-          </span>
+        <div className="relative group">
+          <div className="absolute -inset-1 bg-gradient-to-r from-red-600 to-yellow-600 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
+          <div className="relative bg-white/95 backdrop-blur-sm rounded-lg border-2 border-yellow-400/50 px-6 py-3 shadow-xl">
+            <span className="font-semibold text-gray-800 bg-gradient-to-r from-red-600 to-yellow-600 bg-clip-text text-transparent">
+              Base Price: ₹{formatPriceInCrores(player.base_price)}
+            </span>
+          </div>
         </div>
       </div>
-      {currentBidder != null &&
-        <h2 className={`text-xl font-bold animate-pulse mt-4 ${showPlayerCard == true ? 'text-green-500' : 'text-yellow-400'}`}> {showPlayerCard == true ? 'Sold to' : 'Current Bidder'}: {currentBidder}</h2>
-      }
-      <StatsForHomePage stats={player} />
-      {
-        (showPlayerCard != true && player) && (
-          <div className={`text-center justify-center relative z-10`}>
 
-            <button
-              onClick={markAsUnSold}
-              className=" bg-[#a86e1a] text-white px-4 py-2 rounded hover:bg-[#7a4a01] transition w-36 h-12 max-w-xs "
-            >
-              {isMarkingUnsold ? 'Processing...' : 'Mark as Unsold'}
-            </button>
-          </div>
-        )
-      }
+      {/* Bidder Info with enhanced styling */}
+      {currentBidder != null && (
+        <div className="mt-4 relative">
+          <div className={`absolute inset-0 ${showPlayerCard ? 'bg-green-500/20' : 'bg-yellow-500/20'} rounded-full blur`}></div>
+          <h2 className={`relative text-xl font-bold animate-pulse px-6 py-2 rounded-full ${showPlayerCard ? 'text-green-700' : 'text-yellow-700'}`}>
+            {showPlayerCard ? '🏆 Sold to' : '🔥 Current Bidder'}: {currentBidder}
+          </h2>
+        </div>
+      )}
+
+      {/* Stats Component */}
+      <div className="mt-4 w-full max-w-md">
+        <StatsForHomePage stats={player} />
+      </div>
+
+      {/* Action Button with new design */}
+      {(showPlayerCard != true && player) && (
+        <div className="mt-6 relative">
+          <div className="absolute -inset-1 bg-gradient-to-r from-[#a86e1a] to-[#7a4a01] rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000"></div>
+          <button
+            onClick={markAsUnSold}
+            className="relative bg-gradient-to-r from-[#d4a017] to-[#a86e1a] text-white px-3 py-3 rounded-lg hover:from-[#b8860b] hover:to-[#8b6508] transition-all duration-300 w-40 h-12 max-w-xs shadow-lg hover:shadow-xl font-semibold border-2 border-yellow-400/30"
+          >
+            {isMarkingUnsold ? (
+              <span className="flex items-center justify-center">
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                Processing...
+              </span>
+            ) : (
+              'Mark as Unsold'
+            )}
+          </button>
+        </div>
+      )}
     </div>
   );
 };
