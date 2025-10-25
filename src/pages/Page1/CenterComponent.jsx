@@ -157,14 +157,14 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
   };
 
   return (
-    <div className={`min-h-screen bg-[#193153]  text-white`}>
+    <div className={`min-h-screen bg-[#985c01]  text-white`}>
       <video src={`${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/video//video_2025-01-28%2022_42_02.webm`}
-        autoplay="{true}" loop muted></video>
+        autoPlay loop muted></video>
     {/* // <div className={`min-h-screen text-white bg-[#1c439e]`}> */}
-      <video src=
+      {/* <video src=
         "https://ykpijunxogyxoiveffdq.supabase.co/storage/v1/object/public/video//video_2025-01-28%2022_42_02.webm"
         autoPlay loop muted
-        className="absolute w-auto h-full max-h-full object-cover opacity-40 z-0"></video>
+        className="absolute w-auto h-full max-h-full object-cover opacity-40 z-0"></video> */}
       {/* <img src="https://ecell.nitk.ac.in/navLogo.png" alt="" className="w-40 absolute z-40 top-5 left-4" /> */}
       <img src="https://ecell.nitk.ac.in/incub8L.png" alt="" className="w-32 absolute z-40 top-4 right-4" />
       {!isPlayerSold && !showPlayerCard && (
@@ -200,13 +200,19 @@ const CenterComponent = ({ initteamlist, initplayersList }) => {
               
               {/* Sell Button */}
               {playersList.length > 0 && !showPlayerCard && (
-                <div className="mt-8 text-center">
+                <div className="mt-8 text-center flex justify-center gap-4">
                   <button
-                    onClick={handleSellClick}
-                    className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white px-8 py-4 rounded-lg font-bold text-xl transition-all duration-200 transform hover:scale-105 shadow-lg"
-                  >
-                    🏆 SELL PLAYER
-                  </button>
+                      onClick={handleSellClick}
+                      className="bg-[#985c01] text-white px-8 py-4 rounded-lg font-bold text-xl transition-all duration-200 transform hover:scale-105 shadow-lg"
+                    >
+                      🏆 SELL PLAYER
+                    </button>
+                  {/* <button
+                     onClick={markAsUnSold}
+                     className="bg-[#a86e1a] text-white px-4 py-2 rounded hover:bg-[#7a4a01] transition"
+                   >
+                     Mark as Unsold
+                   </button> */}
                 </div>
               )}
               {playersList.length == 0 &&

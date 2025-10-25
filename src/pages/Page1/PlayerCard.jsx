@@ -76,7 +76,7 @@ const PlayerCard = ({ player, showHammer, currentBidder, currentBid, showPlayerC
 
             <button
               onClick={markAsUnSold}
-              className="w-36 h-12 max-w-xs bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+              className=" bg-[#a86e1a] text-white px-4 py-2 rounded hover:bg-[#7a4a01] transition w-36 h-12 max-w-xs "
             >
               Mark as Unsold
             </button>

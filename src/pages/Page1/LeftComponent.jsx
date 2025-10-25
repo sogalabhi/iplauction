@@ -58,7 +58,7 @@ const LeftComponent = () => {
     <div className="p-8 font-sans space-y-6">
       {/* Most Expensive Player */}
       {mostExpensiveTeam?.team_name && <div
-        className="flex flex-col mb-6 border-slate-1000 bg-white/5 hover:bg-white/0 cursor-default hover:scale-105 transition backdrop-blur-md rounded-lg shadow-lg border border-white/20 p-6n"
+        className="flex flex-col mb-6 bg-[#985c01]/10 backdrop-blur-lg rounded-lg shadow-lg border border-white/20 p-6 hover:scale-105 transition-all duration-300"
       >
         <div className='relative overflow-hidden isolate rounded-lg'>
 
@@ -109,7 +109,7 @@ const LeftComponent = () => {
 
       {/* Last Sold Player */}
       {lastSoldTeam?.team_name && <div
-        className="flex flex-col mb-6 border-slate-1000 bg-white/5 hover:bg-white/0 cursor-default hover:scale-105 transition backdrop-blur-md rounded-lg shadow-lg border border-white/20 p-6n"
+         className="flex flex-col mb-6 bg-[#985c01]/10 backdrop-blur-lg rounded-lg shadow-lg border border-white/20 p-6 hover:scale-105 transition-all duration-300"
       >
         <div className='relative overflow-hidden isolate rounded-lg'>
           {/* Heading */}
